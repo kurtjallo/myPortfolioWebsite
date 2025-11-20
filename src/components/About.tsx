@@ -28,7 +28,7 @@ export function About() {
               trust.
             </p>
             <p className="text-lg text-gray-700 dark:text-gray-200">
-              Outside of tech, I&apos;m a huge sports fan—basketball is my first love, but
+              Outside of tech, I&apos;m a huge sports fan, basketball is my first love, but
               football, baseball, and hockey are always in the mix. Staying active matters
               to me, whether that&apos;s a gym session or time on the court. When I wrap the
               day with a good workout, you can usually find me unwinding with a new show or
