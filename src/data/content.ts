@@ -61,14 +61,13 @@ export const socialLinks: SocialLink[] = [
 export const aboutHighlights: never[] = [];
 
 export const interestTags = [
-  "Next.js & React",
-  "Problem solving",
-  "Dev tooling",
-  "Pickup basketball",
-  "Football & hockey nights",
-  "Baseball box scores",
-  "Chess puzzles",
-  "New show recommendations",
+  "Basketball",
+  "Sunday Night Football",
+  "Hockey",
+  "Baseball",
+  "Coding",
+  "Chess",
+  "Working out",
 ];
 
 export const projects: ProjectCard[] = [
@@ -135,9 +134,10 @@ export const skills: SkillCategory[] = [
 
 export const hobbies = [
   "Basketball",
+  "Sunday Night Football",
+  "Hockey",
+  "Baseball",
+  "Coding",
+  "Chess",
   "Working out",
-  "Reading tech blogs",
-  "New music",
-  "Learning new frameworks",
-  "Hiking",
 ];

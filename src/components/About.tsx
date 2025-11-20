@@ -22,17 +22,18 @@ export function About() {
           </h2>
           <div className="space-y-4 leading-relaxed">
             <p className="text-lg text-gray-700 dark:text-gray-200">
-              Hello, I&apos;m Kurt. I&apos;m a student and aspiring developer obsessed with
-              simple design and solving problems through code. I enjoy translating fuzzy
-              ideas into approachable interfaces and resilient systems that teammates can
-              trust.
+              Hi, I’m Kurt. I’m a student and an aspiring developer. I am currently
+              pursuing a degree in Computer Science at York University. I've been
+              working with technology ever since I was a kid, that's when I knew early
+              on that I wanted to work in this field. I like solving problems and
+              turning ideas into real, working projects.
             </p>
             <p className="text-lg text-gray-700 dark:text-gray-200">
-              Outside of tech, I&apos;m a huge sports fan, basketball is my first love, but
-              football, baseball, and hockey are always in the mix. Staying active matters
-              to me, whether that&apos;s a gym session or time on the court. When I wrap the
-              day with a good workout, you can usually find me unwinding with a new show or
-              movie recommendation.
+              When I’m not coding, I'm either working out, playing sports, or
+              watching a move/shows and exploring around the city. Basketball is my
+              number one, but I keep up with football, baseball, and hockey as well.
+              Staying active helps me clear my head, so I usually wrap up the day
+              with a workout before crashing with a good movie or TV series.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
