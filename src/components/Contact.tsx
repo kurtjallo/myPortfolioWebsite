@@ -54,6 +54,8 @@ export function Contact() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
+            <input type="hidden" name="_subject" value="New submission from kurtjallorina.me" />
+            <input type="hidden" name="_captcha" value="false" />
             <div className="space-y-2">
               <label className="text-sm font-medium text-(--text-muted)">
                 Name
