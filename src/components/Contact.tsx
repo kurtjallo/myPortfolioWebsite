@@ -25,50 +25,48 @@ export function Contact() {
         </div>
 
         <div className="app-card rounded-2xl p-8">
-          <h3 className="text-2xl font-semibold text-gray-900 dark:text-white">
-            Start the conversation
-          </h3>
-          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-            Share what you&apos;re hiring for, the problem you need solved, or the student
-            community you&apos;re building. I read every note quickly (usually after coding,
-            hoops, or a chess puzzle) and reply just as fast.
-          </p>
-          <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700 dark:text-gray-200">
                 Name
               </label>
-              <input
-                type="text"
-                name="name"
-                required
-                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-gray-900 outline-none transition focus:border-transparent focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-100"
-                placeholder="Your name"
-              />
+              <div className="focus-gradient-border rounded-xl">
+                <input
+                  type="text"
+                  name="name"
+                  required
+                  className="w-full rounded-xl border border-gray-200 bg-transparent px-4 py-3 text-gray-900 outline-none transition dark:border-gray-700 dark:bg-gray-950 dark:text-gray-100"
+                  placeholder="Your name"
+                />
+              </div>
             </div>
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700 dark:text-gray-200">
                 Email
               </label>
-              <input
-                type="email"
-                name="email"
-                required
-                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-gray-900 outline-none transition focus:border-transparent focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-100"
-                placeholder="name@company.com"
-              />
+              <div className="focus-gradient-border rounded-xl">
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  className="w-full rounded-xl border border-gray-200 bg-transparent px-4 py-3 text-gray-900 outline-none transition dark:border-gray-700 dark:bg-gray-950 dark:text-gray-100"
+                  placeholder="name@company.com"
+                />
+              </div>
             </div>
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700 dark:text-gray-200">
                 Project Details
               </label>
-              <textarea
-                name="message"
-                required
-                rows={4}
-                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-gray-900 outline-none transition focus:border-transparent focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-100"
-                placeholder="What are you working on? Where could I help?"
-              />
+              <div className="focus-gradient-border rounded-xl">
+                <textarea
+                  name="message"
+                  required
+                  rows={4}
+                  className="w-full rounded-xl border border-gray-200 bg-transparent px-4 py-3 text-gray-900 outline-none transition dark:border-gray-700 dark:bg-gray-950 dark:text-gray-100"
+                  placeholder="What are you working on? Where could I help?"
+                />
+              </div>
             </div>
             <button
               type="submit"
@@ -82,7 +80,6 @@ export function Contact() {
               </p>
             )}
           </form>
-
         </div>
       </div>
     </section>

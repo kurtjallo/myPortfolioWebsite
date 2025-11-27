@@ -3,15 +3,6 @@
 import { motion } from "framer-motion";
 import { hobbies } from "@/data/content";
 
-function SectionHeading({ title }: { title: string }) {
-  return (
-    <div className="flex items-center gap-3 text-sm font-semibold text-gray-700 dark:text-gray-200">
-      <span className="inline-flex h-1 w-6 rounded-full bg-gradient-to-r from-blue-400 to-indigo-400" />
-      <span>{title}</span>
-    </div>
-  );
-}
-
 export function Hobbies() {
   return (
     <section
@@ -31,7 +22,7 @@ export function Hobbies() {
           </h2>
           <div className="space-y-4 leading-relaxed">
             <p className="text-lg text-gray-700 dark:text-gray-200">
-              Beyond the screen, I love staying active and exploring new things. When I'm not coding, you can often find me:
+              Beyond the screen, I love staying active and exploring new things. When I&apos;m not coding, you can often find me:
             </p>
             <ul className="list-disc list-inside text-lg text-gray-700 dark:text-gray-200">
               <li>Playing basketball or working out at the gym.</li>

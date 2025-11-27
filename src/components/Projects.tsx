@@ -3,19 +3,33 @@
 import { motion } from "framer-motion";
 import { ExternalLink, Github } from "lucide-react";
 import { projects } from "@/data/content";
+import { MouseEvent } from "react";
+import type { SimpleIcon } from "simple-icons";
+import {
+  siReact,
+  siExpo,
+  siTypescript,
+  siSvg,
+} from "simple-icons";
 
-function SectionHeading({ title }: { title: string }) {
-  return (
-    <div className="flex items-center gap-3 text-sm font-semibold text-gray-700 dark:text-gray-200">
-      <span className="inline-flex h-1 w-6 rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400" />
-      <span>{title}</span>
-    </div>
-  );
-}
+const techIconMap: Record<string, SimpleIcon | undefined> = {
+  "React Native": siReact,
+  Expo: siExpo,
+  TypeScript: siTypescript,
+  "SVG Charts": siSvg,
+};
 
 export function Projects() {
   const featured = projects[0];
   if (!featured) return null;
+
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
+    e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
+  };
 
   return (
     <section
@@ -31,18 +45,15 @@ export function Projects() {
           <h2 className="text-5xl font-bold text-gray-900 dark:text-white md:text-6xl">
             Projects
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300">
-            Spotlighting SoberYou, the mobile build where my love for thoughtful tech,
-            mindfulness, and problem solving all come together.
-          </p>
         </div>
 
         <motion.article
+          onMouseMove={handleMouseMove}
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: "easeOut" }}
-          className="app-card relative overflow-hidden rounded-3xl px-8 py-12"
+          className="app-card spotlight-border relative overflow-hidden rounded-3xl px-8 py-12"
         >
           <div
             className={`absolute -top-32 right-0 h-72 w-72 rounded-full bg-gradient-to-br ${featured.accent} opacity-40 blur-3xl`}
@@ -60,14 +71,28 @@ export function Projects() {
                   {featured.description}
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  {featured.techStack.map((item) => (
-                    <span
-                      key={item}
-                      className="rounded-full border border-emerald-400/40 bg-emerald-500/10 px-4 py-1.5 text-sm font-medium text-emerald-600 transition-colors hover:bg-emerald-500/20 dark:text-emerald-400"
-                    >
-                      {item}
-                    </span>
-                  ))}
+                  {featured.techStack.map((item) => {
+                    const Icon = techIconMap[item];
+                    return (
+                      <span
+                        key={item}
+                        className="flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-500/10 px-4 py-1.5 text-sm font-medium text-emerald-600 transition-colors hover:bg-emerald-500/20 dark:text-emerald-400"
+                      >
+                        {Icon && (
+                          <svg
+                            role="img"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-4 w-4"
+                            fill="currentColor"
+                          >
+                            <path d={Icon.path} />
+                          </svg>
+                        )}
+                        {item}
+                      </span>
+                    );
+                  })}
                 </div>
               </div>
               <div className="flex flex-wrap gap-4">
@@ -94,21 +119,21 @@ export function Projects() {
 
             <div className="space-y-8">
               <section className="rounded-3xl border border-gray-100/60 bg-white/80 p-6 shadow-[0_20px_60px_rgba(15,23,42,0.12)] backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/60">
-                <SectionHeading title="Key features" />
-                <ul className="mt-4 grid gap-3 text-base leading-relaxed text-gray-700 dark:text-gray-200 sm:grid-cols-2">
-                  {featured.features.map((feature) => (
-                    <li
-                      key={feature}
-                      className="rounded-2xl border border-gray-200/60 bg-white/70 px-4 py-3 shadow-sm transition hover:-translate-y-0.5 hover:border-emerald-300/70 dark:border-gray-800/70 dark:bg-gray-900/60"
-                    >
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
+                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-4">
+                  Key Features
+                </h4>
+                <div className="grid grid-cols-3 gap-4">
+                  {/* Replace with actual screenshots */}
+                  <div className="aspect-video rounded-lg bg-gray-200 dark:bg-gray-700" />
+                  <div className="aspect-video rounded-lg bg-gray-200 dark:bg-gray-700" />
+                  <div className="aspect-video rounded-lg bg-gray-200 dark:bg-gray-700" />
+                </div>
               </section>
 
               <section className="rounded-3xl border border-gray-100/60 bg-white/80 p-6 shadow-[0_20px_60px_rgba(15,23,42,0.12)] backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/60">
-                <SectionHeading title="What I learned" />
+                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-4">
+                  What I learned
+                </h4>
                 <ul className="mt-4 space-y-3 text-base leading-relaxed text-gray-700 dark:text-gray-200">
                   {featured.learnings.map((item) => (
                     <li key={item} className="flex items-start gap-3">

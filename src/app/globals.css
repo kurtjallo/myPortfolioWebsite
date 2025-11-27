@@ -2,7 +2,6 @@
 
 :root {
   color-scheme: dark;
-  --bg-gradient: linear-gradient(135deg, #020617 0%, #030712 40%, #020617 100%);
   --border-muted: rgba(226, 232, 240, 0.12);
   --surface-primary: rgba(7, 11, 22, 0.92);
   --surface-muted: rgba(15, 23, 42, 0.8);
@@ -18,12 +17,32 @@ html {
 
 body {
   min-height: 100vh;
-  background-image: var(--bg-gradient);
+  background-color: #030712;
   color: var(--text-primary);
   font-family: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
   margin: 0;
   transition: background-image 0.6s ease, color 0.3s ease;
+}
+
+.noise-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(/noise.svg);
+    opacity: 0.05;
+    pointer-events: none;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.2;
+    }
+    50% {
+        opacity: 0.25;
+    }
 }
 
 ::selection {
@@ -83,4 +102,61 @@ body {
 .fade-in-up {
   animation: fadeInUp 0.6s ease-out forwards;
   opacity: 0;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.shimmer-bg {
+    animation: shimmer 4s infinite linear;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    background-size: 200% 100%;
+}
+
+.spotlight-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.06), transparent 40%);
+    pointer-events: none;
+}
+
+.focus-gradient-border {
+    position: relative;
+}
+
+.focus-gradient-border::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: linear-gradient(to right, #3b82f6, #8b5cf6);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.focus-gradient-border:focus-within::after {
+    opacity: 1;
+}
+
+.skills-section {
+  background: radial-gradient(140% 140% at 10% 10%, rgba(56, 189, 248, 0.18), transparent 45%),
+    radial-gradient(140% 140% at 90% 5%, rgba(168, 85, 247, 0.15), transparent 45%),
+    radial-gradient(120% 120% at 50% 50%, rgba(14, 165, 233, 0.08), rgba(2, 6, 23, 0.95)),
+    #030712;
+}
+
+.skills-pattern {
+  background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.06) 1.5px, transparent 0);
+  background-size: 46px 46px;
+  mask-image: radial-gradient(120% 120% at 50% 20%, rgba(0, 0, 0, 0.85), transparent 70%);
 }

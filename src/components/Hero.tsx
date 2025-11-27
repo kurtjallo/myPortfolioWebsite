@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowDown } from "lucide-react";
+import { Mouse } from "lucide-react";
 import { socialLinks } from "@/data/content";
 import { Link } from "react-scroll";
 
-const headlineSegments = ["Hi, there", "My name is Kurt."];
+const headlineSegments = ["Hi, there, my name is", "Kurt."];
 
 export function Hero() {
   const [displayText, setDisplayText] = useState("");
@@ -75,18 +75,8 @@ export function Hero() {
           transition={{ duration: 0.8 }}
           className="mb-10"
         >
-          <div className="mx-auto mb-6 h-32 w-32 rounded-full bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 p-1 shadow-2xl">
-            {/* Replace with your photo */}
-            <div className="flex h-full w-full items-center justify-center rounded-full bg-gray-50 text-4xl font-bold text-gray-900 dark:bg-gray-900 dark:text-white">
-              <img
-                src="https://www.gravatar.com/avatar/?d=mp"
-                alt="Kurt"
-                className="rounded-full"
-              />
-            </div>
-          </div>
           <div className="flex flex-wrap items-center justify-center gap-3">
-            <p className="app-chip inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium">
+            <p className="app-chip shimmer-bg inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium">
               <span className="h-2 w-2 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500" />
               Computer Science student
             </p>
@@ -100,7 +90,7 @@ export function Hero() {
               const [firstLine = "", secondLine = ""] = displayText.split("\n");
               return (
                 <>
-                  <div className="bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 bg-clip-text text-transparent dark:from-white dark:via-gray-200 dark:to-white">
+                  <div className="text-gray-400">
                     {firstLine}
                     {isTyping && !secondLine && (
                       <span
@@ -110,7 +100,7 @@ export function Hero() {
                       />
                     )}
                   </div>
-                  <div className="bg-gradient-to-r from-blue-300 via-cyan-300 to-emerald-300 bg-clip-text text-transparent">
+                  <div className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
                     {secondLine}
                     {isTyping && secondLine && (
                       <span
@@ -162,11 +152,11 @@ export function Hero() {
             to="about"
             smooth={true}
             duration={500}
-            offset={-50}
+            offset={-90}
             className="cursor-pointer inline-flex flex-col items-center text-sm font-medium text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
           >
             Scroll to explore
-            <ArrowDown className="mt-1 h-8 w-8 animate-bounce text-gray-400 dark:text-gray-500" />
+            <Mouse className="mt-1 h-8 w-8 animate-bounce text-gray-400 dark:text-gray-500" />
           </Link>
         </motion.div>
       </div>

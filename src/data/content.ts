@@ -34,6 +34,8 @@ export type SkillCategory = {
   title: string;
   icon: LucideIcon;
   gradient: string;
+  accent: string;
+  watermark?: string;
   items: string[];
 };
 
@@ -110,24 +112,32 @@ export const skills: SkillCategory[] = [
     title: "Languages",
     icon: Code2,
     gradient: "from-blue-500 to-cyan-500",
+    accent: "#38bdf8",
+    watermark: "TypeScript",
     items: ["TypeScript", "JavaScript", "Python", "HTML/CSS"],
   },
   {
     title: "Front-end",
     icon: Sparkles,
     gradient: "from-green-500 to-emerald-500",
+    accent: "#34d399",
+    watermark: "React / Next",
     items: ["Next.js", "React", "Tailwind CSS", "Framer Motion"],
   },
   {
     title: "Back-end",
     icon: Rocket,
     gradient: "from-orange-500 to-red-500",
+    accent: "#fb923c",
+    watermark: "API",
     items: ["Node.js", "Express", "PostgreSQL", "Supabase"],
   },
   {
     title: "Tools",
     icon: Layers,
     gradient: "from-purple-500 to-pink-500",
+    accent: "#a855f7",
+    watermark: "Ops",
     items: ["Git & GitHub", "Docker", "Figma", "Vercel"],
   },
 ];
