@@ -4,78 +4,107 @@ import { FormEvent, useState } from "react";
 
 export function Contact() {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    event.currentTarget.reset();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
+    setIsSubmitting(true);
+    
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/kurtjallorina6@gmail.com", {
+        method: "POST",
+        headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(Object.fromEntries(formData)),
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+        form.reset();
+        setTimeout(() => setSubmitted(false), 5000);
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <section
       id="contact"
-      className="bg-gradient-to-br from-gray-50 via-white to-slate-100 py-32 dark:from-gray-950 dark:via-gray-900/60 dark:to-gray-950"
+      className="py-32"
     >
       <div className="mx-auto max-w-4xl px-6">
         <div className="mb-12 space-y-4 text-center">
-          <h2 className="text-5xl font-bold text-gray-900 dark:text-white md:text-6xl">
+          <h2 className="text-5xl font-bold text-white md:text-6xl">
             Contact
           </h2>
         </div>
 
-        <div className="app-card rounded-2xl p-8">
+        <div className="glass-card rounded-2xl p-8 max-w-2xl mx-auto">
+          <div className="text-center mb-8">
+             <h3 className="text-2xl font-bold text-white mb-2">Let&apos;s create something cool.</h3>
+             <p className="text-(--text-muted)">I&apos;m currently open for new opportunities. Whether you have a question or just want to say hi, my inbox is always open.</p>
+          </div>
+
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700 dark:text-gray-200">
+              <label className="text-sm font-medium text-(--text-muted)">
                 Name
               </label>
-              <div className="focus-gradient-border rounded-xl">
+              <div className="rounded-xl">
                 <input
                   type="text"
                   name="name"
                   required
-                  className="w-full rounded-xl border border-gray-200 bg-transparent px-4 py-3 text-gray-900 outline-none transition dark:border-gray-700 dark:bg-gray-950 dark:text-gray-100"
+                  className="w-full rounded-xl border border-(--border-color) bg-transparent px-4 py-3 text-white outline-none transition focus:border-(--accent-cold)"
                   placeholder="Your name"
                 />
               </div>
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700 dark:text-gray-200">
+              <label className="text-sm font-medium text-(--text-muted)">
                 Email
               </label>
-              <div className="focus-gradient-border rounded-xl">
+              <div className="rounded-xl">
                 <input
                   type="email"
                   name="email"
                   required
-                  className="w-full rounded-xl border border-gray-200 bg-transparent px-4 py-3 text-gray-900 outline-none transition dark:border-gray-700 dark:bg-gray-950 dark:text-gray-100"
+                  className="w-full rounded-xl border border-(--border-color) bg-transparent px-4 py-3 text-white outline-none transition focus:border-(--accent-cold)"
                   placeholder="name@company.com"
                 />
               </div>
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700 dark:text-gray-200">
+              <label className="text-sm font-medium text-(--text-muted)">
                 Project Details
               </label>
-              <div className="focus-gradient-border rounded-xl">
+              <div className="rounded-xl">
                 <textarea
                   name="message"
                   required
                   rows={4}
-                  className="w-full rounded-xl border border-gray-200 bg-transparent px-4 py-3 text-gray-900 outline-none transition dark:border-gray-700 dark:bg-gray-950 dark:text-gray-100"
+                  className="w-full rounded-xl border border-(--border-color) bg-transparent px-4 py-3 text-white outline-none transition focus:border-(--accent-cold)"
                   placeholder="What are you working on? Where could I help?"
                 />
               </div>
             </div>
             <button
               type="submit"
-              className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 py-3 text-lg font-semibold text-white shadow-xl transition hover:-translate-y-0.5 hover:from-blue-700 hover:to-cyan-700"
+              disabled={isSubmitting}
+              className="w-full btn-warm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Send message
+              {isSubmitting ? "Sending..." : "Send message"}
             </button>
             {submitted && (
-              <p className="text-center text-sm font-medium text-emerald-600 dark:text-emerald-400">
+              <p className="text-center text-sm font-medium text-(--accent-cold)">
                 Thanks for reaching out! I&apos;ll reply soon.
               </p>
             )}

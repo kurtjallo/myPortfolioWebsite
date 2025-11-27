@@ -14,7 +14,7 @@ export function About() {
   return (
     <section
       id="about"
-      className="bg-gradient-to-br from-white via-slate-50 to-gray-100 py-32 dark:from-gray-950 dark:via-gray-950/90 dark:to-gray-900"
+      className="py-32"
     >
       <div className="mx-auto max-w-4xl px-6">
         <motion.div
@@ -22,12 +22,13 @@ export function About() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
+          className="glass-card"
         >
-          <h2 className="text-5xl font-bold text-gray-900 dark:text-white md:text-6xl mb-12">
-            About
+          <h2 className="text-5xl font-bold text-white md:text-6xl mb-12 flex items-center gap-4">
+            <span className="text-(--accent-warm)">☕</span> About Me
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div className="space-y-4 text-lg text-gray-700 dark:text-gray-200 leading-relaxed">
+          <div className="grid grid-cols-1 gap-12">
+            <div className="space-y-4 text-lg text-(--text-muted) leading-relaxed">
               <p>
                 Hi, I&apos;m Kurt. I&apos;m a student and an aspiring developer. I am
                 currently pursuing a degree in Computer Science at York
@@ -44,29 +45,18 @@ export function About() {
                 usually wrap up the day with a workout before crashing with a good
                 movie or TV series.
               </p>
-              <div className="flex flex-wrap gap-3 pt-4">
+              
+              <h3 className="text-xl font-semibold text-white mt-8 mb-4">Interests</h3>
+              <div className="flex flex-wrap gap-3">
                 {interestTags.map((tag) => (
                   <motion.span
                     key={tag}
-                    className={`bg-white/5 rounded-full px-3 py-1 text-sm font-medium cursor-pointer ${
-                      hobbyColors[tag] || "hover:bg-white/10"
-                    }`}
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ type: "spring", stiffness: 300 }}
+                    whileHover={{ scale: 1.05 }}
+                    className="project-tag-winter cursor-default"
                   >
                     {tag}
                   </motion.span>
                 ))}
-              </div>
-            </div>
-            <div className="flex items-center justify-center">
-              <div className="w-full max-w-sm p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl">
-                <div className="aspect-video rounded-lg bg-gray-800/50 flex items-center justify-center">
-                  <div className="text-center">
-                    <MapPin className="w-12 h-12 mx-auto text-white/20" />
-                    <p className="text-white/40 mt-2">Toronto</p>
-                  </div>
-                </div>
               </div>
             </div>
           </div>

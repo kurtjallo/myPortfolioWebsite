@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Outfit, Inter } from "next/font/google";
 import "./globals.css";
+import SnowCanvas from "@/components/SnowCanvas";
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  variable: "--font-outfit",
+  display: "swap",
+});
 
 const inter = Inter({
   subsets: ["latin"],
@@ -22,19 +29,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className="dark">
       <body
-        className={`${inter.variable} font-sans antialiased bg-neutral-950 text-white`}
+        className={`${outfit.className} ${inter.variable} antialiased text-white`}
       >
-        <div className="noise-bg fixed inset-0 w-full h-full pointer-events-none" />
-        <div className="fixed inset-0 w-full h-full overflow-hidden pointer-events-none">
-          <div
-            className="absolute top-[-20%] left-[-20%] w-[600px] h-[600px] bg-blue-500/30 rounded-full filter blur-3xl animate-pulse"
-            style={{ animationDelay: "0s" }}
-          />
-          <div
-            className="absolute bottom-[-20%] right-[-20%] w-[600px] h-[600px] bg-purple-500/30 rounded-full filter blur-3xl animate-pulse"
-            style={{ animationDelay: "2s" }}
-          />
-        </div>
+        <SnowCanvas />
         <main className="relative z-10">{children}</main>
       </body>
     </html>

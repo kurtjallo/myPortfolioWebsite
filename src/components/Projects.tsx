@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import { ExternalLink, Github } from "lucide-react";
 import { projects } from "@/data/content";
-import { MouseEvent } from "react";
 import type { SimpleIcon } from "simple-icons";
 import {
   siReact,
@@ -20,134 +19,88 @@ const techIconMap: Record<string, SimpleIcon | undefined> = {
 };
 
 export function Projects() {
-  const featured = projects[0];
-  if (!featured) return null;
-
-  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
-    e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
-  };
-
   return (
     <section
       id="projects"
-      className="relative overflow-hidden bg-gradient-to-b from-gray-50 via-white to-slate-100 py-32 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950"
+      className="relative overflow-hidden py-32"
     >
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-10 top-10 h-40 w-40 rounded-full bg-blue-200/40 blur-3xl dark:bg-blue-900/40" />
-        <div className="absolute right-10 bottom-10 h-52 w-52 rounded-full bg-pink-200/40 blur-3xl dark:bg-pink-900/30" />
-      </div>
       <div className="relative mx-auto max-w-5xl px-6">
         <div className="mb-12 space-y-4 text-center">
-          <h2 className="text-5xl font-bold text-gray-900 dark:text-white md:text-6xl">
-            Projects
+          <h2 className="text-5xl font-bold text-white md:text-6xl">
+            Featured Projects
           </h2>
         </div>
 
-        <motion.article
-          onMouseMove={handleMouseMove}
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          className="app-card spotlight-border relative overflow-hidden rounded-3xl px-8 py-12"
-        >
-          <div
-            className={`absolute -top-32 right-0 h-72 w-72 rounded-full bg-gradient-to-br ${featured.accent} opacity-40 blur-3xl`}
-          />
-          <div className="relative space-y-10">
-            <div className="space-y-6">
-              <span className="app-chip inline-flex items-center gap-2 rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-[0.25em]">
-                Featured build
-              </span>
-              <div className="space-y-4">
-                <h3 className="text-4xl font-bold text-gray-900 dark:text-white">
-                  {featured.title}
-                </h3>
-                <p className="text-lg text-gray-600 dark:text-gray-300">
-                  {featured.description}
-                </p>
-                <div className="flex flex-wrap gap-3">
-                  {featured.techStack.map((item) => {
-                    const Icon = techIconMap[item];
-                    return (
-                      <span
-                        key={item}
-                        className="flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-500/10 px-4 py-1.5 text-sm font-medium text-emerald-600 transition-colors hover:bg-emerald-500/20 dark:text-emerald-400"
-                      >
-                        {Icon && (
-                          <svg
-                            role="img"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-4 w-4"
-                            fill="currentColor"
+        <div className="grid grid-cols-1 gap-8">
+          {projects.map((project, index) => (
+            <motion.article
+              key={project.title}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: index * 0.1, ease: "easeOut" }}
+              className="glass-card relative overflow-hidden rounded-3xl px-8 py-12"
+            >
+              <div className="relative space-y-10">
+                <div className="space-y-6">
+                  <div className="mb-4 text-(--accent-warm) text-2xl">
+                    <i className="fas fa-laptop-code"></i>
+                  </div>
+                  <div className="space-y-4">
+                    <h3 className="text-4xl font-bold text-white">
+                      {project.title}
+                    </h3>
+                    <p className="text-lg text-(--text-muted)">
+                      {project.description}
+                    </p>
+                    <div className="flex flex-wrap gap-3">
+                      {project.techStack.map((item) => {
+                        const Icon = techIconMap[item];
+                        return (
+                          <span
+                            key={item}
+                            className="project-tag-winter"
                           >
-                            <path d={Icon.path} />
-                          </svg>
-                        )}
-                        {item}
-                      </span>
-                    );
-                  })}
+                            {Icon && (
+                              <svg
+                                role="img"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-4 w-4"
+                                fill="currentColor"
+                              >
+                                <path d={Icon.path} />
+                              </svg>
+                            )}
+                            {item}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-4">
+                    <a
+                      href={project.demo}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-(--accent-cold) font-bold hover:text-white transition-colors flex items-center gap-2"
+                    >
+                      View Project <ExternalLink className="h-4 w-4" />
+                    </a>
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-(--text-muted) hover:text-white transition-colors flex items-center gap-2"
+                    >
+                      Source Code <Github className="h-4 w-4" />
+                    </a>
+                  </div>
                 </div>
               </div>
-              <div className="flex flex-wrap gap-4">
-                <a
-                  href={featured.demo}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 px-6 py-3 text-base font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl dark:from-emerald-400 dark:to-cyan-400 dark:text-gray-900"
-                >
-                  <ExternalLink className="h-5 w-5" />
-                  View live
-                </a>
-                <a
-                  href={featured.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center gap-3 rounded-2xl border border-gray-200/70 px-6 py-3 text-base font-semibold text-gray-800 transition hover:-translate-y-0.5 hover:bg-white dark:border-gray-700 dark:bg-gray-900/50 dark:text-gray-100 dark:hover:bg-gray-900/80"
-                >
-                  <Github className="h-5 w-5" />
-                  Source
-                </a>
-              </div>
-            </div>
-
-            <div className="space-y-8">
-              <section className="rounded-3xl border border-gray-100/60 bg-white/80 p-6 shadow-[0_20px_60px_rgba(15,23,42,0.12)] backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/60">
-                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-4">
-                  Key Features
-                </h4>
-                <div className="grid grid-cols-3 gap-4">
-                  {/* Replace with actual screenshots */}
-                  <div className="aspect-video rounded-lg bg-gray-200 dark:bg-gray-700" />
-                  <div className="aspect-video rounded-lg bg-gray-200 dark:bg-gray-700" />
-                  <div className="aspect-video rounded-lg bg-gray-200 dark:bg-gray-700" />
-                </div>
-              </section>
-
-              <section className="rounded-3xl border border-gray-100/60 bg-white/80 p-6 shadow-[0_20px_60px_rgba(15,23,42,0.12)] backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/60">
-                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-4">
-                  What I learned
-                </h4>
-                <ul className="mt-4 space-y-3 text-base leading-relaxed text-gray-700 dark:text-gray-200">
-                  {featured.learnings.map((item) => (
-                    <li key={item} className="flex items-start gap-3">
-                      <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 text-xs font-semibold text-blue-600 dark:bg-blue-500/20 dark:text-blue-300">
-                        ✓
-                      </span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            </div>
-          </div>
-        </motion.article>
+            </motion.article>
+          ))}
+        </div>
       </div>
     </section>
   );
