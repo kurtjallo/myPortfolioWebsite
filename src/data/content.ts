@@ -82,7 +82,7 @@ export const projects: ProjectCard[] = [
     description:
       "TenantShield is an AI-powered housing-rights platform that helps tenants identify unsafe living conditions and understand their legal rights. Many renters face issues like mold, leaks, pests, and unsafe wiring, but don’t know what landlords are responsible for fixing. The platform solves this by using Google Gemini Vision to scan images for hazards and generates clear, location-based rights and next steps.",
     tags: ["Hackathon Winner", "AI", "Full Stack"],
-    github: "https://github.com/kurtjallo",
+    github: "https://github.com/kurtjallo/TenantShield",
     demo: "#",
     accent: "from-blue-500 to-indigo-600",
     iconText: "TS",
@@ -125,7 +125,7 @@ export const projects: ProjectCard[] = [
     description:
       "Cooksy is a smart food management and recipe generation app designed to help users reduce food waste and make cooking easier. Many people struggle with keeping track of what they have at home and end up wasting food because they don’t know what to cook. Cooksy solves this by letting users add ingredients manually or upload a photo to detect ingredients automatically, then generating personalized recipes based on what they already have.",
     tags: ["AI", "Full Stack"],
-    github: "https://github.com/kurtjallo",
+    github: "https://github.com/kurtjallo/Cooksy",
     demo: "#",
     accent: "from-orange-500 to-red-500",
     iconText: "CK",
