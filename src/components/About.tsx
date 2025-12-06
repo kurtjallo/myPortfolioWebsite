@@ -38,9 +38,8 @@ export function About() {
                 working projects.
               </p>
               <p>
-                When I&apos;m not coding, I&apos;m either working out, playing sports, or
-                watching a move/shows and exploring around the city. Basketball
-                is my number one, but I keep up with football, baseball, and
+                When I&apos;m not coding, I&apos;m either working out, playing basketball, or
+                watching a move/shows and exploring around the city. I also keep up with football, baseball, and
                 hockey as well. Staying active helps me clear my head, so I
                 usually wrap up the day with a workout before crashing with a good
                 movie or TV series.
