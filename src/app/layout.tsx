@@ -1,24 +1,50 @@
 import type { Metadata } from "next";
-import { Outfit, Inter } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import SnowCanvas from "@/components/SnowCanvas";
 
-const outfit = Outfit({
+const geist = Geist({
   subsets: ["latin"],
-  variable: "--font-outfit",
+  variable: "--font-geist",
   display: "swap",
 });
 
-const inter = Inter({
+const geistMono = Geist_Mono({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-geist-mono",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Kurt - Product Engineer",
+  title: "Kurt Jallorina - Software Developer",
   description:
-    "Product-focused software engineer crafting high-polish web experiences with design systems, motion, and thoughtful storytelling.",
+    "Software Developer passionate about building full-stack applications that solve real problems. Experience with React, Python, AWS, and cloud technologies.",
+  keywords: [
+    "Software Developer",
+    "Full Stack Developer",
+    "React",
+    "TypeScript",
+    "Python",
+    "AWS",
+    "Toronto",
+  ],
+  authors: [{ name: "Kurt Jallorina" }],
+  openGraph: {
+    title: "Kurt Jallorina - Software Developer",
+    description:
+      "Software Developer passionate about building full-stack applications that solve real problems.",
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Kurt Jallorina - Software Developer",
+    description:
+      "Software Developer passionate about building full-stack applications that solve real problems.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
@@ -27,13 +53,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className="dark">
-      <body
-        className={`${outfit.className} ${inter.variable} antialiased text-white`}
-      >
-        <SnowCanvas />
-        <main className="relative z-10">{children}</main>
-      </body>
+    <html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
+      <body className="font-sans antialiased">{children}</body>
     </html>
   );
 }

@@ -1,243 +1,190 @@
-import type { LucideIcon } from "lucide-react";
-import {
-  Code2,
-  Layers,
-  Linkedin,
-  Mail,
-  Rocket,
-  Sparkles,
-  Github,
-} from "lucide-react";
-
-export type SocialLink = {
-  label: string;
-  href: string;
-  icon: LucideIcon;
-  gradient: string;
-};
-
-export type ProjectCard = {
-  slug: string;
+export type Experience = {
   title: string;
-  description: string;
-  tags: string[];
-  github: string;
-  demo: string;
-  accent: string;
-  iconText: string;
+  company: string;
+  period: string;
+  location?: string;
+  description?: string;
+  bullets?: string[];
   logo?: string;
-  techStack: string[];
-  features: string[];
-  learnings: string[];
-  role?: string[];
-  outcome?: string[];
 };
 
-export type SkillCategory = {
+export type Education = {
+  degree: string;
+  school: string;
+  period: string;
+  description?: string;
+};
+
+export type Project = {
   title: string;
-  icon: LucideIcon;
-  gradient: string;
-  accent: string;
-  watermark?: string;
-  items: string[];
+  event?: string;
+  period: string;
+  description: string;
+  bullets: string[];
+  techStack: string[];
+  github: string;
+  demo?: string;
+  award?: string;
 };
 
-export const socialLinks: SocialLink[] = [
+export type Certification = {
+  title: string;
+  issuer: string;
+  year: string;
+  link?: string;
+  description?: string;
+};
+
+export const profile = {
+  name: "Kurt Jallorina",
+  title: "Software Engineer",
+  location: "Toronto, Ontario",
+  email: "kurtjallorina4@gmail.com",
+  phone: "647-222-9838",
+  linkedin: "linkedin.com/in/kurtjallorina",
+  github: "github.com/kurtjallo",
+  website: "kurtjallorina.me",
+  avatar: "/avatar.jpg",
+};
+
+export const about = `I'm a Software Developer and Founding Engineer at HAVN, passionate about building full-stack applications that solve real problems. With experience in React, Python, and cloud technologies, I create intuitive user experiences backed by robust, scalable systems. I also love hackathons and attend them for fun! I love the adrenaline, thrive in fast-paced environments, and love turning ideas into production-ready software. Outside of coding, I play basketball and stay active.`;
+
+export const experiences: Experience[] = [
   {
-    label: "GitHub",
-    href: "https://github.com/kurtjallo",
-    icon: Github,
-    gradient: "from-gray-900 to-gray-600",
+    title: "Founding Engineer",
+    company: "HAVN Inc.",
+    period: "Dec 2025 - Present",
+    location: "Toronto, Ontario",
+    logo: "/logos/havn.png",
+    description: "Architected and deployed full-stack social platform using React Native, Python/FastAPI, and PostgreSQL.",
+    bullets: [
+      "Designed and implemented 15+ RESTful APIs with JWT authentication, input validation, and comprehensive error handling",
+      "Deployed production infrastructure on AWS (EC2, S3, RDS), achieving 99.9% uptime and sub-200ms response times",
+      "Implemented CI/CD pipelines using GitHub Actions for automated testing, building, and deployment workflows",
+      "Optimized database queries and implemented Redis caching, reducing API latency by 60%",
+      "Led technical decisions as founding engineer, establishing coding standards and development practices",
+      "Integrated OpenAI APIs for intelligent features, implementing LLM-powered workflows and automation",
+    ],
   },
   {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/in/kurt-jallorina-4035b92b3/",
-    icon: Linkedin,
-    gradient: "from-sky-500 to-indigo-500",
+    title: "Technical Associate (Executive)",
+    company: "AWS Cloud Club at YU",
+    period: "Dec 2025 - Present",
+    location: "Toronto, Ontario",
+    logo: "/logos/aws-cloud-club.jpeg",
+    description: "Lead hands-on workshops and technical sessions to teach club members AWS services and cloud best practices.",
+    bullets: [
+      "Develop and guide collaborative projects that give students practical experience with cloud technologies",
+      "Mentor students on AWS certifications and career development in cloud computing",
+    ],
   },
   {
-    label: "Email",
-    href: "mailto:kurtjallorina4@gmail.com",
-    icon: Mail,
-    gradient: "from-purple-500 to-pink-500",
+    title: "ITAD Production Associate",
+    company: "Quantum Lifecycle Partners",
+    period: "May 2024 - Present",
+    location: "Brampton, Ontario",
+    logo: "/logos/quantum.jpeg",
+    description: "Applied analytical and problem-solving skills in fast-paced environment with cross-functional teams.",
+    bullets: [
+      "Diagnose and repair laptops, desktops, and mobile devices, ensuring they meet performance standards",
+      "Demonstrated strong communication and collaboration abilities across technical and non-technical stakeholders",
+    ],
+  },
+  {
+    title: "Pro Shop Associate",
+    company: "Parkshore Golf Club",
+    period: "Mar 2024 - Nov 2024",
+    location: "Brampton, Ontario",
+    description: "Delivered high-quality customer service in a fast-paced, team-oriented environment.",
+    bullets: [
+      "Handled check-ins, bookings, and payments while maintaining a welcoming and professional atmosphere",
+    ],
   },
 ];
 
-export const aboutHighlights: never[] = [];
-
-export const interestTags = [
-  "Basketball",
-  "Sunday Night Football",
-  "Hockey",
-  "Baseball",
-  "Coding",
-  "Chess",
-  "Working out",
+export const education: Education[] = [
+  {
+    degree: "Honours BA in Computer Science",
+    school: "York University",
+    period: "Sep 2024 - Apr 2028",
+    description: "Coursework: Data Structures, Algorithms, Databases, Software Engineering. Active member of AWS Cloud Club York U as Technical Associate (Executive).",
+  },
 ];
 
-export const projects: ProjectCard[] = [
+export const projects: Project[] = [
   {
-    slug: "tenant-shield",
-    title: "TenantShield – Hackathon Winner (CSHub Hacks 2025)",
-    description:
-      "TenantShield is an AI-powered housing-rights platform that helps tenants identify unsafe living conditions and understand their legal rights. Many renters face issues like mold, leaks, pests, and unsafe wiring, but don’t know what landlords are responsible for fixing. The platform solves this by using Google Gemini Vision to scan images for hazards and generates clear, location-based rights and next steps.",
-    tags: ["Hackathon Winner", "AI", "Full Stack"],
+    title: "TenantShield",
+    event: "CSHub Hacks 2025",
+    period: "Jan 2025",
+    award: "1st Place Winner & Best Use of Gemini AI",
+    description: "AI-powered tenant rights assistant that helps renters identify housing violations and take action.",
+    bullets: [
+      "Led team to 1st place out of 20+ teams, winning $400 prize and Best Use of Gemini AI award",
+      "Built full-stack application with React frontend and Node.js/Express backend in 12 hours",
+      "Integrated Google Gemini API for multimodal AI analysis, achieving 85% accuracy on classification tasks",
+      "Designed intuitive UX for complex legal information, prioritizing user empathy and accessibility",
+    ],
+    techStack: ["React", "Node.js", "Express", "Google Gemini API", "Tailwind CSS", "Vercel"],
     github: "https://github.com/kurtjallo/TenantShield",
-    demo: "#",
-    accent: "from-blue-500 to-indigo-600",
-    iconText: "TS",
-    logo: "",
-    techStack: [
-      "React",
-      "Node.js",
-      "Vercel",
-      "Gemini Vision",
-      "Google Maps",
-      "TailwindCSS",
-    ],
-    features: [
-      "AI image analysis to detect mold, leaks, pests, and fire hazards",
-      "Real-time legal rights explanation tailored to the user’s location",
-      "Integration with Google Maps + Places to find nearby legal clinics",
-      "Clean, modern UI built with React + TailwindCSS",
-      "Serverless backend deployed on Vercel",
-      "Fully built in under 24 hours during CSHub Hacks 2025",
-    ],
-    role: [
-      "Full-stack development (frontend, backend, deployment)",
-      "Implemented Gemini Vision image scanning",
-      "Integrated Google Maps + Places geolocation logic",
-      "Designed UI/UX using TailwindCSS + Figma",
-      "Configured serverless API routes and environment keys on Vercel",
-      "Collaborated closely with team, managing Git branching and rapid development",
-    ],
-    outcome: [
-      "Won 1st Place at CSHub Hacks 2025",
-      "Recognized for innovation, clarity, real-world usefulness, and technical execution.",
-    ],
-    learnings: [
-      "Building a fully functional AI-powered app in under 24 hours taught me the importance of rapid decision-making and prioritizing core features. I learned how to effectively integrate the Gemini Vision API for real-world problem solving and managed complex state across a serverless architecture.",
-    ],
+    demo: "https://tenant-shield-mocha.vercel.app",
   },
   {
-    slug: "cooksy",
-    title: "Cooksy – Smart Food Management & Recipe Generator",
-    description:
-      "Cooksy is a smart food management and recipe generation app designed to help users reduce food waste and make cooking easier. Many people struggle with keeping track of what they have at home and end up wasting food because they don’t know what to cook. Cooksy solves this by letting users add ingredients manually or upload a photo to detect ingredients automatically, then generating personalized recipes based on what they already have.",
-    tags: ["AI", "Full Stack"],
-    github: "https://github.com/kurtjallo/Cooksy",
-    demo: "#",
-    accent: "from-orange-500 to-red-500",
-    iconText: "CK",
-    logo: "",
-    techStack: [
-      "React",
-      "TailwindCSS",
-      "Motoko",
-      "AI Image Detection",
+    title: "Clarify",
+    event: "Hackville 2026",
+    period: "Jan 2026",
+    description: "Document-aware RAG application helping Canadians understand complex government and legal forms in plain language.",
+    bullets: [
+      "Built functional RAG system in under 24 hours with vector search using MongoDB Atlas",
+      "Implemented document upload, parsing, and semantic search for accurate, grounded responses",
+      "Designed accessibility-first UI reducing cognitive load for users navigating complex forms",
+      "Created highlight-to-explain feature for inline document clarification",
     ],
-    features: [
-      "Ingredient input through text or image upload",
-      "AI-powered ingredient detection from photos",
-      "Intelligent recipe generation based on available ingredients",
-      "Detailed cooking instructions, prep time, and difficulty ratings",
-      "Save favorite recipes and revisit past ingredient lists through the History tab",
-      "Useful food storage and safety tips to help reduce waste",
-      "Clean, centered demo-friendly UI built with React + TailwindCSS",
-    ],
-    role: [
-      "Implemented photo-based ingredient detection",
-      "Built the recipe generation logic and formatting",
-      "Designed and developed the full UI using React + TailwindCSS",
-      "Created the ingredient history and favorites system",
-      "Integrated with the Internet Computer backend using Motoko",
-      "Optimized the UX for smooth demos and fast iteration",
-    ],
-    outcome: [
-      "Delivered a polished, fully functional smart recipe assistant",
-      "Helped users reduce food waste by turning ingredients into actionable recipes",
-      "Learned how to connect React frontends with Internet Computer canisters and how to optimize AI-driven UX flows",
-    ],
-    learnings: [
-      "Learned how to connect React frontends with Internet Computer canisters and how to optimize AI-driven UX flows.",
-    ],
+    techStack: ["Next.js", "TypeScript", "MongoDB Atlas", "RAG", "Tailwind CSS", "Zustand"],
+    github: "https://github.com/kurtjallo/Clarify-Hackville-2026",
+    demo: "https://form-bridge-hackville-2026.vercel.app",
   },
   {
-    slug: "sober-you",
-    title: "SoberYou – A Sobriety & Habit Recovery Tracker",
-    description:
-      "SoberYou is a mobile app that helps people replace bad habits with mindful routines. It tracks sobriety down to the second, celebrates milestones, and surrounds the experience with a calming glassmorphism UI inspired by nature and renewal.",
-    tags: ["Full Stack"],
-    github: "https://github.com/kurtjallo/sober-you",
-    demo: "https://soberyou.app",
-    accent: "from-emerald-500 to-green-600",
-    iconText: "SY",
-    logo: "/soberyou-logo.svg",
-    techStack: [
-      "React Native",
-      "Expo",
-      "TypeScript",
-      "Zustand (planned)",
-      "SVG Charts",
+    title: "Savour",
+    event: "ConUHacks 2026",
+    period: "Jan 2026",
+    description: "Grocery price comparison web app for Canadian shoppers to compare prices across 5 major stores.",
+    bullets: [
+      "Built price comparison engine across No Frills, FreshCo, Walmart, Loblaws, and Metro",
+      "Implemented price history charts and smart basket optimization algorithms",
+      "Created AI recipe generator based on basket items to reduce food waste",
+      "Designed responsive UI with real-time savings calculations",
     ],
-    features: [
-      "Real-time sobriety streak tracker (days, hours, minutes, seconds)",
-      "Automatic relapse reset paired with mindful prompts",
-      "Motivational quotes, empathy nudges, and praise states",
-      "Achievement system spanning 1 day to lifetime milestones",
-      "Glass-style green gradient interface symbolizing calm and growth",
-      "Cross-device testing through Expo Go—no Xcode or Android Studio required",
-    ],
-    learnings: [
-      "Designed and implemented a modern mobile UI with real glass effects.",
-      "Structured a scalable Expo project teammates can navigate.",
-      "Managed TypeScript path aliases, dependency graphs, and shared components.",
-      "Used GitHub effectively for version control and async collaboration.",
-    ],
+    techStack: ["React", "TypeScript", "Python", "FastAPI", "MongoDB Atlas", "Tailwind CSS"],
+    github: "https://github.com/kurtjallo/savour-conuhacks-2026",
+    demo: "https://www.savourapp.tech",
   },
 ];
 
-export const skills: SkillCategory[] = [
+export const certifications: Certification[] = [
   {
-    title: "Languages",
-    icon: Code2,
-    gradient: "from-blue-500 to-cyan-500",
-    accent: "#38bdf8",
-    watermark: "TypeScript",
-    items: ["TypeScript", "JavaScript", "Python", "HTML/CSS"],
-  },
-  {
-    title: "Front-end",
-    icon: Sparkles,
-    gradient: "from-green-500 to-emerald-500",
-    accent: "#34d399",
-    watermark: "React / Next",
-    items: ["Next.js", "React", "Tailwind CSS", "Framer Motion"],
-  },
-  {
-    title: "Back-end",
-    icon: Rocket,
-    gradient: "from-orange-500 to-red-500",
-    accent: "#fb923c",
-    watermark: "API",
-    items: ["Node.js", "Express", "PostgreSQL", "Supabase"],
-  },
-  {
-    title: "Tools",
-    icon: Layers,
-    gradient: "from-purple-500 to-pink-500",
-    accent: "#a855f7",
-    watermark: "Ops",
-    items: ["Git & GitHub", "Docker", "Figma", "Vercel"],
+    title: "AWS Cloud Practitioner",
+    issuer: "Amazon Web Services",
+    year: "In Progress",
+    description: "Foundational understanding of AWS Cloud concepts, services, and terminology.",
   },
 ];
 
-export const hobbies = [
-  "Basketball",
-  "Sunday Night Football",
-  "Hockey",
-  "Baseball",
-  "Coding",
-  "Chess",
-  "Working out",
+export const skills = {
+  languages: ["Python", "JavaScript", "TypeScript", "Java", "SQL"],
+  frontend: ["React", "React Native", "Next.js", "Tailwind CSS"],
+  backend: ["Node.js", "Express.js", "FastAPI", "PostgreSQL", "MongoDB", "Redis"],
+  tools: ["AWS", "Docker", "Git", "GitHub Actions", "CI/CD", "Vercel"],
+  practices: ["Agile/Scrum", "Code Reviews", "Testing", "System Design"],
+};
+
+export const languages = [
+  { name: "English", level: "Native" },
+  { name: "Tagalog", level: "Conversational" },
 ];
+
+export const socialLinks = {
+  email: "kurtjallorina4@gmail.com",
+  linkedin: "https://www.linkedin.com/in/kurtjallorina",
+  github: "https://github.com/kurtjallo",
+  website: "https://kurtjallorina.me",
+};
