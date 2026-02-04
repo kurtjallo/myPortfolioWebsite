@@ -56,48 +56,27 @@ export const experiences: Experience[] = [
     period: "Dec 2025 - Present",
     location: "Toronto, Ontario",
     logo: "/logos/havn.png",
-    description: "Architected and deployed full-stack social platform using React Native, Python/FastAPI, and PostgreSQL.",
+    description: "Architected and deployed full-stack social platform using React Native, Python/FastAPI, and MongoDB.",
     bullets: [
-      "Designed and implemented 15+ RESTful APIs with JWT authentication, input validation, and comprehensive error handling",
-      "Deployed production infrastructure on AWS (EC2, S3, RDS), achieving 99.9% uptime and sub-200ms response times",
-      "Implemented CI/CD pipelines using GitHub Actions for automated testing, building, and deployment workflows",
-      "Optimized database queries and implemented Redis caching, reducing API latency by 60%",
-      "Led technical decisions as founding engineer, establishing coding standards and development practices",
-      "Integrated OpenAI APIs for intelligent features, implementing LLM-powered workflows and automation",
-    ],
-  },
-  {
-    title: "Technical Associate (Executive)",
-    company: "AWS Cloud Club at YU",
-    period: "Dec 2025 - Present",
-    location: "Toronto, Ontario",
-    logo: "/logos/aws-cloud-club.jpeg",
-    description: "Lead hands-on workshops and technical sessions to teach club members AWS services and cloud best practices.",
-    bullets: [
-      "Develop and guide collaborative projects that give students practical experience with cloud technologies",
-      "Mentor students on AWS certifications and career development in cloud computing",
+      "Containerized application with Docker and orchestrated with Kubernetes on AWS EKS",
+      "Configured AWS Load Balancer for traffic distribution achieving 99.9% uptime",
+      "Designed and implemented 15+ RESTful APIs with JWT authentication and error handling",
+      "Implemented CI/CD pipelines using GitHub Actions for automated testing and deployment",
+      "Optimized queries and implemented Redis caching, reducing API latency by 60%",
+      "Integrated OpenAI APIs for intelligent features, implementing LLM-powered workflows",
+      "Collaborated in Agile/Scrum environment with daily standups, sprint planning, and code reviews",
     ],
   },
   {
     title: "ITAD Production Associate",
-    company: "Quantum Lifecycle Partners",
+    company: "Quantum Lifecycle",
     period: "May 2024 - Present",
     location: "Brampton, Ontario",
     logo: "/logos/quantum.jpeg",
     description: "Applied analytical and problem-solving skills in fast-paced environment with cross-functional teams.",
     bullets: [
-      "Diagnose and repair laptops, desktops, and mobile devices, ensuring they meet performance standards",
+      "Applied analytical and problem-solving skills in fast-paced environment with cross-functional teams",
       "Demonstrated strong communication and collaboration abilities across technical and non-technical stakeholders",
-    ],
-  },
-  {
-    title: "Pro Shop Associate",
-    company: "Parkshore Golf Club",
-    period: "Mar 2024 - Nov 2024",
-    location: "Brampton, Ontario",
-    description: "Delivered high-quality customer service in a fast-paced, team-oriented environment.",
-    bullets: [
-      "Handled check-ins, bookings, and payments while maintaining a welcoming and professional atmosphere",
     ],
   },
 ];
@@ -107,7 +86,7 @@ export const education: Education[] = [
     degree: "Honours BA in Computer Science",
     school: "York University",
     period: "Sep 2024 - Apr 2028",
-    description: "Coursework: Data Structures, Algorithms, Databases, Software Engineering. Active member of AWS Cloud Club York U as Technical Associate (Executive).",
+    description: "AWS Cloud Club York U - Technical Associate (Executive), leading workshops teaching AWS services and cloud best practices. Coursework: Data Structures, Algorithms, Databases, Software Engineering.",
   },
 ];
 
@@ -121,8 +100,9 @@ export const projects: Project[] = [
     bullets: [
       "Led team to 1st place out of 20+ teams, winning $400 prize and Best Use of Gemini AI award",
       "Built full-stack application with React frontend and Node.js/Express backend in 12 hours",
-      "Integrated Google Gemini API for multimodal AI analysis, achieving 85% accuracy on classification tasks",
+      "Integrated Google Gemini API for multimodal AI analysis, achieving 85% accuracy on classification",
       "Designed intuitive UX for complex legal information, prioritizing user empathy and accessibility",
+      "Demonstrated leadership, time management, and ability to deliver production-ready software under pressure",
     ],
     techStack: ["React", "Node.js", "Express", "Google Gemini API", "Tailwind CSS", "Vercel"],
     github: "https://github.com/kurtjallo/TenantShield",
@@ -171,10 +151,11 @@ export const certifications: Certification[] = [
 
 export const skills = {
   languages: ["Python", "JavaScript", "TypeScript", "Java", "SQL"],
-  frontend: ["React", "React Native", "Next.js", "Tailwind CSS"],
-  backend: ["Node.js", "Express.js", "FastAPI", "PostgreSQL", "MongoDB", "Redis"],
-  tools: ["AWS", "Docker", "Git", "GitHub Actions", "CI/CD", "Vercel"],
-  practices: ["Agile/Scrum", "Code Reviews", "Testing", "System Design"],
+  frameworks: ["React", "React Native", "Node.js", "FastAPI", "Express.js"],
+  databases: ["MongoDB", "PostgreSQL", "Redis", "REST APIs"],
+  devops: ["AWS", "Docker", "Kubernetes", "CI/CD", "Git"],
+  tools: ["Locust", "Pytest", "Jest", "Postman", "Swagger", "Grafana", "Prometheus", "Sentry", "GitHub Actions"],
+  practices: ["Agile/Scrum", "Code Reviews", "TDD", "Load Testing", "System Design"],
 };
 
 export const languages = [

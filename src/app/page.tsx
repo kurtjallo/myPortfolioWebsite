@@ -232,12 +232,12 @@ function ProjectsSection() {
 }
 
 const skillCategories = [
-  { title: "Languages", skills: ["Python", "TypeScript", "JavaScript", "Java", "SQL"] },
-  { title: "Frontend", skills: ["React", "React Native", "Next.js", "Tailwind CSS", "Expo"] },
-  { title: "Backend & APIs", skills: ["FastAPI", "Node.js", "Express.js", "REST APIs"] },
-  { title: "Databases & Caching", skills: ["PostgreSQL", "MongoDB", "Redis"] },
-  { title: "Cloud & Infrastructure", skills: ["AWS", "EC2", "S3", "Vercel"] },
-  { title: "DevOps & Tools", skills: ["Docker", "Git", "GitHub", "GitHub Actions", "Postman"] },
+  { title: "Languages", skills: ["Python", "JavaScript", "TypeScript", "Java", "SQL"] },
+  { title: "Frameworks", skills: ["React", "React Native", "Node.js", "FastAPI", "Express.js"] },
+  { title: "Databases", skills: ["MongoDB", "PostgreSQL", "Redis", "REST APIs"] },
+  { title: "DevOps", skills: ["AWS", "Docker", "Kubernetes", "CI/CD", "Git"] },
+  { title: "Tools", skills: ["Locust", "Pytest", "Jest", "Postman", "Swagger", "Grafana", "Prometheus", "Sentry", "GitHub Actions"] },
+  { title: "Practices", skills: ["Agile/Scrum", "Code Reviews", "TDD", "Load Testing", "System Design"] },
 ];
 
 function SkillsSection() {
