@@ -68,6 +68,18 @@ export const experiences: Experience[] = [
     ],
   },
   {
+    title: "Technical Associate (Executive)",
+    company: "AWS Cloud Club at YU",
+    period: "Dec 2025 - Present",
+    location: "Toronto, Ontario",
+    logo: "/logos/aws-cloud-club.jpeg",
+    description: "Lead hands-on workshops and technical sessions to teach club members AWS services and cloud best practices.",
+    bullets: [
+      "Develop and guide collaborative projects that give students practical experience with cloud technologies",
+      "Mentor students on AWS certifications and career development in cloud computing",
+    ],
+  },
+  {
     title: "ITAD Production Associate",
     company: "Quantum Lifecycle",
     period: "May 2024 - Present",
