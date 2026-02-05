@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { MapPin, Clock, Github, ExternalLink, FileText } from "lucide-react";
+import { motion } from "framer-motion";
 import {
   profile,
   about,
@@ -13,6 +14,22 @@ import {
   languages,
   socialLinks,
 } from "@/data/content";
+
+// Animation variants
+const fadeInUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
 
 function Header() {
   const [time, setTime] = useState<string>("");
@@ -34,7 +51,12 @@ function Header() {
   }, []);
 
   return (
-    <header className="flex items-center justify-between py-6 text-sm text-neutral-500">
+    <motion.header
+      className="flex items-center justify-between py-6 text-sm text-neutral-500"
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <div className="flex items-center gap-2">
         <MapPin className="h-4 w-4" />
         <span className="uppercase tracking-wide">{profile.location}</span>
@@ -43,14 +65,24 @@ function Header() {
         <Clock className="h-4 w-4" />
         <span className="tabular-nums">{time}</span>
       </div>
-    </header>
+    </motion.header>
   );
 }
 
 function ProfileSection() {
   return (
-    <section className="flex flex-col items-center py-12 text-center">
-      <div className="relative mb-6 h-24 w-24 overflow-hidden rounded-2xl">
+    <motion.section
+      className="flex flex-col items-center py-12 text-center"
+      initial="hidden"
+      animate="visible"
+      variants={staggerContainer}
+    >
+      <motion.div
+        className="relative mb-6 h-32 w-32 overflow-hidden rounded-2xl shadow-lg ring-2 ring-neutral-100"
+        variants={fadeInUp}
+        whileHover={{ scale: 1.03 }}
+        transition={{ type: "spring", stiffness: 300 }}
+      >
         <Image
           src="/avatar.jpg"
           alt={profile.name}
@@ -58,19 +90,32 @@ function ProfileSection() {
           className="object-cover"
           priority
         />
-      </div>
-      <h1 className="text-3xl font-semibold text-neutral-900">{profile.name}</h1>
-      <p className="mt-1 text-lg text-neutral-500">{profile.title}</p>
-      <a
+      </motion.div>
+      <motion.h1
+        className="text-3xl font-semibold text-neutral-900"
+        variants={fadeInUp}
+      >
+        {profile.name}
+      </motion.h1>
+      <motion.p
+        className="mt-1 text-lg text-neutral-500"
+        variants={fadeInUp}
+      >
+        {profile.title}
+      </motion.p>
+      <motion.a
         href="/resume.pdf"
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-4 inline-flex items-center gap-2 rounded-full bg-neutral-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-neutral-700"
+        className="mt-4 inline-flex items-center gap-2 rounded-full bg-neutral-900 px-4 py-2 text-sm font-medium text-white shadow-md transition-all hover:bg-neutral-800 hover:shadow-lg"
+        variants={fadeInUp}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
       >
         <FileText className="h-4 w-4" />
         View Resume
-      </a>
-    </section>
+      </motion.a>
+    </motion.section>
   );
 }
 
@@ -83,27 +128,51 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 }
 
 function Divider() {
-  return <hr className="my-10 border-neutral-200" />;
+  return (
+    <motion.hr
+      className="my-10 border-neutral-200"
+      initial={{ scaleX: 0 }}
+      whileInView={{ scaleX: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    />
+  );
 }
 
 function AboutSection() {
   return (
-    <section>
+    <motion.section
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-100px" }}
+      variants={fadeInUp}
+      transition={{ duration: 0.5 }}
+    >
       <SectionTitle>About</SectionTitle>
       <p className="text-base leading-relaxed text-neutral-600">{about}</p>
-    </section>
+    </motion.section>
   );
 }
 
 function ExperienceSection() {
   return (
-    <section>
+    <motion.section
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-100px" }}
+      variants={staggerContainer}
+    >
       <SectionTitle>Experience</SectionTitle>
       <div className="space-y-8">
         {experiences.map((exp, index) => (
-          <div key={index} className="flex gap-4">
+          <motion.div
+            key={index}
+            className="flex gap-4 rounded-xl p-4 -mx-4 transition-colors hover:bg-neutral-50"
+            variants={fadeInUp}
+            transition={{ duration: 0.4, delay: index * 0.1 }}
+          >
             {exp.logo ? (
-              <div className="relative h-10 w-10 flex-shrink-0 overflow-hidden rounded-lg">
+              <div className="relative h-10 w-10 flex-shrink-0 overflow-hidden rounded-lg shadow-sm">
                 <Image
                   src={exp.logo}
                   alt={exp.company}
@@ -112,7 +181,7 @@ function ExperienceSection() {
                 />
               </div>
             ) : (
-              <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-neutral-100 text-xs font-semibold text-neutral-600">
+              <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-neutral-100 text-xs font-semibold text-neutral-600 shadow-sm">
                 {exp.company.split(" ")[0].substring(0, 2).toUpperCase()}
               </div>
             )}
@@ -135,16 +204,22 @@ function ExperienceSection() {
                 </ul>
               )}
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
-    </section>
+    </motion.section>
   );
 }
 
 function EducationSection() {
   return (
-    <section>
+    <motion.section
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-100px" }}
+      variants={fadeInUp}
+      transition={{ duration: 0.5 }}
+    >
       <SectionTitle>Education</SectionTitle>
       <div className="space-y-6">
         {education.map((edu, index) => (
@@ -159,23 +234,33 @@ function EducationSection() {
           </div>
         ))}
       </div>
-    </section>
+    </motion.section>
   );
 }
 
 function ProjectsSection() {
   return (
-    <section>
+    <motion.section
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-100px" }}
+      variants={staggerContainer}
+    >
       <SectionTitle>Projects</SectionTitle>
-      <div className="space-y-8">
+      <div className="space-y-6">
         {projects.map((project, index) => (
-          <div key={index} className="group">
+          <motion.div
+            key={index}
+            className="group rounded-xl border border-transparent p-4 -mx-4 transition-all duration-300 hover:border-neutral-200 hover:bg-neutral-50/50 hover:shadow-sm"
+            variants={fadeInUp}
+            transition={{ duration: 0.4, delay: index * 0.1 }}
+          >
             <div className="flex items-start justify-between">
               <div>
                 <h3 className="font-semibold text-neutral-900">
                   {project.title}
                   {project.award && (
-                    <span className="ml-2 inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-800">
+                    <span className="ml-2 inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-800 shadow-sm">
                       {project.award.split("&")[0].trim()}
                     </span>
                   )}
@@ -184,12 +269,12 @@ function ProjectsSection() {
                   {project.event} · {project.period}
                 </p>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-1">
                 <a
                   href={project.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-lg p-2 text-neutral-400 transition-colors hover:bg-neutral-100 hover:text-neutral-900"
+                  className="rounded-lg p-2 text-neutral-400 transition-all hover:bg-neutral-200 hover:text-neutral-900 hover:scale-110"
                 >
                   <Github className="h-4 w-4" />
                 </a>
@@ -198,7 +283,7 @@ function ProjectsSection() {
                     href={project.demo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="rounded-lg p-2 text-neutral-400 transition-colors hover:bg-neutral-100 hover:text-neutral-900"
+                    className="rounded-lg p-2 text-neutral-400 transition-all hover:bg-neutral-200 hover:text-neutral-900 hover:scale-110"
                   >
                     <ExternalLink className="h-4 w-4" />
                   </a>
@@ -218,16 +303,16 @@ function ProjectsSection() {
               {project.techStack.map((tech, i) => (
                 <span
                   key={i}
-                  className="rounded-md border border-neutral-200 px-2 py-1 text-xs text-neutral-600"
+                  className="rounded-md border border-neutral-200 bg-white px-2 py-1 text-xs text-neutral-600 transition-colors group-hover:border-neutral-300"
                 >
                   {tech}
                 </span>
               ))}
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
-    </section>
+    </motion.section>
   );
 }
 
@@ -242,32 +327,47 @@ const skillCategories = [
 
 function SkillsSection() {
   return (
-    <section>
+    <motion.section
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-100px" }}
+      variants={staggerContainer}
+    >
       <SectionTitle>Tech Stack</SectionTitle>
       <div className="space-y-5">
         {skillCategories.map((category, index) => (
-          <div key={index}>
+          <motion.div
+            key={index}
+            variants={fadeInUp}
+            transition={{ duration: 0.4, delay: index * 0.05 }}
+          >
             <h3 className="mb-2 text-sm font-medium text-neutral-500">{category.title}</h3>
             <div className="flex flex-wrap gap-2">
               {category.skills.map((skill, i) => (
                 <span
                   key={i}
-                  className="cursor-default rounded-md border border-neutral-200 px-3 py-1.5 text-sm text-neutral-700 transition-all duration-200 hover:-translate-y-0.5 hover:border-neutral-400 hover:shadow-md"
+                  className="cursor-default rounded-md border border-neutral-200 bg-white px-3 py-1.5 text-sm text-neutral-700 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-neutral-300 hover:shadow-md"
                 >
                   {skill}
                 </span>
               ))}
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
-    </section>
+    </motion.section>
   );
 }
 
 function LanguagesSection() {
   return (
-    <section>
+    <motion.section
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-100px" }}
+      variants={fadeInUp}
+      transition={{ duration: 0.5 }}
+    >
       <SectionTitle>Languages</SectionTitle>
       <div className="space-y-3">
         {languages.map((lang, index) => (
@@ -277,56 +377,73 @@ function LanguagesSection() {
           </div>
         ))}
       </div>
-    </section>
+    </motion.section>
   );
 }
 
 function ContactSection() {
   return (
-    <section>
+    <motion.section
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-100px" }}
+      variants={staggerContainer}
+    >
       <SectionTitle>Contact</SectionTitle>
-      <div className="space-y-3">
-        <a
+      <div className="space-y-2">
+        <motion.a
           href={`mailto:${socialLinks.email}`}
-          className="flex items-center justify-between text-neutral-900 transition-colors hover:text-neutral-600"
+          className="flex items-center justify-between rounded-lg p-3 -mx-3 text-neutral-900 transition-all hover:bg-neutral-50"
+          variants={fadeInUp}
+          whileHover={{ x: 4 }}
         >
           <span>Email</span>
           <span className="text-neutral-500">{socialLinks.email}</span>
-        </a>
-        <a
+        </motion.a>
+        <motion.a
           href={socialLinks.linkedin}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-between text-neutral-900 transition-colors hover:text-neutral-600"
+          className="flex items-center justify-between rounded-lg p-3 -mx-3 text-neutral-900 transition-all hover:bg-neutral-50"
+          variants={fadeInUp}
+          whileHover={{ x: 4 }}
         >
           <span>LinkedIn</span>
           <span className="text-neutral-500">/in/kurtjallorina</span>
-        </a>
-        <a
+        </motion.a>
+        <motion.a
           href={socialLinks.github}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-between text-neutral-900 transition-colors hover:text-neutral-600"
+          className="flex items-center justify-between rounded-lg p-3 -mx-3 text-neutral-900 transition-all hover:bg-neutral-50"
+          variants={fadeInUp}
+          whileHover={{ x: 4 }}
         >
           <span>GitHub</span>
           <span className="text-neutral-500">@kurtjallo</span>
-        </a>
+        </motion.a>
       </div>
-    </section>
+    </motion.section>
   );
 }
 
 function Footer() {
   return (
-    <footer className="py-12 text-center text-sm text-neutral-400">
+    <motion.footer
+      className="py-12 text-center text-sm text-neutral-400"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+    >
       <p>© {new Date().getFullYear()} Kurt Jallorina. All rights reserved.</p>
-    </footer>
+    </motion.footer>
   );
 }
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen">
       <div className="mx-auto max-w-2xl px-6">
         <Header />
         <ProfileSection />

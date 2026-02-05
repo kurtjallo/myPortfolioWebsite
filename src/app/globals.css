@@ -12,9 +12,20 @@ html {
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(180deg, #ffffff 0%, #fafafa 50%, #f5f5f5 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
 }
 
 ::selection {
   background: #171717;
   color: #fafafa;
+}
+
+/* Focus visible styles for accessibility */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+  border-radius: 4px;
 }
