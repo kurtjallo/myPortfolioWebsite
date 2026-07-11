@@ -19,13 +19,10 @@
   </head>
   <body>
     <script>
-      // Apply the saved/default theme before first paint to avoid a flash of light.
+      // Default is light; apply dark before first paint only if the user chose it.
       try {
-        var t = localStorage.getItem('theme') || 'dark';
-        if (t === 'dark') document.documentElement.classList.add('dark');
-      } catch (e) {
-        document.documentElement.classList.add('dark');
-      }
+        if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
+      } catch (e) {}
     </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>

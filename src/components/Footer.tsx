@@ -1,12 +1,11 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Mail, Github, Linkedin, Calendar, FileText, ArrowUpRight } from "lucide-react";
+import { Mail, Github, Linkedin, Calendar, ArrowUpRight } from "lucide-react";
 import { EASE } from "@/lib/motion";
 import cloudsImg from "@assets/generated_images/storm_sky.jpg";
 
 const LINKS = [
   { icon: Mail, label: "Email", href: "mailto:kurtjallorina6@gmail.com" },
-  { icon: FileText, label: "Resume", href: "/resume.pdf" },
   { icon: Github, label: "GitHub", href: "https://github.com/kurtjallo" },
   { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/kurtjallorina/" },
   { icon: Calendar, label: "Events", href: "https://luma.com/user/kurtjallo" },
