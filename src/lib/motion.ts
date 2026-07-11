@@ -1,0 +1,2 @@
+// Shared easing curve used across scroll/entrance animations.
+export const EASE = [0.16, 1, 0.3, 1] as const;
