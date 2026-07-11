@@ -1,7 +1,16 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Mail, Github, Linkedin, Calendar, ArrowUpRight } from "lucide-react";
+import { Mail, Github, Linkedin, Calendar, FileText, ArrowUpRight } from "lucide-react";
+import { EASE } from "@/lib/motion";
 import cloudsImg from "@assets/generated_images/storm_sky.jpg";
+
+const LINKS = [
+  { icon: Mail, label: "Email", href: "mailto:kurtjallorina6@gmail.com" },
+  { icon: FileText, label: "Resume", href: "/resume.pdf" },
+  { icon: Github, label: "GitHub", href: "https://github.com/kurtjallo" },
+  { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/kurtjallorina/" },
+  { icon: Calendar, label: "Events", href: "https://luma.com/user/kurtjallo" },
+];
 
 export function Footer() {
   const containerRef = useRef<HTMLElement>(null);
@@ -40,7 +49,7 @@ export function Footer() {
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as const }}
+          transition={{ duration: 0.8, ease: EASE }}
           className="flex flex-col lg:flex-row justify-between items-start gap-16"
         >
           <div className="space-y-8 max-w-2xl">
@@ -55,44 +64,21 @@ export function Footer() {
 
           <div className="flex flex-col gap-8 w-full lg:w-auto">
             <div className="flex flex-col gap-1 rounded-sm border border-border bg-background/70 p-2 w-full lg:w-auto lg:min-w-[240px]">
-              <a
-                href="mailto:kurtjallorina6@gmail.com"
-                className="flex items-center gap-3 px-3 py-2.5 rounded-sm text-base font-mono text-foreground/85 hover:text-foreground hover:bg-secondary/60 transition-colors group"
-              >
-                <Mail className="w-5 h-5 shrink-0 text-primary" />
-                <span className="flex-1">Email</span>
-                <ArrowUpRight className="w-4 h-4 opacity-40 group-hover:opacity-100 transition-opacity" />
-              </a>
-              <a
-                href="https://github.com/kurtjallo"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 px-3 py-2.5 rounded-sm text-base font-mono text-foreground/85 hover:text-foreground hover:bg-secondary/60 transition-colors group"
-              >
-                <Github className="w-5 h-5 shrink-0 text-primary" />
-                <span className="flex-1">GitHub</span>
-                <ArrowUpRight className="w-4 h-4 opacity-40 group-hover:opacity-100 transition-opacity" />
-              </a>
-              <a
-                href="https://www.linkedin.com/in/kurtjallorina/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 px-3 py-2.5 rounded-sm text-base font-mono text-foreground/85 hover:text-foreground hover:bg-secondary/60 transition-colors group"
-              >
-                <Linkedin className="w-5 h-5 shrink-0 text-primary" />
-                <span className="flex-1">LinkedIn</span>
-                <ArrowUpRight className="w-4 h-4 opacity-40 group-hover:opacity-100 transition-opacity" />
-              </a>
-              <a
-                href="https://luma.com/user/kurtjallo"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 px-3 py-2.5 rounded-sm text-base font-mono text-foreground/85 hover:text-foreground hover:bg-secondary/60 transition-colors group"
-              >
-                <Calendar className="w-5 h-5 shrink-0 text-primary" />
-                <span className="flex-1">Events</span>
-                <ArrowUpRight className="w-4 h-4 opacity-40 group-hover:opacity-100 transition-opacity" />
-              </a>
+              {LINKS.map(({ icon: Icon, label, href }) => {
+                const external = href.startsWith("http");
+                return (
+                  <a
+                    key={label}
+                    href={href}
+                    {...(external || href.startsWith("/") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                    className="flex items-center gap-3 px-3 py-2.5 rounded-sm text-base font-mono text-foreground/85 hover:text-foreground hover:bg-secondary/60 transition-colors group"
+                  >
+                    <Icon className="w-5 h-5 shrink-0 text-primary" />
+                    <span className="flex-1">{label}</span>
+                    <ArrowUpRight className="w-4 h-4 opacity-40 group-hover:opacity-100 transition-opacity" />
+                  </a>
+                );
+              })}
             </div>
           </div>
         </motion.div>

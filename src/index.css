@@ -1,6 +1,5 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
-@plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -72,6 +71,11 @@
   --border: 214 16% 82%;
   --input: 214 16% 82%;
   --ring: 220 70% 38%;
+  --primary-border: hsl(220 70% 38%);
+  --secondary-border: hsl(214 16% 82%);
+  --muted-border: hsl(214 16% 82%);
+  --accent-border: hsl(214 16% 82%);
+  --destructive-border: hsl(6 65% 48%);
   --radius: 0.125rem;
 
   --sidebar: 210 20% 96%;
@@ -113,6 +117,11 @@
   --border: 214 20% 18%;
   --input: 214 20% 18%;
   --ring: 218 75% 60%;
+  --primary-border: hsl(218 75% 60%);
+  --secondary-border: hsl(214 20% 18%);
+  --muted-border: hsl(214 20% 18%);
+  --accent-border: hsl(214 20% 18%);
+  --destructive-border: hsl(6 70% 56%);
 
   --sidebar: 216 32% 6%;
   --sidebar-foreground: 210 24% 92%;

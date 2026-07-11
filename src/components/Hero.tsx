@@ -1,5 +1,6 @@
 import React from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { EASE } from "@/lib/motion";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import cloudsImg from "@assets/generated_images/storm_sky.jpg";
 
@@ -38,7 +39,7 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as const }}
+          transition={{ duration: 1, ease: EASE }}
           className="space-y-6 md:space-y-8"
         >
           <motion.p 

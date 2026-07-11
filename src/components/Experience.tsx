@@ -1,5 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { EASE } from "@/lib/motion";
+import { SectionHeading } from "@/components/SectionHeading";
 import { EXPERIENCE, SKILLS } from "../data";
 
 const containerVariants = {
@@ -12,7 +14,7 @@ const containerVariants = {
 
 const itemVariants = {
   hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const } }
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } }
 };
 
 export function Experience() {
@@ -28,10 +30,7 @@ export function Experience() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-sm font-sans font-semibold tracking-widest uppercase text-primary mb-16 flex items-center gap-4">
-              <span className="w-8 h-px bg-primary opacity-50" />
-              Experience
-            </h2>
+            <SectionHeading label="Experience" className="mb-16" />
           </motion.div>
 
           <motion.div 
@@ -73,15 +72,12 @@ export function Experience() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-sm font-sans font-semibold tracking-widest uppercase text-primary mb-12 flex items-center gap-4">
-              <span className="w-8 h-px bg-primary opacity-50" />
-              Education
-            </h2>
+            <SectionHeading label="Education" className="mb-12" />
             <div className="space-y-4 bg-secondary/30 p-8 rounded-md border border-border transition-colors duration-200">
               <h3 className="text-2xl font-display font-bold text-foreground">York University</h3>
-              <p className="text-foreground/90 font-medium">BSc Honours in Computer Science</p>
+              <p className="text-foreground/90 font-medium">BA Honours in Computer Science</p>
               <p className="text-foreground/70 font-mono text-sm">Lassonde School of Engineering</p>
-              <p className="text-primary font-mono text-sm uppercase tracking-wider mt-4">Sept 2024 - Apr 2028</p>
+              <p className="text-primary font-mono text-sm uppercase tracking-wider mt-4">2024 - 2028</p>
             </div>
           </motion.div>
 
@@ -91,10 +87,7 @@ export function Experience() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            <h2 className="text-sm font-sans font-semibold tracking-widest uppercase text-primary mb-12 flex items-center gap-4">
-              <span className="w-8 h-px bg-primary opacity-50" />
-              Skills
-            </h2>
+            <SectionHeading label="Skills" className="mb-12" />
             <div className="space-y-10">
               {SKILLS.map((skillGroup, idx) => (
                 <div key={idx}>

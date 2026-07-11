@@ -2,7 +2,7 @@ export const EXPERIENCE = [
   {
     company: "Tofu (HireTofu)",
     role: "Software Engineer",
-    period: "Jun 2026 - Present",
+    period: "2026 - Present",
     description: [
       "Improved Django API performance by profiling high-traffic endpoints and removing N+1 queries.",
       "Redesigned automation APIs into grouped Django REST Framework responses for faster React rendering.",
@@ -12,25 +12,26 @@ export const EXPERIENCE = [
   {
     company: "Nmbr",
     role: "Software Engineer Intern",
-    period: "May 2026 - Present",
+    period: "2026 - Present",
     description: [
       "Built and tested features for an embedded Canadian payroll API covering tax forms and compliance.",
       "Replaced older browser tests with Playwright tests for improved coverage and reliability."
     ]
   },
   {
-    company: "Keyfill",
+    company: "KeyFill",
     role: "Software Engineer",
-    period: "Apr 2026 - Present",
+    period: "2026 - Present",
     description: [
-      "Co-founded an AI document automation startup, shipping a React Native/TypeScript mobile app.",
-      "Built real-time speech extraction and validation flows comparing AI-filled fields."
+      "Co-founded KeyFill, a mobile app that lets real estate agents complete leases and rental agreements by voice instead of filling out forms by hand.",
+      "Built the speech-to-form pipeline in React Native/TypeScript — transcribing spoken input, extracting the key details, and auto-filling the correct documents.",
+      "Added a review step so agents can verify AI-filled fields before sending, cutting repetitive admin work for agents and brokerages."
     ]
   },
   {
     company: "HAVN Inc.",
     role: "Software Engineer",
-    period: "Dec 2025 - Present",
+    period: "2025 - Present",
     description: [
       "Designed and implemented 40+ REST API endpoints in Python (FastAPI) with Redis caching.",
       "Reduced API response times by 60% and shipped React Native features across iOS and Android.",
@@ -52,7 +53,7 @@ export const PROJECTS = [
     event: "Open Source",
     description: "An open-source VS Code extension that converts developer errors into structured plain-English explanations using Gemini 2.0 Flash, reaching 100+ installs.",
     stack: ["JavaScript", "TypeScript", "VS Code Extension API", "Gemini 2.0 Flash", "Chart.js"],
-    link: "https://github.com/kurtjallo/Clarify-Hackville-2026"
+    link: "https://github.com/kurtjallo"
   }
 ];
 

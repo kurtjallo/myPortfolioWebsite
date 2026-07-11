@@ -18,22 +18,29 @@ export function Navigation() {
 
   useEffect(() => {
     setMounted(true);
-    
-    const handleScroll = () => {
+
+    const elements = SECTIONS.map((s) => document.getElementById(s.id));
+    let ticking = false;
+
+    const update = () => {
+      ticking = false;
       const scrollPosition = window.scrollY + window.innerHeight / 3;
-      
       let current = "home";
-      for (const section of SECTIONS) {
-        const element = document.getElementById(section.id);
-        if (element && element.offsetTop <= scrollPosition) {
-          current = section.id;
-        }
+      for (let i = 0; i < SECTIONS.length; i++) {
+        const el = elements[i];
+        if (el && el.offsetTop <= scrollPosition) current = SECTIONS[i].id;
       }
       setActiveSection(current);
     };
 
+    const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
+    update();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 

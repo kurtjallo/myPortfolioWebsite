@@ -1,21 +1,20 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { SectionHeading } from "@/components/SectionHeading";
 import portraitImg from "@assets/kurt_portrait_crop.png";
 
 export function About() {
   return (
     <section id="about" className="py-24 md:py-32 px-6 md:px-12 lg:px-24 bg-card text-foreground relative transition-colors duration-200 border-b border-border overflow-hidden">
       <div className="max-w-6xl relative z-10 mx-auto">
-        <motion.h2 
+        <motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="text-sm font-sans font-semibold tracking-widest uppercase text-primary mb-12 flex items-center gap-4"
         >
-          <span className="w-8 h-px bg-primary opacity-50" />
-          About
-        </motion.h2>
+          <SectionHeading label="About" className="mb-12" />
+        </motion.div>
         
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
           <div className="text-xl md:text-3xl lg:text-4xl font-sans tracking-tight leading-[1.4] md:leading-[1.3] text-foreground/90 space-y-8 font-medium flex-1">

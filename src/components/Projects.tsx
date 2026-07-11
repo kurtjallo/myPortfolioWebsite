@@ -1,5 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { EASE } from "@/lib/motion";
+import { SectionHeading } from "@/components/SectionHeading";
 import { ArrowUpRight } from "lucide-react";
 import { PROJECTS } from "../data";
 
@@ -13,23 +15,21 @@ const containerVariants = {
 
 const cardVariants = {
   hidden: { opacity: 0, y: 40 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as const } }
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } }
 };
 
 export function Projects() {
   return (
     <section id="projects" className="py-24 md:py-32 px-6 md:px-12 lg:px-24 bg-card text-foreground transition-colors duration-200 relative border-b border-border">
       <div className="max-w-7xl mx-auto">
-        <motion.h2 
+        <motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="text-sm font-sans font-semibold tracking-widest uppercase text-primary mb-16 flex items-center gap-4"
         >
-          <span className="w-8 h-px bg-primary opacity-50" />
-          Projects
-        </motion.h2>
+          <SectionHeading label="Projects" className="mb-16" />
+        </motion.div>
 
         <motion.div 
           variants={containerVariants}
