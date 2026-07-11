@@ -18,7 +18,7 @@ const cardVariants = {
 
 export function Projects() {
   return (
-    <section id="projects" className="py-24 md:py-32 px-6 md:px-12 lg:px-24 bg-card text-foreground transition-colors duration-500 relative border-b border-border">
+    <section id="projects" className="py-24 md:py-32 px-6 md:px-12 lg:px-24 bg-card text-foreground transition-colors duration-200 relative border-b border-border">
       <div className="max-w-7xl mx-auto">
         <motion.h2 
           initial={{ opacity: 0, x: -20 }}
@@ -45,10 +45,10 @@ export function Projects() {
               href={project.link} 
               target="_blank" 
               rel="noopener noreferrer"
-              className="group block p-8 md:p-12 rounded-3xl bg-secondary/30 hover:bg-secondary/60 transition-all duration-300 border border-border hover:border-primary/30 relative overflow-hidden shadow-sm hover:shadow-md"
+              className="group block p-8 md:p-12 rounded-md bg-secondary/30 hover:bg-secondary/60 transition-colors duration-200 border border-border hover:border-primary/50 relative overflow-hidden"
             >
-              {/* Subtle hover glow inside card */}
-              <div className="absolute -inset-px bg-gradient-to-br from-primary/0 to-primary/0 group-hover:from-primary/5 group-hover:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl pointer-events-none" />
+              {/* Subtle hover wash inside card */}
+              <div className="absolute -inset-px bg-gradient-to-br from-primary/0 to-primary/0 group-hover:from-primary/5 group-hover:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-md pointer-events-none" />
               
               <div className="flex justify-between items-start mb-8 relative z-10">
                 <div>
@@ -59,7 +59,7 @@ export function Projects() {
                     {project.event}
                   </p>
                 </div>
-                <div className="w-12 h-12 rounded-full bg-background flex items-center justify-center border border-border text-foreground/60 group-hover:text-primary-foreground group-hover:bg-primary group-hover:border-primary transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 shrink-0 shadow-sm">
+                <div className="w-12 h-12 rounded-sm bg-background flex items-center justify-center border border-border text-foreground/60 group-hover:text-primary-foreground group-hover:bg-primary group-hover:border-primary transition-all duration-200 group-hover:-translate-y-1 group-hover:translate-x-1 shrink-0">
                   <ArrowUpRight className="w-5 h-5" />
                 </div>
               </div>
@@ -72,7 +72,7 @@ export function Projects() {
                 {project.stack.map((tech, tIdx) => (
                   <span 
                     key={tIdx}
-                    className="text-xs font-mono px-3 py-1.5 bg-background border border-border rounded-md text-foreground/70 shadow-sm"
+                    className="text-xs font-mono px-3 py-1.5 bg-background border border-border rounded-sm text-foreground/70"
                   >
                     {tech}
                   </span>

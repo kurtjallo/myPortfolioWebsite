@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Mail, Github, Linkedin, Calendar, ArrowUpRight } from "lucide-react";
-import cloudsImg from "@assets/generated_images/painterly_clouds_blue.png";
+import cloudsImg from "@assets/generated_images/storm_sky.jpg";
 
 export function Footer() {
   const containerRef = useRef<HTMLElement>(null);
@@ -14,35 +14,34 @@ export function Footer() {
   const cloudsY = useTransform(scrollYProgress, [0, 1], [-100, 0]);
 
   return (
-    <footer id="contact" ref={containerRef} className="py-24 md:py-32 px-6 md:px-12 lg:px-24 bg-background text-foreground relative overflow-hidden flex flex-col justify-end transition-colors duration-500">
+    <footer id="contact" ref={containerRef} className="min-h-[92vh] pt-24 md:pt-32 pb-6 px-6 md:px-12 lg:px-24 bg-background text-foreground relative overflow-hidden flex flex-col transition-colors duration-200">
       
-      {/* Background Cloud Artwork (flipped and masked from top) with Parallax */}
-      <motion.div 
+      {/* Background stormy sky (fades in at the top to blend with the section above) */}
+      <motion.div
         style={{ y: cloudsY }}
-        className="absolute inset-0 z-0 pointer-events-none opacity-40 dark:opacity-30 mix-blend-multiply dark:mix-blend-screen scale-y-[-1]"
+        className="absolute inset-0 z-0 pointer-events-none opacity-95 dark:opacity-85"
       >
         <img
           src={cloudsImg}
-          alt="Painterly clouds"
+          alt="Stormy sky"
           className="w-full h-full object-cover"
-          style={{ 
-            WebkitMaskImage: "linear-gradient(to top, black 40%, transparent 100%)",
-            maskImage: "linear-gradient(to top, black 40%, transparent 100%)" 
+          style={{
+            WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 15%)",
+            maskImage: "linear-gradient(to bottom, transparent 0%, black 15%)"
           }}
         />
       </motion.div>
 
-      {/* Background abstract indigo glow mirroring the hero */}
-      <div className="absolute -bottom-[60%] left-1/2 -translate-x-1/2 w-[150vw] md:w-[120vw] h-[80vh] bg-primary rounded-[100%] blur-[120px] md:blur-[180px] pointer-events-none opacity-20 dark:opacity-40 mix-blend-multiply dark:mix-blend-screen transition-opacity duration-500" />
-      <div className="absolute -bottom-[40%] left-1/2 -translate-x-1/2 w-[80vw] md:w-[60vw] h-[50vh] bg-primary rounded-[100%] blur-[100px] md:blur-[120px] pointer-events-none opacity-30 dark:opacity-60 mix-blend-multiply dark:mix-blend-screen transition-opacity duration-500" />
+      {/* Text-anchored scrim for legibility over the sky (see index.css .footer-scrim) */}
+      <div className="footer-scrim absolute inset-0 z-[1] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto w-full relative z-10">
+      <div className="max-w-7xl mx-auto w-full relative z-10 flex flex-1 flex-col">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as const }}
-          className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-16"
+          className="flex flex-col lg:flex-row justify-between items-start gap-16"
         >
           <div className="space-y-8 max-w-2xl">
             <h2 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-tighter leading-[1.05]">
@@ -55,53 +54,51 @@ export function Footer() {
           </div>
 
           <div className="flex flex-col gap-8 w-full lg:w-auto">
-            <div className="flex flex-wrap gap-8 md:gap-12">
-              <a 
+            <div className="flex flex-col gap-1 rounded-sm border border-border bg-background/70 p-2 w-full lg:w-auto lg:min-w-[240px]">
+              <a
                 href="mailto:kurtjallorina6@gmail.com"
-                aria-label="Email"
-                className="flex items-center text-foreground/70 hover:text-primary transition-colors"
+                className="flex items-center gap-3 px-3 py-2.5 rounded-sm text-base font-mono text-foreground/85 hover:text-foreground hover:bg-secondary/60 transition-colors group"
               >
-                <Mail className="w-5 h-5" />
+                <Mail className="w-5 h-5 shrink-0 text-primary" />
+                <span className="flex-1">Email</span>
+                <ArrowUpRight className="w-4 h-4 opacity-40 group-hover:opacity-100 transition-opacity" />
               </a>
-              <a 
-                href="https://github.com/kurtjallo" 
-                target="_blank" 
+              <a
+                href="https://github.com/kurtjallo"
+                target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 text-lg font-mono text-foreground/70 hover:text-foreground transition-colors group"
+                className="flex items-center gap-3 px-3 py-2.5 rounded-sm text-base font-mono text-foreground/85 hover:text-foreground hover:bg-secondary/60 transition-colors group"
               >
-                <Github className="w-5 h-5" />
-                <span>GitHub</span>
-                <ArrowUpRight className="w-4 h-4 opacity-0 -translate-x-2 translate-y-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all" />
+                <Github className="w-5 h-5 shrink-0 text-primary" />
+                <span className="flex-1">GitHub</span>
+                <ArrowUpRight className="w-4 h-4 opacity-40 group-hover:opacity-100 transition-opacity" />
               </a>
-              <a 
-                href="https://www.linkedin.com/in/kurtjallorina/" 
-                target="_blank" 
+              <a
+                href="https://www.linkedin.com/in/kurtjallorina/"
+                target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 text-lg font-mono text-foreground/70 hover:text-foreground transition-colors group"
+                className="flex items-center gap-3 px-3 py-2.5 rounded-sm text-base font-mono text-foreground/85 hover:text-foreground hover:bg-secondary/60 transition-colors group"
               >
-                <Linkedin className="w-5 h-5" />
-                <span>LinkedIn</span>
-                <ArrowUpRight className="w-4 h-4 opacity-0 -translate-x-2 translate-y-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all" />
+                <Linkedin className="w-5 h-5 shrink-0 text-primary" />
+                <span className="flex-1">LinkedIn</span>
+                <ArrowUpRight className="w-4 h-4 opacity-40 group-hover:opacity-100 transition-opacity" />
               </a>
-              <a 
-                href="https://luma.com/user/kurtjallo" 
-                target="_blank" 
+              <a
+                href="https://luma.com/user/kurtjallo"
+                target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 text-lg font-mono text-foreground/70 hover:text-foreground transition-colors group"
+                className="flex items-center gap-3 px-3 py-2.5 rounded-sm text-base font-mono text-foreground/85 hover:text-foreground hover:bg-secondary/60 transition-colors group"
               >
-                <Calendar className="w-5 h-5" />
-                <span>Events</span>
-                <ArrowUpRight className="w-4 h-4 opacity-0 -translate-x-2 translate-y-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all" />
+                <Calendar className="w-5 h-5 shrink-0 text-primary" />
+                <span className="flex-1">Events</span>
+                <ArrowUpRight className="w-4 h-4 opacity-40 group-hover:opacity-100 transition-opacity" />
               </a>
             </div>
           </div>
         </motion.div>
 
-        <div className="mt-32 pt-8 border-t border-border text-foreground/60 font-mono text-xs md:text-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <p>© {new Date().getFullYear()} Kurt Jallorina. All rights reserved.</p>
-          <p className="flex items-center gap-3">
-            Built in Toronto <span className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_hsl(var(--primary))]" />
-          </p>
+        <div className="mt-auto pt-6 border-t border-border/60 text-foreground/70 font-mono text-xs md:text-sm">
+          <p className="inline-block rounded-sm bg-background/70 px-2.5 py-1">© {new Date().getFullYear()} Kurt Jallorina. All rights reserved.</p>
         </div>
       </div>
     </footer>

@@ -4,7 +4,7 @@ import portraitImg from "@assets/kurt_portrait_crop.png";
 
 export function About() {
   return (
-    <section id="about" className="py-24 md:py-32 px-6 md:px-12 lg:px-24 bg-card text-foreground relative transition-colors duration-500 border-b border-border overflow-hidden">
+    <section id="about" className="py-24 md:py-32 px-6 md:px-12 lg:px-24 bg-card text-foreground relative transition-colors duration-200 border-b border-border overflow-hidden">
       <div className="max-w-6xl relative z-10 mx-auto">
         <motion.h2 
           initial={{ opacity: 0, x: -20 }}
@@ -44,7 +44,7 @@ export function About() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="w-full max-w-sm lg:w-[360px] xl:w-[400px] shrink-0 aspect-[700/880] rounded-3xl border border-border shadow-sm overflow-hidden"
+            className="w-full max-w-sm lg:w-[360px] xl:w-[400px] shrink-0 aspect-[700/880] rounded-sm border border-border overflow-hidden"
           >
             <img
               src={portraitImg}

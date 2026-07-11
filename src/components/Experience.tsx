@@ -17,10 +17,7 @@ const itemVariants = {
 
 export function Experience() {
   return (
-    <section id="experience" className="py-24 md:py-32 px-6 md:px-12 lg:px-24 bg-background text-foreground relative overflow-hidden transition-colors duration-500 border-b border-border">
-      {/* Subtle mid-page glow for continuity */}
-      <div className="absolute top-1/3 -right-1/4 w-[800px] h-[800px] bg-primary rounded-full blur-[150px] pointer-events-none mix-blend-multiply dark:mix-blend-screen opacity-10 transition-opacity duration-500" />
-
+    <section id="experience" className="py-24 md:py-32 px-6 md:px-12 lg:px-24 bg-background text-foreground relative overflow-hidden transition-colors duration-200 border-b border-border">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 relative z-10">
         
         {/* Experience Column */}
@@ -58,7 +55,7 @@ export function Experience() {
                 <ul className="space-y-4">
                   {job.description.map((bullet, bIdx) => (
                     <li key={bIdx} className="flex gap-4 text-foreground/80 font-sans font-normal leading-relaxed text-lg md:text-xl">
-                      <span className="text-primary/70 text-sm mt-1.5 flex-shrink-0">✦</span>
+                      <span className="text-primary text-sm mt-1.5 flex-shrink-0 font-mono">▸</span>
                       <span>{bullet}</span>
                     </li>
                   ))}
@@ -80,7 +77,7 @@ export function Experience() {
               <span className="w-8 h-px bg-primary opacity-50" />
               Education
             </h2>
-            <div className="space-y-4 bg-secondary/30 p-8 rounded-2xl border border-border backdrop-blur-sm transition-colors duration-500">
+            <div className="space-y-4 bg-secondary/30 p-8 rounded-md border border-border transition-colors duration-200">
               <h3 className="text-2xl font-display font-bold text-foreground">York University</h3>
               <p className="text-foreground/90 font-medium">BSc Honours in Computer Science</p>
               <p className="text-foreground/70 font-mono text-sm">Lassonde School of Engineering</p>
@@ -106,7 +103,7 @@ export function Experience() {
                     {skillGroup.items.map((skill, sIdx) => (
                       <span 
                         key={sIdx}
-                        className="px-3 py-1.5 bg-card border border-border rounded-full text-sm font-medium text-foreground/80 hover:border-primary/50 hover:text-primary transition-colors cursor-default shadow-sm"
+                        className="px-3 py-1.5 bg-card border border-border rounded-sm text-sm font-mono text-foreground/80 hover:border-primary/50 hover:text-primary transition-colors cursor-default"
                       >
                         {skill}
                       </span>

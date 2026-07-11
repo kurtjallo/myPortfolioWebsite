@@ -1,7 +1,7 @@
 import React from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
-import cloudsImg from "@assets/generated_images/painterly_clouds_blue.png";
+import cloudsImg from "@assets/generated_images/storm_sky.jpg";
 
 export function Hero() {
   const { scrollY } = useScroll();
@@ -15,25 +15,24 @@ export function Hero() {
   return (
     <section id="home" className="relative min-h-[100dvh] w-full bg-background flex flex-col justify-end pb-16 md:pb-24 px-6 md:px-12 lg:px-24 overflow-hidden border-b border-border">
       
-      {/* Background Cloud Artwork with Parallax */}
-      <motion.div 
+      {/* Background stormy sky with Parallax */}
+      <motion.div
         style={{ y: cloudsY }}
         className="absolute inset-0 z-0 pointer-events-none overflow-hidden"
       >
         <img
           src={cloudsImg}
-          alt="Painterly clouds"
-          className="w-full h-full object-cover scale-[1.1] opacity-80 dark:opacity-60"
-          style={{ 
-            WebkitMaskImage: "linear-gradient(to bottom, black 50%, transparent 100%)",
-            maskImage: "linear-gradient(to bottom, black 50%, transparent 100%)"
+          alt="Stormy sky"
+          className="w-full h-full object-cover scale-[1.1] opacity-100 dark:opacity-95"
+          style={{
+            WebkitMaskImage: "linear-gradient(to bottom, black 92%, transparent 100%)",
+            maskImage: "linear-gradient(to bottom, black 92%, transparent 100%)"
           }}
         />
       </motion.div>
 
-      {/* Vivid indigo radial glow arcing up from the bottom */}
-      <div className="absolute -bottom-[40%] left-1/2 -translate-x-1/2 w-[150vw] md:w-[120vw] h-[80vh] bg-primary rounded-[100%] blur-[120px] md:blur-[180px] pointer-events-none opacity-20 dark:opacity-40 mix-blend-multiply dark:mix-blend-screen transition-opacity duration-500" />
-      <div className="absolute -bottom-[25%] left-1/2 -translate-x-1/2 w-[80vw] md:w-[60vw] h-[50vh] bg-primary rounded-[100%] blur-[80px] md:blur-[120px] pointer-events-none opacity-30 dark:opacity-60 mix-blend-multiply dark:mix-blend-screen transition-opacity duration-500" />
+      {/* Text-anchored scrim for legibility over the sky (see index.css .hero-scrim) */}
+      <div className="hero-scrim absolute inset-0 z-[1] pointer-events-none" />
 
       <motion.div style={{ y: contentY, opacity: contentOpacity, scale: contentScale }} className="max-w-7xl z-10 relative w-full flex flex-col origin-left">
         <motion.div
@@ -66,19 +65,20 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.8 }}
             className="pt-4 md:pt-8 flex flex-col items-start gap-4"
           >
-            <div className="inline-flex items-center px-6 py-3 rounded-full bg-background/50 backdrop-blur-md border border-border text-foreground font-mono text-sm md:text-base uppercase tracking-widest shadow-sm">
+            <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-sm bg-background/70 border border-border text-foreground font-mono text-sm md:text-base uppercase tracking-widest">
+              <span className="w-2 h-2 bg-primary" />
               <span className="text-primary font-bold tracking-widest">Software Engineer</span>
             </div>
-            
+
             <div className="flex flex-wrap items-center gap-3">
-              <span className="px-5 py-2.5 rounded-full bg-background/50 border border-border text-xs md:text-sm font-sans font-semibold tracking-wide text-foreground/80 shadow-sm backdrop-blur-md">
+              <span className="px-4 py-2 rounded-sm bg-background/70 border border-border text-xs md:text-sm font-mono font-medium uppercase tracking-widest text-foreground/80">
                 Replit Ambassador
               </span>
-              <a 
-                href="https://www.ideabrowser.com/" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="px-5 py-2.5 rounded-full bg-background/50 border border-border hover:border-primary/50 hover:text-primary transition-all text-xs md:text-sm font-sans font-semibold tracking-wide text-foreground/80 shadow-sm flex items-center gap-1.5 group backdrop-blur-md"
+              <a
+                href="https://www.ideabrowser.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 rounded-sm bg-background/70 border border-border hover:border-primary/50 hover:text-primary transition-colors text-xs md:text-sm font-mono font-medium uppercase tracking-widest text-foreground/80 flex items-center gap-1.5 group"
               >
                 Ideabrowser Ambassador
                 <ArrowUpRight className="w-3 h-3 opacity-50 group-hover:opacity-100" />
@@ -92,7 +92,7 @@ export function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 1 }}
-        className="absolute bottom-8 right-6 md:right-12 lg:right-24 text-foreground/70 flex items-center gap-3 text-sm font-sans font-semibold tracking-widest uppercase z-10 bg-background/50 backdrop-blur-md px-4 py-2 rounded-full border border-border shadow-sm"
+        className="absolute bottom-8 right-6 md:right-12 lg:right-24 text-foreground/70 flex items-center gap-3 text-sm font-mono font-medium tracking-widest uppercase z-10 bg-background/70 px-4 py-2 rounded-sm border border-border"
       >
         <span>Scroll</span>
         <motion.div

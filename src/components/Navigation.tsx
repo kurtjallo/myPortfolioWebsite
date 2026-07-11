@@ -51,17 +51,15 @@ export function Navigation() {
         <div className="flex flex-col gap-4">
           {SECTIONS.map((section) => (
             <div key={section.id} className="relative group flex items-center justify-end">
-              <span className={`absolute right-6 px-2.5 py-1 rounded text-xs font-sans tracking-wide whitespace-nowrap bg-background/80 backdrop-blur-md border border-border transition-all duration-300 pointer-events-none shadow-sm
-                ${activeSection === section.id ? "opacity-100 translate-x-0" : "opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0"}
-              `}>
+              <span className="absolute right-8 px-2.5 py-1 rounded-sm text-[10px] font-mono uppercase tracking-widest whitespace-nowrap bg-secondary border border-border transition-all duration-200 pointer-events-none opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0">
                 {section.label}
               </span>
               <button
                 onClick={() => document.getElementById(section.id)?.scrollIntoView({ behavior: "smooth" })}
-                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                  activeSection === section.id 
-                    ? "bg-primary scale-125 shadow-[0_0_8px_hsl(var(--primary))]" 
-                    : "bg-foreground/20 hover:bg-primary/60"
+                className={`h-[2px] rounded-none transition-all duration-200 ${
+                  activeSection === section.id
+                    ? "w-6 bg-primary"
+                    : "w-3 bg-foreground/25 hover:bg-primary/60"
                 }`}
                 aria-label={`Scroll to ${section.label}`}
               />
@@ -72,7 +70,7 @@ export function Navigation() {
         <div className="w-px h-12 bg-border" />
         
         <button
-          className="w-10 h-10 rounded-full bg-background/60 backdrop-blur-md border border-border flex items-center justify-center text-foreground hover:bg-secondary transition-all shadow-sm"
+          className="w-10 h-10 rounded-sm bg-secondary border border-border flex items-center justify-center text-foreground hover:border-primary/50 transition-colors"
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           aria-label="Toggle theme"
         >
@@ -91,7 +89,7 @@ export function Navigation() {
         className="fixed top-6 right-6 z-50 md:hidden"
       >
         <button
-          className="w-10 h-10 rounded-full bg-background/80 backdrop-blur-md border border-border flex items-center justify-center text-foreground shadow-sm"
+          className="w-10 h-10 rounded-sm bg-secondary border border-border flex items-center justify-center text-foreground"
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           aria-label="Toggle theme"
         >
