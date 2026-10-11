@@ -75,7 +75,7 @@ export const ABOUT = {
   portrait: { light: portraitLight, dark: portraitDark, cols: 190, rows: 100 },
 };
 
-export const EXPERIENCE_HEADING: Heading = ["Where I've shipped.", 'Now building deepfake detection.'];
+export const EXPERIENCE_HEADING: Heading = ["Where I've shipped.", 'Most recent first.'];
 
 export const ROLES: Role[] = [
   {
@@ -90,7 +90,7 @@ export const ROLES: Role[] = [
   },
   {
     company: 'Nmbr',
-    role: 'Software Engineer',
+    role: 'Software Engineer Intern',
     type: 'Internship',
     start: 'May 2026',
     end: 'Aug 2026',
