@@ -1,6 +1,9 @@
 import { useEffect, type RefObject } from 'react';
 
-/** Adds `.in` to every `[data-reveal]` inside `root` once it scrolls into view (styles in tokens.css). */
+/**
+ * Sets `data-shown` on every `[data-reveal]` inside `root` once it scrolls into view (styles in tokens.css).
+ * An attribute, not a class: React rewrites `className` on re-render and would erase a class added here.
+ */
 export function useReveal(root: RefObject<HTMLElement | null>) {
   useEffect(() => {
     const el = root.current;
@@ -9,7 +12,7 @@ export function useReveal(root: RefObject<HTMLElement | null>) {
       (entries) => {
         for (const e of entries) {
           if (e.isIntersecting) {
-            e.target.classList.add('in');
+            e.target.setAttribute('data-shown', '');
             io.unobserve(e.target);
           }
         }
