@@ -1,0 +1,53 @@
+.hero {
+  --nav-h: 80px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--nav-h);
+  padding-bottom: 32px;
+}
+.hero-main { margin: auto 0; padding: 48px 0; }
+.hero-eyebrow { margin: 0 0 32px; }
+.hero-name { margin: 0 0 48px; --rise: 32px; }
+.hero-name[data-reveal] { transition-duration: 1s; }
+
+.hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; --d: 300ms; }
+@media (min-width: 1024px) { .hero-ctas { gap: 16px; } }
+
+.hero-ripple { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
+
+
+.hero .pill.outline { background-color: var(--bg); }
+.hero .pill.outline:hover { background-image: linear-gradient(var(--tint-strong), var(--tint-strong)); }
+
+
+@media (max-width: 767px) {
+  .hero-name { font-size: min(calc((100vw - 2 * var(--pad-x)) * 0.17), 96px); }
+}
+
+/* The code field fills the hero: faded under the nav and into About, quieted behind the copy. */
+.hero-field {
+  position: absolute; inset: 0; z-index: 0; display: block; width: 100%; height: 100%; pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 40px, #000 200px, #000 calc(100% - 160px), transparent);
+  mask-image: linear-gradient(to bottom, transparent 40px, #000 200px, #000 calc(100% - 160px), transparent);
+}
+.hero-scrim {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(ellipse 52% 40% at 30% 54%, color-mix(in srgb, var(--bg) 88%, transparent) 35%, transparent 100%);
+}
+@media (max-width: 767px) {
+  .hero-scrim { background: radial-gradient(ellipse 90% 38% at 40% 52%, color-mix(in srgb, var(--bg) 88%, transparent) 40%, transparent 100%); }
+}

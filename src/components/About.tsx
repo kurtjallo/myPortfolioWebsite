@@ -1,57 +1,60 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { SectionHeading } from "@/components/SectionHeading";
-import portraitImg from "@assets/kurt_portrait_crop.png";
+import type { CSSProperties } from 'react';
+import { ABOUT, SITE } from '@/data';
+import './About.css';
+
+const [lead, muted] = ABOUT.heading;
+const [communityLead, ...communityRest] = ABOUT.community.split(/(?<=\.)\s+/);
+const place = `${SITE.location}, ON`;
 
 export function About() {
   return (
-    <section id="about" className="py-24 md:py-32 px-6 md:px-12 lg:px-24 bg-card text-foreground relative transition-colors duration-200 border-b border-border overflow-hidden">
-      <div className="max-w-6xl relative z-10 mx-auto">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-        >
-          <SectionHeading label="About" className="mb-12" />
-        </motion.div>
-        
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
-          <div className="text-xl md:text-3xl lg:text-4xl font-sans tracking-tight leading-[1.4] md:leading-[1.3] text-foreground/90 space-y-8 font-medium flex-1">
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8 }}
-            >
-              I'm someone who can't sit still when there's something <span className="text-primary font-semibold">worth building</span>. I don't wait for permission or the perfect time—I just start. Whether it's shipping code or organizing an event, I'd rather try and learn than sit on the bench.
-            </motion.p>
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              className="text-foreground/70"
-            >
-              A lot of that drive comes from my love for Toronto. This city has introduced me to some of the most curious, generous, and ambitious people I've met. I want to help make it easier for others to find their way into those rooms.
-            </motion.p>
+    <section id="about" className="section about">
+      <div className="container about-grid">
+        <div className="about-copy" data-reveal style={{ '--slide': '-32px', '--rise': '0px' } as CSSProperties}>
+          <span className="eyebrow">About</span>
+          <h2 className="h2">
+            {lead}
+            <br />
+            <span className="mute">{muted}</span>
+          </h2>
+          <p className="lead about-lead">{ABOUT.intro}</p>
+          <div className="about-do">
+            <p className="label">What I do</p>
+            <ol>
+              {ABOUT.whatIDo.map((item, i) => (
+                <li key={item}>
+                  <span className="index">{String(i + 1).padStart(2, '0')}</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ol>
           </div>
-
-          {/* Profile Picture */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="w-full max-w-sm lg:w-[360px] xl:w-[400px] shrink-0 aspect-[700/880] rounded-sm border border-border overflow-hidden"
-          >
-            <img
-              src={portraitImg}
-              alt="Kurt Jallorina"
-              className="w-full h-full object-cover object-top"
-            />
-          </motion.div>
+          <div className="about-community">
+            <p className="label">Community</p>
+            <p className="body">
+              <span className="about-fg">{communityLead}</span> {communityRest.join(' ')}
+            </p>
+          </div>
         </div>
+        <figure
+          className="about-frame"
+          data-reveal
+          style={{ '--slide': '32px', '--rise': '0px', '--d': '200ms', '--ar': (ABOUT.portrait.cols * 0.6) / ABOUT.portrait.rows } as CSSProperties}
+        >
+          <div
+            className="about-frame-img about-ascii"
+            role="img"
+            aria-label={`Portrait of ${SITE.name}, drawn in ASCII characters`}
+            style={{ '--cols': ABOUT.portrait.cols } as CSSProperties}
+          >
+            <pre className="about-ascii-light" aria-hidden="true">{ABOUT.portrait.light}</pre>
+            <pre className="about-ascii-dark" aria-hidden="true">{ABOUT.portrait.dark}</pre>
+          </div>
+          <figcaption className="about-frame-cap">
+            <span className="label">{SITE.name}</span>
+            <span className="label">{place}</span>
+          </figcaption>
+        </figure>
       </div>
     </section>
   );
