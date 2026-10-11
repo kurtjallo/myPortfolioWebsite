@@ -12,7 +12,7 @@ const RINGS = Array.from({ length: RIPPLE.rings + 1 }, (_, d) => {
   return out;
 });
 
-// Griffin's AsciiPattern band, drawn with Kurt's diamond set. Cells are 12x14, sampled at (col+.5)*.13.
+// Griffin's AsciiPattern field (full hero), drawn with Kurt's diamond set. Cells are 12x14, sampled at (col+.5)*.13.
 const BAND = { cw: 12, ch: 14, scale: 0.13, spacing: 0.08, speed: 0.9, alpha: [0.06, 0.13, 0.29, 0.58].map((a) => a * 0.6) };
 const OCTAVES = [[1, 1], [2.2, 0.7], [4.5, 0.4]] as const;
 
@@ -198,7 +198,6 @@ function makeRipples(canvas: HTMLCanvasElement) {
   let amp = new Float32Array(0);
   let life = new Float32Array(0);
   let listed = new Uint8Array(0);
-  let blocked = new Uint8Array(0);
   let active = new Int32Array(0);
   let nActive = 0;
   let dirty = false;
@@ -213,7 +212,7 @@ function makeRipples(canvas: HTMLCanvasElement) {
       const row = rp.row + ring[k + 1];
       if (col < 0 || row < 0 || col >= cols || row >= rows) continue;
       const i = row * cols + col;
-      if (blocked[i] || a < amp[i] * life[i]) continue;
+      if (a < amp[i] * life[i]) continue;
       amp[i] = a;
       life[i] = 1;
       if (!listed[i]) {
@@ -233,16 +232,9 @@ function makeRipples(canvas: HTMLCanvasElement) {
       amp = new Float32Array(cols * rows);
       life = new Float32Array(cols * rows);
       listed = new Uint8Array(cols * rows);
-      blocked = new Uint8Array(cols * rows);
       active = new Int32Array(cols * rows);
       nActive = 0;
       ripples.length = 0;
-    },
-    clip(bandTop: number) {
-      for (let i = 0; i < blocked.length; i++) {
-        blocked[i] = (((i / cols) | 0) + 1) * P > bandTop ? 1 : 0;
-        if (blocked[i]) life[i] = 0;
-      }
     },
     poke(x: number, y: number, t: number) {
       const col = Math.floor(x / P);
@@ -250,7 +242,7 @@ function makeRipples(canvas: HTMLCanvasElement) {
       const cell = row * cols + col;
       if (cell === lastCell) return;
       lastCell = cell;
-      if (!blocked[cell]) ripples.push({ col, row, t0: t, next: 0 });
+      ripples.push({ col, row, t0: t, next: 0 });
     },
     leave() {
       lastCell = -1;
@@ -334,10 +326,7 @@ export function createScene({ root, ripple, band }: SceneEls): Scene {
       sprites = makeSprites();
     }
     bandLayer.resize(dpr);
-    if (rippleLayer) {
-      rippleLayer.resize(dpr);
-      rippleLayer.clip(band.getBoundingClientRect().top - root.getBoundingClientRect().top);
-    }
+    rippleLayer?.resize(dpr);
     drawBand();
   }
 

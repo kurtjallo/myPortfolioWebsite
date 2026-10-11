@@ -5,8 +5,6 @@ import { onTheme } from '@/lib/theme';
 import { createScene, type Scene } from './scene';
 import './hero.css';
 
-const ROWS = Array.from({ length: 8 }, (_, i) => 12.5 * (i + 1));
-const COLS = Array.from({ length: 12 }, (_, i) => (100 / 12) * (i + 1));
 
 export function Hero() {
   const root = useRef<HTMLElement>(null);
@@ -31,16 +29,8 @@ export function Hero() {
 
   return (
     <section id="home" ref={root} className="hero">
-      <div className="hero-bg" aria-hidden="true">
-        <div className="hero-grid">
-          {ROWS.map((top) => (
-            <i key={`r${top}`} className="hero-grid-row" style={{ top: `${top}%` }} />
-          ))}
-          {COLS.map((left) => (
-            <i key={`c${left}`} className="hero-grid-col" style={{ left: `${left}%` }} />
-          ))}
-        </div>
-      </div>
+      <canvas ref={band} className="hero-field" aria-hidden="true" />
+      <div className="hero-scrim" aria-hidden="true" />
       {!reduced && <canvas ref={ripple} className="hero-ripple" aria-hidden="true" />}
       <div className="container hero-inner">
         <div className="hero-main">
@@ -60,7 +50,6 @@ export function Hero() {
           </div>
         </div>
       </div>
-      <canvas ref={band} className="hero-band" aria-hidden="true" />
     </section>
   );
 }
