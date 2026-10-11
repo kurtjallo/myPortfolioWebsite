@@ -1,0 +1,81 @@
+.exp {
+  --p-bg: #080503;
+  --p-fg: #fafaf9;
+  --p-muted: rgba(250, 250, 249, 0.58);
+  --p-line: rgba(250, 250, 249, 0.12);
+  --p-tint: rgba(250, 250, 249, 0.03);
+  background: var(--p-bg);
+  color: var(--p-fg);
+  isolation: isolate;
+}
+[data-theme="dark"] .exp {
+  --p-bg: #17120e;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.exp::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: repeating-linear-gradient(-45deg, var(--p-tint) 0 1px, transparent 1px 12px);
+}
+.exp .eyebrow, .exp .h2 .mute { color: var(--p-muted); }
+.exp .eyebrow::before { background: rgba(250, 250, 249, 0.3); }
+
+.exp-head { display: flex; flex-direction: column; gap: 24px; margin-bottom: 64px; }
+
+.exp-grid { display: flex; flex-direction: column; gap: 32px; }
+.exp-grid .exp-card { margin: 0 0 28px; }
+
+.exp-step {
+  display: grid; grid-template-columns: 48px 1fr; width: 100%; text-align: left;
+  padding: 28px 0; border-bottom: 1px solid var(--p-line);
+}
+.exp-step-num, .exp-step-co { color: var(--p-muted); transition: color 0.5s var(--ease); }
+.exp-step:hover .exp-step-co, .exp-step:hover .exp-step-num { color: var(--p-fg); }
+.exp-step[aria-selected="true"] .exp-step-num, .exp-step[aria-selected="true"] .exp-step-co { color: var(--p-fg); }
+.exp-step[aria-selected="true"] .exp-step-co { font-weight: 500; letter-spacing: -0.015em; }
+.exp-step-num { font-size: clamp(22px, 2vw, 28px); line-height: 1.15; letter-spacing: 0.04em; }
+.exp-step-co { display: block; width: fit-content; white-space: nowrap; font-size: clamp(24px, 2.2vw, 32px); line-height: 1.15; letter-spacing: -0.01em; }
+.exp-step-co .scramble-x { font-family: var(--mono); font-size: 0.8em; color: var(--p-muted); }
+.exp-step-meta { display: block; margin-top: 10px; font-size: 13px; color: var(--p-muted); }
+.exp-step-bar { display: block; position: relative; height: 1px; margin-top: 22px; background: var(--p-line); opacity: 0; transition: opacity 0.3s var(--ease); }
+.exp-step-bar::after { content: ""; position: absolute; inset: 0; background: var(--p-fg); transform: scaleX(0); transform-origin: left; transition: transform 0.7s var(--ease); }
+.exp-step[aria-selected="true"] .exp-step-bar { opacity: 1; }
+.exp-step[aria-selected="true"] .exp-step-bar::after { transform: scaleX(1); }
+
+.exp-card { border: 1px solid var(--p-line); background: rgba(8, 5, 3, 0.35); align-self: start; }
+[data-theme="dark"] .exp-card { background: rgba(8, 5, 3, 0.5); }
+.exp-card-top { display: flex; align-items: center; justify-content: space-between; height: 52px; padding: 0 20px; border-bottom: 1px solid var(--p-line); }
+.exp-dots { display: flex; gap: 8px; }
+.exp-dots i { width: 12px; height: 12px; border-radius: 50%; background: rgba(250, 250, 249, 0.2); }
+.exp-file { font-size: 13px; color: var(--p-muted); }
+
+.exp-code { padding: 32px 24px 36px; font-size: 14px; line-height: 2; }
+.exp-code .scramble-x { color: var(--p-muted); }
+.exp-ln { display: grid; grid-template-columns: 36px 1fr; }
+/* 0.47, not the prototype's 0.46: 0.46 measures 4.47:1 on the light-theme card, under AA. */
+.exp-no { color: rgba(250, 250, 249, 0.47); user-select: none; }
+.exp-tx { min-height: 2em; }
+.exp-k { display: inline-block; min-width: 9ch; color: var(--p-muted); }
+.exp-v { color: var(--p-fg); }
+.exp-note .exp-tx { padding-left: 2ch; text-indent: -2ch; }
+.exp-note .exp-k { display: inline; min-width: 0; }
+.exp-note .exp-v { color: rgba(250, 250, 249, 0.86); }
+.exp-play .exp-ln { animation: exp-line 0.4s var(--ease) both; animation-delay: var(--ld); }
+@keyframes exp-line { from { opacity: 0; transform: translateX(-8px); } }
+
+.exp-card-foot { display: flex; align-items: center; padding: 14px 20px; border-top: 1px solid var(--p-line); font-size: 12px; color: var(--p-muted); }
+.exp-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--green); margin-right: 10px; vertical-align: 1px; }
+.exp-past .exp-dot { background: transparent; box-shadow: inset 0 0 0 1px var(--p-muted); }
+
+@media (min-width: 1024px) {
+  .exp-head { margin-bottom: 96px; }
+  .exp-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 96px; align-items: start; }
+  .exp-grid .exp-card { margin: 0; }
+  .exp-step { padding: 32px 0; }
+  .exp-step:last-child { border-bottom: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .exp-play .exp-ln { animation: none; }
+  .exp-step-bar::after { transition: none; }
+}

@@ -4,25 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kurt Jallorina</title>
-    <meta name="description" content="Kurt Jallorina — Software Engineer based in Toronto. Building fast, reliable products with Python, TypeScript, React, and AI." />
+    <meta name="description" content="Kurt Jallorina, software engineer in Toronto. I build full-stack products end to end, from the API to the interface." />
     <meta name="robots" content="index, follow" />
     <meta property="og:title" content="Kurt Jallorina" />
-    <meta property="og:description" content="Kurt Jallorina — Software Engineer based in Toronto. Building fast, reliable products with Python, TypeScript, React, and AI." />
+    <meta property="og:description" content="Kurt Jallorina, software engineer in Toronto. I build full-stack products end to end, from the API to the interface." />
     <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Kurt Jallorina" />
-    <meta name="twitter:description" content="Kurt Jallorina — Software Engineer based in Toronto. Building fast, reliable products with Python, TypeScript, React, and AI." />
+    <meta name="twitter:description" content="Kurt Jallorina, software engineer in Toronto. I build full-stack products end to end, from the API to the interface." />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   </head>
   <body>
     <script>
-      // Default is light; apply dark before first paint only if the user chose it.
+      // Light is the default; apply a saved dark choice before first paint.
       try {
-        if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
-      } catch (e) {}
+        document.documentElement.dataset.theme = localStorage.getItem('theme') === 'dark' ? 'dark' : 'light';
+      } catch (e) {
+        document.documentElement.dataset.theme = 'light';
+      }
     </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>

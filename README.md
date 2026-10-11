@@ -1,6 +1,6 @@
 # Kurt Jallorina — Personal Site
 
-Personal portfolio site built with Vite, React, TypeScript, Tailwind CSS v4, and shadcn/ui.
+Personal portfolio site built with Vite, React, and TypeScript, styled with plain CSS. The hero canvas (ripple trail and code band) and the pinned Skills stack use no animation libraries.
 
 ## Getting Started
 
@@ -22,13 +22,17 @@ Open [http://localhost:5173](http://localhost:5173) with your browser to see the
 
 ## Where things live
 
-- `src/pages/Home.tsx` — the main page, composed of section components
-- `src/components/` — page sections (`Hero`, `About`, `Experience`, `Projects`, `Footer`, `Navigation`) and `ui/` (shadcn primitives)
-- `src/data.ts` — experience, projects, and skills content (edit here to update the site)
-- `src/index.css` — Tailwind theme, fonts, and color tokens (light/dark)
-- `attached_assets/` — images imported via the `@assets` alias
-- `public/` — static assets served as-is (favicon, resume, robots.txt)
+- `src/data.ts` — all site content: about, experience, projects, the four skill layers, contact (edit here to update the site)
+- `src/App.tsx` — the page: `Nav`, `Hero`, `About`, `Experience`, `Projects`, `Stack`, `ContactBand`
+- `src/components/` — one component per section, each with its own stylesheet
+  - `hero/scene.ts` — the canvas scene behind the hero (ripple trail and code band)
+  - `Stack.tsx` + `stack/plates.ts` — the pinned, scroll-driven isometric plate stack in Skills
+- `src/hooks/useScramble.ts` — the text decode effect on Experience hover
+- `src/lib/` — theme (light/dark on `<html data-theme>`), motion helpers (reduced motion, off-screen pausing, canvas DPR), scroll reveals
+- `src/styles/tokens.css` — colour tokens for light and dark, fonts, and shared type and layout utilities
+- `src/assets/` — the ASCII portrait (light and dark art)
+- `public/` — static assets served as-is (favicon, robots.txt)
 
 ## Deploy on Vercel
 
-Configured via `vercel.json` (framework: `vite`, output: `dist`, SPA rewrites). Push to the connected repo and Vercel builds and deploys automatically.
+Configured via `vercel.json` (framework: `vite`, output: `dist`). Push to the connected repo and Vercel builds and deploys automatically.

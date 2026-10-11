@@ -1,0 +1,41 @@
+.about { overflow-x: clip; }
+.about-grid { display: grid; grid-template-columns: 1fr; gap: 64px; }
+.about-copy .h2 { margin-top: 24px; }
+.about-lead { margin-top: 40px; max-width: 32em; color: var(--fg); }
+
+.about-do { margin-top: 56px; max-width: 640px; }
+.about-do ol { list-style: none; margin: 16px 0 0; padding: 0; border-bottom: 1px solid var(--line); }
+.about-do li { display: grid; grid-template-columns: 48px 1fr; padding: 16px 0; border-top: 1px solid var(--line); font-size: 17px; line-height: 1.45; }
+.about-do .index { font-size: 12px; line-height: 25px; }
+
+.about-community { margin-top: 48px; }
+.about-community .body { margin-top: 12px; max-width: 36em; font-size: 16px; }
+.about-fg { color: var(--fg); }
+
+.about-frame { margin: 0; padding: 12px; border: 1px solid var(--line); width: 100%; }
+/* --ar is the art's width/height: cols * 0.6em over rows * 1em (set from data in About.tsx). */
+.about-frame-img { aspect-ratio: var(--ar); overflow: hidden; background: var(--tint-strong); }
+.about-frame-cap { display: flex; justify-content: space-between; gap: 16px; padding-top: 12px; }
+
+@media (min-width: 1024px) {
+  .about-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; align-items: start; }
+  /* As large as the column allows, but short enough to fit on screen beside the copy. */
+  .about-frame { justify-self: end; align-self: center; width: min(100%, calc((100vh - 168px) * var(--ar))); }
+}
+
+/* ASCII portrait: one JetBrains Mono cell is 0.6em x 1em, so `cols * 0.6em` spans the frame width exactly. */
+.about-ascii { container-type: inline-size; background: none; }
+.about-ascii pre {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: calc(100cqw / (var(--cols) * 0.6));
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: pre;
+  color: var(--fg);
+  font-variant-ligatures: none;
+  font-kerning: none;
+}
+.about-ascii-dark { display: none; }
+[data-theme="dark"] .about-ascii-light { display: none; }
+[data-theme="dark"] .about-ascii-dark { display: block; }

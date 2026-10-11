@@ -17,8 +17,7 @@
     "noUnusedLocals": false,
     "types": ["node", "vite/client"],
     "paths": {
-      "@/*": ["./src/*"],
-      "@assets/*": ["./attached_assets/*"]
+      "@/*": ["./src/*"]
     }
   }
 }

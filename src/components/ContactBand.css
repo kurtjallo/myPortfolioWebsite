@@ -1,0 +1,85 @@
+.cb { padding-bottom: 0; }
+.cb-eyebrow { margin-bottom: 8px; }
+
+.cb-band { --rise: 0px; container-type: inline-size; position: relative; overflow: hidden; }
+
+/* An ink halftone: a static screen of paper with dot-shaped holes (::after) sits over the sliding
+   ink type, so the letters read as solid dots on the same grid as the faint field dots. */
+.cb-field {
+  --cols: 100;
+  --unit: calc(100cqw / var(--cols));
+  --dot: color-mix(in srgb, var(--fg) 14%, transparent);
+  --dot-r: 0.34;
+  position: relative; display: flex; align-items: center;
+  min-height: min(45svh, 520px);
+  background-color: var(--bg);
+  background-image: radial-gradient(circle at center, var(--dot) calc(var(--unit) * var(--dot-r)), transparent calc(var(--unit) * var(--dot-r) + 0.75px));
+  background-size: var(--unit) var(--unit);
+}
+@media (min-width: 1024px) { .cb-field { --cols: 166; } }
+@media (max-width: 639px) { .cb-field { min-height: 300px; } }
+.cb-field::after {
+  content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background-image: radial-gradient(circle at center, transparent calc(var(--unit) * var(--dot-r)), var(--bg) calc(var(--unit) * var(--dot-r) + 0.75px));
+  background-size: var(--unit) var(--unit);
+}
+.cb-field::before {
+  content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  background:
+    linear-gradient(to bottom, var(--bg) 0%, transparent 34%, transparent 66%, var(--bg) 100%),
+    linear-gradient(to right, var(--bg) 0%, transparent 14%, transparent 86%, var(--bg) 100%);
+}
+
+.cb-scroller { position: relative; z-index: 1; flex: 1; min-width: 0; overflow: hidden; }
+.cb-track {
+  display: flex; width: max-content;
+  gap: calc(var(--unit) * 24); padding-right: calc(var(--unit) * 24);
+}
+.cb-track.cb-run { animation: cb-marquee 60s linear infinite; }
+.cb-off .cb-track.cb-run, .cb-off .dot-live { animation-play-state: paused; }
+@keyframes cb-marquee { to { transform: translateX(-50%); } }
+.cb-text {
+  margin: 0; white-space: nowrap; user-select: none;
+  font-family: var(--pixel);
+  font-size: calc(var(--unit) * 26.3158); line-height: 1; font-weight: 400; letter-spacing: 0;
+  color: var(--fg);
+  text-box: trim-both cap alphabetic;
+}
+
+.cb-close {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto;
+  margin-top: 56px; border-top: 1px solid var(--line);
+}
+.cb-body {
+  grid-column: 1 / -1; margin: 0; padding-top: 40px; max-width: 26em;
+  font-size: clamp(22px, 2.1vw, 30px); line-height: 1.35; letter-spacing: -0.015em; color: var(--fg);
+}
+.cb-reach { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 24px; padding: 32px 0 48px; }
+.cb-status { display: flex; align-items: center; gap: 10px; margin: 0; }
+.cb-ctas { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 480px; }
+.cb-ctas .pill { justify-content: center; }
+.cb-ctas .pill:first-child { grid-column: 1 / -1; }
+.cb-sign, .cb-more { margin: 0; padding: 20px 0 32px; border-top: 1px solid var(--line); }
+.cb-sign { display: flex; align-items: center; gap: 12px; }
+.cb-sign svg { flex: none; margin: -2px 0; color: var(--fg); }
+.cb-more { display: flex; justify-content: flex-end; gap: 24px; }
+.cb-more a { transition: color 0.15s var(--ease); }
+.cb-more a:hover { color: var(--fg); }
+
+@media (min-width: 1024px) {
+  .cb-close { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+  .cb-body { grid-column: 1; padding: 48px 48px 72px 0; }
+  .cb-reach { grid-column: 2; justify-content: space-between; padding: 48px 0 72px 48px; border-left: 1px solid var(--line); }
+  .cb-ctas { max-width: none; }
+  .cb-sign { padding: 24px 48px 40px 0; }
+  .cb-more { justify-content: flex-start; padding: 24px 0 40px 48px; border-left: 1px solid var(--line); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cb-track { width: auto; justify-content: center; padding-right: 0; }
+  .cb-text + .cb-text { display: none; }
+  .cb-text { font-size: calc(var(--unit) * 26.3158 / 3); }
+}
+@media (prefers-reduced-motion: reduce) and (min-width: 1024px) {
+  .cb-text { font-size: calc(var(--unit) * 26.3158 / 2); }
+}

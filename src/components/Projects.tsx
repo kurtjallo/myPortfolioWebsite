@@ -1,86 +1,54 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { EASE } from "@/lib/motion";
-import { SectionHeading } from "@/components/SectionHeading";
-import { ArrowUpRight } from "lucide-react";
-import { PROJECTS } from "../data";
+import type { CSSProperties } from 'react';
+import { GITHUB_URL, PROJECTS, PROJECTS_HEADING } from '@/data';
+import './Projects.css';
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.15 }
-  }
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 40 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } }
-};
+const vars = (v: Record<string, string>) => v as CSSProperties;
+const pad = (i: number) => String(i + 1).padStart(2, '0');
 
 export function Projects() {
+  const [line1, line2] = PROJECTS_HEADING;
   return (
-    <section id="projects" className="py-24 md:py-32 px-6 md:px-12 lg:px-24 bg-card text-foreground transition-colors duration-200 relative border-b border-border">
-      <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-        >
-          <SectionHeading label="Projects" className="mb-16" />
-        </motion.div>
-
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12"
-        >
-          {PROJECTS.map((project, idx) => (
-            <motion.a 
-              variants={cardVariants}
-              key={idx} 
-              href={project.link} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="group block p-8 md:p-12 rounded-md bg-secondary/30 hover:bg-secondary/60 transition-colors duration-200 border border-border hover:border-primary/50 relative overflow-hidden"
-            >
-              {/* Subtle hover wash inside card */}
-              <div className="absolute -inset-px bg-gradient-to-br from-primary/0 to-primary/0 group-hover:from-primary/5 group-hover:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-md pointer-events-none" />
-              
-              <div className="flex justify-between items-start mb-8 relative z-10">
-                <div>
-                  <h3 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
-                    {project.name}
-                  </h3>
-                  <p className="text-sm text-primary font-mono uppercase tracking-wider">
-                    {project.event}
-                  </p>
-                </div>
-                <div className="w-12 h-12 rounded-sm bg-background flex items-center justify-center border border-border text-foreground/60 group-hover:text-primary-foreground group-hover:bg-primary group-hover:border-primary transition-all duration-200 group-hover:-translate-y-1 group-hover:translate-x-1 shrink-0">
-                  <ArrowUpRight className="w-5 h-5" />
-                </div>
+    <section id="projects" className="section">
+      <div className="container">
+        <div className="pj-head">
+          <span className="eyebrow" data-reveal>Projects</span>
+          <h2 className="h2" data-reveal style={vars({ '--d': '80ms' })}>
+            {line1}
+            <br />
+            <span className="mute">{line2}</span>
+          </h2>
+        </div>
+        <div className="pj-rows">
+          {PROJECTS.map((p, i) => (
+            <article key={p.name} className="pj-row" data-reveal style={vars({ '--rise': '32px', '--d': `${i * 100}ms` })}>
+              <span className="index pj-idx">{pad(i)}</span>
+              <div className="pj-main">
+                <h3 className="pj-title">{p.name}</h3>
+                <span className="label pj-event">{p.event}</span>
+                <p className="pj-desc">{p.description}</p>
               </div>
-              
-              <p className="text-foreground/80 mb-10 font-sans font-normal leading-relaxed text-lg relative z-10">
-                {project.description}
-              </p>
-              
-              <div className="flex flex-wrap gap-2 mt-auto relative z-10">
-                {project.stack.map((tech, tIdx) => (
-                  <span 
-                    key={tIdx}
-                    className="text-xs font-mono px-3 py-1.5 bg-background border border-border rounded-sm text-foreground/70"
-                  >
-                    {tech}
-                  </span>
+              <ul className="pj-stack">
+                {p.stack.map((s) => (
+                  <li key={s} className="chip">{s}</li>
                 ))}
-              </div>
-            </motion.a>
+              </ul>
+              <span className="pj-arrow" aria-hidden="true">↗</span>
+              <a
+                className="pj-cover"
+                href={p.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${p.name} on GitHub (opens in new tab)`}
+              />
+            </article>
           ))}
-        </motion.div>
+        </div>
+        <a className="pj-more" href={GITHUB_URL} target="_blank" rel="noopener noreferrer" data-reveal style={vars({ '--d': '200ms' })}>
+          <span>Hackathon builds and open source</span>
+          <span>
+            More on GitHub <span className="pj-nudge">↗</span>
+          </span>
+        </a>
       </div>
     </section>
   );

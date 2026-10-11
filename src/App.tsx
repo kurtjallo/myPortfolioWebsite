@@ -1,39 +1,31 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useRef } from 'react';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
-import { Toaster } from '@/components/ui/toaster';
-import { TooltipProvider } from '@/components/ui/tooltip';
-import { ThemeProvider } from '@/components/ThemeProvider';
-import NotFound from '@/pages/not-found';
-import Home from '@/pages/Home';
-import { Route, Switch, Router as WouterRouter } from 'wouter';
+import { Nav } from '@/components/Nav';
+import { Hero } from '@/components/hero/Hero';
+import { About } from '@/components/About';
+import { Experience } from '@/components/Experience';
+import { Projects } from '@/components/Projects';
+import { Stack } from '@/components/Stack';
+import { ContactBand } from '@/components/ContactBand';
+import { useReveal } from '@/lib/reveal';
 
-const queryClient = new QueryClient();
-
-function Router() {
+export default function App() {
+  const main = useRef<HTMLElement>(null);
+  useReveal(main);
   return (
-    <Switch>
-      <Route path="/" component={Home} />
-      <Route component={NotFound} />
-    </Switch>
+    <>
+      <Nav />
+      <main ref={main}>
+        <Hero />
+        <About />
+        <Experience />
+        <Projects />
+        <Stack />
+        <ContactBand />
+      </main>
+      <Analytics />
+      <SpeedInsights />
+    </>
   );
 }
-
-function App() {
-  return (
-    <ThemeProvider attribute="class" defaultTheme="light" disableTransitionOnChange>
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
-            <Router />
-          </WouterRouter>
-          <Toaster />
-          <Analytics />
-          <SpeedInsights />
-        </TooltipProvider>
-      </QueryClientProvider>
-    </ThemeProvider>
-  );
-}
-
-export default App;

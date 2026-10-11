@@ -1,113 +1,205 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { EASE } from "@/lib/motion";
-import { SectionHeading } from "@/components/SectionHeading";
-import { EXPERIENCE, SKILLS } from "../data";
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
+import { EXPERIENCE_HEADING, ROLES, type Role } from '@/data';
+import { GLYPHS, useScramble } from '@/hooks/useScramble';
+import { prefersReducedMotion } from '@/lib/motion';
+import './Experience.css';
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 }
-  }
-};
+const NUMERALS = ['I', 'II', 'III', 'IV', 'V', 'VI'];
+const STEP_KEYS: Partial<Record<string, number>> = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 };
+const [lead, muted] = EXPERIENCE_HEADING;
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } }
-};
+const period = (r: Role) => `${r.start} - ${r.end ?? 'Present'}`;
+const fileName = (r: Role) => `${r.company.split(/[\s(]/)[0].toLowerCase().replace(/[^a-z0-9]/g, '')}.yml`;
+
+/** The card body: `key: value` fields, a blank line, then the one-liner as a `#` comment. */
+const cardLines = (r: Role): ([string, string] | null)[] => [
+  ['company:', r.company],
+  ['role:', r.role],
+  ['type:', r.type],
+  ['period:', period(r)],
+  ['location:', r.location],
+  null,
+  ['#', r.oneLiner],
+];
 
 export function Experience() {
+  // `run` counts animated reveals of the card; 0 means it has never animated.
+  const [sel, setSel] = useState({ index: 0, run: 0 });
+  const names = useScramble(`${GLYPHS}/`);
+  const panel = useScramble();
+  const tabs = useRef<(HTMLButtonElement | null)[]>([]);
+  const companies = useRef<(HTMLSpanElement | null)[]>([]);
+  const card = useRef<HTMLDivElement>(null);
+  const code = useRef<HTMLDivElement>(null);
+  const hovered = useRef<number | null>(null);
+  const hoverTimer = useRef(0);
+  const indexRef = useRef(sel.index);
+  indexRef.current = sel.index;
+
+  const scrambleName = (i: number) => {
+    const node = companies.current[i];
+    if (node) names.run(node, ROLES[i].company, { dur: 600, lockWidth: true });
+  };
+
+  const select = (i: number) =>
+    setSel((s) => (s.index === i ? s : { index: i, run: prefersReducedMotion() ? s.run : s.run + 1 }));
+
+  useLayoutEffect(() => {
+    panel.stop();
+    if (!sel.run || !code.current) return;
+    code.current.querySelectorAll('.exp-ln').forEach((line, n) => {
+      line.querySelectorAll<HTMLElement>('.exp-k, .exp-v').forEach((node) => {
+        const text = node.textContent ?? '';
+        panel.run(node, text, { delay: n * 80, dur: Math.max(260, Math.min(700, text.length * 6)) });
+      });
+    });
+  }, [sel, panel]);
+
+  useEffect(() => {
+    const el = card.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting || prefersReducedMotion()) return;
+        io.disconnect();
+        setSel((s) => ({ ...s, run: s.run + 1 }));
+        scrambleName(indexRef.current);
+      },
+      { threshold: 0.4 },
+    );
+    io.observe(el);
+    return () => {
+      io.disconnect();
+      clearTimeout(hoverTimer.current);
+    };
+  }, []);
+
+  const role = ROLES[sel.index];
+  const lines = cardLines(role);
+  const ongoing = role.end === null;
+
   return (
-    <section id="experience" className="py-24 md:py-32 px-6 md:px-12 lg:px-24 bg-background text-foreground relative overflow-hidden transition-colors duration-200 border-b border-border">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 relative z-10">
-        
-        {/* Experience Column */}
-        <div className="lg:col-span-8 space-y-16">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
-          >
-            <SectionHeading label="Experience" className="mb-16" />
-          </motion.div>
-
-          <motion.div 
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-100px" }}
-            className="space-y-20"
-          >
-            {EXPERIENCE.map((job, idx) => (
-              <motion.div variants={itemVariants} key={idx} className="group relative">
-                <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-4 gap-2 md:gap-4">
-                  <h3 className="text-2xl md:text-4xl font-display font-bold text-foreground group-hover:text-primary transition-colors">
-                    {job.company}
-                  </h3>
-                  <div className="text-foreground/60 font-mono text-sm uppercase tracking-wider shrink-0">
-                    {job.period}
-                  </div>
-                </div>
-                <div className="text-foreground/70 font-sans font-semibold mb-6 text-lg tracking-wide">{job.role}</div>
-                <ul className="space-y-4">
-                  {job.description.map((bullet, bIdx) => (
-                    <li key={bIdx} className="flex gap-4 text-foreground/80 font-sans font-normal leading-relaxed text-lg md:text-xl">
-                      <span className="text-primary text-sm mt-1.5 flex-shrink-0 font-mono">▸</span>
-                      <span>{bullet}</span>
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            ))}
-          </motion.div>
+    <section id="experience" className="section exp">
+      <div className="container">
+        <div className="exp-head">
+          <span className="eyebrow" data-reveal>
+            Experience
+          </span>
+          <h2 className="h2" data-reveal style={{ '--d': '80ms' } as CSSProperties}>
+            {lead}
+            <br />
+            <span className="mute">{muted}</span>
+          </h2>
         </div>
-
-        {/* Education & Skills Column */}
-        <div className="lg:col-span-4 space-y-20">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
+        <div className="exp-grid">
+          <div
+            className="exp-list"
+            role="tablist"
+            aria-orientation="vertical"
+            aria-label="Roles"
+            onMouseLeave={() => {
+              hovered.current = null;
+              clearTimeout(hoverTimer.current);
+            }}
           >
-            <SectionHeading label="Education" className="mb-12" />
-            <div className="space-y-4 bg-secondary/30 p-8 rounded-md border border-border transition-colors duration-200">
-              <h3 className="text-2xl font-display font-bold text-foreground">York University</h3>
-              <p className="text-foreground/90 font-medium">BA Honours in Computer Science</p>
-              <p className="text-foreground/70 font-mono text-sm">Lassonde School of Engineering</p>
-              <p className="text-primary font-mono text-sm uppercase tracking-wider mt-4">2024 - 2028</p>
+            {ROLES.map((r, i) => (
+              <button
+                key={r.company}
+                ref={(node) => {
+                  tabs.current[i] = node;
+                }}
+                type="button"
+                className="exp-step"
+                role="tab"
+                id={`exp-step-${i}`}
+                aria-controls="exp-card"
+                aria-selected={i === sel.index}
+                tabIndex={i === sel.index ? 0 : -1}
+                aria-label={`${r.company}, ${r.role}, ${period(r)}`}
+                data-reveal
+                style={{ '--i': i, '--rise': '24px', '--d': `${i * 80}ms` } as CSSProperties}
+                onMouseEnter={() => {
+                  if (!matchMedia('(hover: hover)').matches) return;
+                  hovered.current = i;
+                  scrambleName(i);
+                  clearTimeout(hoverTimer.current);
+                  hoverTimer.current = window.setTimeout(() => select(i), 90);
+                }}
+                onFocus={(e) => {
+                  if (hovered.current !== i && e.currentTarget.matches(':focus-visible')) scrambleName(i);
+                }}
+                onClick={() => {
+                  if (hovered.current !== i) scrambleName(i);
+                  select(i);
+                }}
+                onKeyDown={(e) => {
+                  const delta = STEP_KEYS[e.key];
+                  if (!delta) return;
+                  e.preventDefault();
+                  const next = (i + delta + ROLES.length) % ROLES.length;
+                  tabs.current[next]?.focus();
+                  select(next);
+                }}
+              >
+                <span className="exp-step-num" aria-hidden="true">
+                  {NUMERALS[i]}
+                </span>
+                <span className="exp-step-body" aria-hidden="true">
+                  <span
+                    className="exp-step-co"
+                    ref={(node) => {
+                      companies.current[i] = node;
+                    }}
+                  >
+                    {r.company}
+                  </span>
+                  <span className="exp-step-meta mono">{`${r.role} · ${period(r)}`}</span>
+                  <span className="exp-step-bar" />
+                </span>
+              </button>
+            ))}
+          </div>
+          <div
+            ref={card}
+            id="exp-card"
+            className={`exp-card${ongoing ? '' : ' exp-past'}`}
+            role="tabpanel"
+            aria-labelledby={`exp-step-${sel.index}`}
+            data-reveal
+            style={{ '--rise': '32px', '--d': '200ms' } as CSSProperties}
+          >
+            <div className="exp-card-top">
+              <span className="exp-dots" aria-hidden="true">
+                <i />
+                <i />
+                <i />
+              </span>
+              <span className="exp-file mono">{fileName(role)}</span>
             </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            <SectionHeading label="Skills" className="mb-12" />
-            <div className="space-y-10">
-              {SKILLS.map((skillGroup, idx) => (
-                <div key={idx}>
-                  <h4 className="text-xs font-mono text-foreground/60 mb-4 uppercase tracking-widest">{skillGroup.category}</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {skillGroup.items.map((skill, sIdx) => (
-                      <span 
-                        key={sIdx}
-                        className="px-3 py-1.5 bg-card border border-border rounded-sm text-sm font-mono text-foreground/80 hover:border-primary/50 hover:text-primary transition-colors cursor-default"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
+            <div key={`${sel.index}.${sel.run}`} ref={code} className={`exp-code mono${sel.run ? ' exp-play' : ''}`}>
+              {lines.map((line, n) => (
+                <div
+                  key={n}
+                  className={`exp-ln${n === lines.length - 1 ? ' exp-note' : ''}`}
+                  style={{ '--ld': `${n * 80}ms` } as CSSProperties}
+                >
+                  <span className="exp-no">{n + 1}</span>
+                  <span className="exp-tx">
+                    {line && (
+                      <>
+                        <span className="exp-k">{line[0]}</span> <span className="exp-v">{line[1]}</span>
+                      </>
+                    )}
+                  </span>
                 </div>
               ))}
             </div>
-          </motion.div>
+            <div className="exp-card-foot mono">
+              <span className="exp-dot" />
+              <span>{ongoing ? 'Current role' : 'Past role'}</span>
+            </div>
+          </div>
         </div>
-
       </div>
     </section>
   );
