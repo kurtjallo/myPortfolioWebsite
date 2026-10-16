@@ -8,6 +8,6 @@ I'm a software engineer in Toronto. I build full-stack products end to end, from
 
 ## Say hi
 
-- [Email](mailto:kurtjallorina6@gmail.com)
+- [Email](mailto:kurtjallo@gmail.com)
 - [LinkedIn](https://www.linkedin.com/in/kurtjallorina/)
 - [GitHub](https://github.com/kurtjallo)
