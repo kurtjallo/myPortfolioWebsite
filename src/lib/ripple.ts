@@ -1,3 +1,6 @@
+import { dpr as currentDpr } from '@/lib/motion';
+import { onTheme } from '@/lib/theme';
+
 export const RIPPLE = { pitch: 14, rings: 8, ringMs: 35, fadeMs: 1100, peak: 0.58, edge: 0.12, glyphPx: 12 };
 // Cell offsets at exactly Manhattan distance d, flattened as [dc, dr, dc, dr, ...], so a ripple lights ring d in one pass.
 const RINGS = Array.from({ length: RIPPLE.rings + 1 }, (_, d) => {
@@ -51,12 +54,16 @@ const VECTOR: Record<Glyph, (g: CanvasRenderingContext2D, k: number) => void> = 
 /** One row of pre-rendered sprites, each `box` CSS px square, painted centred. */
 export type Atlas = { canvas: HTMLCanvasElement; s: number; box: number; dpr: number };
 
-export function atlas(glyphs: Glyph[], box: number, dpr: number, ink: string, px: number): Atlas {
+export function atlas(glyphs: Glyph[], box: number, dpr: number, ink: string, px: number, backdrop?: string): Atlas {
   const s = Math.ceil(box * dpr);
   const canvas = document.createElement('canvas');
   canvas.width = s * glyphs.length;
   canvas.height = s;
   const g = canvas.getContext('2d')!;
+  if (backdrop) {
+    g.fillStyle = backdrop;
+    g.fillRect(0, 0, canvas.width, canvas.height);
+  }
   g.fillStyle = ink;
   g.strokeStyle = ink;
   glyphs.forEach((glyph, i) => {
@@ -174,6 +181,61 @@ export function makeRipples(canvas: HTMLCanvasElement) {
         blit(ctx, sprites, level > 0.75 ? 0 : level > 0.5 ? 1 : level > 0.25 ? 2 : 3, ((i % cols) + 0.5) * P, (((i / cols) | 0) + 0.5) * P);
       }
       ctx.globalAlpha = 1;
+    },
+  };
+}
+
+export type RippleScene = { frame(time: number, delta: number): void; destroy(): void };
+
+/** A ripple trail on `canvas`, poked by the pointer over `host`; sprites follow the theme and DPR. */
+export function createRipple(host: HTMLElement, canvas: HTMLCanvasElement): RippleScene {
+  const layer = makeRipples(canvas);
+  let dpr = currentDpr();
+  let sprites = makeSprites();
+  let clock = 0;
+
+  function makeSprites() {
+    const css = getComputedStyle(document.documentElement);
+    // Filled cells knock the ink out under them; bare glyphs vanish over the portrait's dense ASCII.
+    return atlas(RIPPLE_GLYPHS, RIPPLE.pitch, dpr, css.getPropertyValue('--fg').trim(), RIPPLE.glyphPx, css.getPropertyValue('--bg').trim());
+  }
+
+  function resize() {
+    const nextDpr = currentDpr();
+    if (nextDpr !== dpr) {
+      dpr = nextDpr;
+      sprites = makeSprites();
+    }
+    layer.resize(dpr);
+  }
+
+  function onMove(e: PointerEvent) {
+    if (e.pointerType === 'touch') return;
+    // The host reveals with a transform, so the rect is read per event rather than cached.
+    const r = canvas.getBoundingClientRect();
+    layer.poke(e.clientX - r.left, e.clientY - r.top, clock);
+  }
+
+  const onLeave = () => layer.leave();
+  const ro = new ResizeObserver(resize);
+  ro.observe(canvas);
+  host.addEventListener('pointermove', onMove, { passive: true });
+  host.addEventListener('pointerleave', onLeave);
+  const offTheme = onTheme(() => {
+    sprites = makeSprites();
+    layer.invalidate();
+  });
+
+  return {
+    frame(time, delta) {
+      clock = time / 1000;
+      layer.frame(clock, delta / 1000, sprites);
+    },
+    destroy() {
+      ro.disconnect();
+      host.removeEventListener('pointermove', onMove);
+      host.removeEventListener('pointerleave', onLeave);
+      offTheme();
     },
   };
 }
