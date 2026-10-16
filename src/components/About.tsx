@@ -1,5 +1,7 @@
-import type { CSSProperties } from 'react';
+import { useEffect, useRef, type CSSProperties } from 'react';
 import { ABOUT, SITE } from '@/data';
+import { useFrameLoop, useReducedMotion } from '@/lib/motion';
+import { createRipple, type RippleScene } from '@/lib/ripple';
 import './About.css';
 
 const [lead, muted] = ABOUT.heading;
@@ -7,6 +9,23 @@ const [communityLead, ...communityRest] = ABOUT.community.split(/(?<=\.)\s+/);
 const place = `${SITE.location}, ON`;
 
 export function About() {
+  const frame = useRef<HTMLDivElement>(null);
+  const canvas = useRef<HTMLCanvasElement>(null);
+  const ripple = useRef<RippleScene | null>(null);
+  const reduced = useReducedMotion();
+
+  useEffect(() => {
+    if (!frame.current || !canvas.current) return;
+    const r = createRipple(frame.current, canvas.current);
+    ripple.current = r;
+    return () => {
+      r.destroy();
+      ripple.current = null;
+    };
+  }, [reduced]);
+
+  useFrameLoop(frame, (time, delta) => ripple.current?.frame(time, delta));
+
   return (
     <section id="about" className="section about">
       <div className="container about-grid">
@@ -42,6 +61,7 @@ export function About() {
           style={{ '--slide': '32px', '--rise': '0px', '--d': '200ms', '--ar': (ABOUT.portrait.cols * 0.6) / ABOUT.portrait.rows } as CSSProperties}
         >
           <div
+            ref={frame}
             className="about-frame-img about-ascii"
             role="img"
             aria-label={`Portrait of ${SITE.name}, drawn in ASCII characters`}
@@ -49,6 +69,7 @@ export function About() {
           >
             <pre className="about-ascii-light" aria-hidden="true">{ABOUT.portrait.light}</pre>
             <pre className="about-ascii-dark" aria-hidden="true">{ABOUT.portrait.dark}</pre>
+            {!reduced && <canvas ref={canvas} className="about-ripple" aria-hidden="true" />}
           </div>
           <figcaption className="about-frame-cap">
             <span className="label">{SITE.name}</span>

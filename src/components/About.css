@@ -14,7 +14,8 @@
 
 .about-frame { margin: 0; padding: 12px; border: 1px solid var(--line); width: 100%; }
 /* --ar is the art's width/height: cols * 0.6em over rows * 1em (set from data in About.tsx). */
-.about-frame-img { aspect-ratio: var(--ar); overflow: hidden; background: var(--tint-strong); }
+.about-frame-img { position: relative; aspect-ratio: var(--ar); overflow: hidden; background: var(--tint-strong); }
+.about-ripple { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
 .about-frame-cap { display: flex; justify-content: space-between; gap: 16px; padding-top: 12px; }
 
 @media (min-width: 1024px) {
