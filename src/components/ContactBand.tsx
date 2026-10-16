@@ -1,11 +1,55 @@
 import { useEffect, useRef, useState } from 'react';
 import { CONTACT, LINKS, SITE } from '@/data';
 import { useReducedMotion } from '@/lib/motion';
+import { copyEmail } from '@/lib/email';
+import { useScramble } from '@/hooks/useScramble';
 import { Logo } from '@/components/Logo';
 import './ContactBand.css';
 
 /** Marquee speed in dot-grid cells per second. */
 const SPEED = 7;
+
+const IDLE = 'Email me';
+const COPIED = 'Email copied';
+
+const check = (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" aria-hidden="true">
+    <path d="M2.5 12.5l6 6L21.5 5.5" />
+  </svg>
+);
+
+function CopyEmail() {
+  const label = useRef<HTMLSpanElement>(null);
+  const timer = useRef(0);
+  const scramble = useScramble();
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => () => clearTimeout(timer.current), []);
+
+  useEffect(() => {
+    const text = copied ? COPIED : IDLE;
+    if (label.current!.textContent !== text) scramble.run(label.current!, text);
+  }, [copied, scramble]);
+
+  const copy = async () => {
+    if (!(await copyEmail())) return;
+    setCopied(true);
+    clearTimeout(timer.current);
+    timer.current = window.setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <>
+      <button type="button" className="pill cb-email" title={SITE.email} onClick={copy}>
+        <span ref={label}>{IDLE}</span>
+        {copied ? check : <span className="arrow" aria-hidden="true">→</span>}
+      </button>
+      <span className="sr-only" aria-live="polite">
+        {copied ? 'Email address copied to clipboard' : ''}
+      </span>
+    </>
+  );
+}
 
 export function ContactBand() {
   const section = useRef<HTMLElement>(null);
@@ -72,9 +116,7 @@ export function ContactBand() {
               {CONTACT.status}
             </p>
             <div className="cb-ctas">
-              <a className="pill" href={LINKS.email.href}>
-                Email me <span className="arrow">→</span>
-              </a>
+              <CopyEmail />
               <a className="pill outline" href={LINKS.linkedin.href} target="_blank" rel="noopener noreferrer">
                 LinkedIn
               </a>

@@ -59,6 +59,7 @@
 .cb-ctas { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 480px; }
 .cb-ctas .pill { justify-content: center; }
 .cb-ctas .pill:first-child { grid-column: 1 / -1; }
+.cb-email .scramble-x { font-family: var(--mono); font-size: 0.8em; }
 .cb-sign, .cb-more { margin: 0; padding: 20px 0 32px; border-top: 1px solid var(--line); }
 .cb-sign { display: flex; align-items: center; gap: 12px; }
 .cb-sign svg { flex: none; margin: -2px 0; color: var(--fg); }
