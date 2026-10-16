@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { Nav } from '@/components/Nav';
+import { CommandMenu } from '@/components/CommandMenu';
 import { Hero } from '@/components/hero/Hero';
 import { About } from '@/components/About';
 import { Experience } from '@/components/Experience';
@@ -24,6 +25,7 @@ export default function App() {
         <Stack />
         <ContactBand />
       </main>
+      <CommandMenu />
       <Analytics />
       <SpeedInsights />
     </>

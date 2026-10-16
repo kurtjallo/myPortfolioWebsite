@@ -1,8 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { SECTIONS, SITE } from '@/data';
+import { openCommandMenu } from '@/lib/commandMenu';
 import { setTheme, useTheme } from '@/lib/theme';
 import { Logo } from '@/components/Logo';
 import './Nav.css';
+
+const APPLE = /Mac|iPhone|iPad|iPod/.test(navigator.platform);
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -56,6 +59,15 @@ export function Nav() {
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
               <path d="M4 8h16M4 16h16" />
             </svg>
+          </button>
+          <button
+            type="button"
+            className="nav-icon nav-cmdk"
+            aria-label="Open command menu"
+            aria-keyshortcuts="Meta+K Control+K"
+            onClick={openCommandMenu}
+          >
+            {APPLE ? '⌘K' : 'Ctrl K'}
           </button>
           <button type="button" className="nav-icon" aria-label={`Switch to ${next} theme`} onClick={() => setTheme(next)}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">

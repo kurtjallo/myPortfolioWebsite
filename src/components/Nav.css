@@ -37,6 +37,8 @@
 .nav-icon:hover { color: var(--fg); }
 .nav-menu { display: none; }
 @media (max-width: 899px) { .nav-menu { display: grid; } }
+.nav-cmdk { width: auto; padding: 0 10px; font-family: var(--mono); font-size: 12px; white-space: nowrap; }
+@media (max-width: 899px) { .nav-cmdk { display: none; } }
 
 .nav-cta { height: 36px; padding: 0 18px; font-size: 14px; white-space: nowrap; }
 .nav-scrolled .nav-cta { height: 32px; padding: 0 14px; font-size: 13px; }
