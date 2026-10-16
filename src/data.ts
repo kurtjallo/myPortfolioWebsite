@@ -48,7 +48,7 @@ export const SITE = {
   name: 'Kurt Jallorina',
   role: 'Software Engineer',
   location: 'Toronto',
-  email: 'kurtjallorina6@gmail.com',
+  email: 'kurtjallo@gmail.com',
 };
 
 export const SECTIONS = [
