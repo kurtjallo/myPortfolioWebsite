@@ -14,5 +14,8 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
+    rollupOptions: {
+      input: ['index.html', '404.html'].map((page) => path.resolve(import.meta.dirname, page)),
+    },
   },
 });

@@ -1,0 +1,11 @@
+.nf-inner {
+  position: relative; z-index: 1; margin: auto; padding: 48px var(--pad-x);
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+}
+.nf-code { margin: 0 0 32px; font: 400 clamp(96px, 16vw, 200px) / 0.9 var(--pixel); }
+.nf-path { margin: 12px 0 40px; text-transform: none; overflow-wrap: anywhere; }
+
+.nf .hero-scrim { background: radial-gradient(ellipse 40% 42% at 50% 50%, color-mix(in srgb, var(--bg) 88%, transparent) 35%, transparent 100%); }
+@media (max-width: 767px) {
+  .nf .hero-scrim { background: radial-gradient(ellipse 90% 40% at 50% 50%, color-mix(in srgb, var(--bg) 88%, transparent) 40%, transparent 100%); }
+}
