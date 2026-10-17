@@ -44,6 +44,7 @@ function CopyEmail() {
         <span ref={label}>{IDLE}</span>
         {copied ? check : <span className="arrow" aria-hidden="true">→</span>}
       </button>
+      <p className="label cb-addr">{SITE.email}</p>
       <span className="sr-only" aria-live="polite">
         {copied ? 'Email address copied to clipboard' : ''}
       </span>
