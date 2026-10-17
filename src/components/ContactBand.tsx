@@ -60,7 +60,7 @@ export function ContactBand() {
   const [duration, setDuration] = useState<number | null>(null);
 
   useEffect(() => {
-    const io = new IntersectionObserver(([e]) => setOffscreen(!e.isIntersecting));
+    const io = new IntersectionObserver((es) => setOffscreen(!es.at(-1)!.isIntersecting));
     io.observe(section.current!);
     return () => io.disconnect();
   }, []);
