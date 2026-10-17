@@ -115,7 +115,7 @@ export const PROJECTS: Project[] = [
     name: 'Clarify',
     event: 'Hackville 2026',
     description:
-      'A full-stack document chatbot that helps users navigate legal and tax forms using Retrieval-Augmented Generation and MongoDB Atlas Vector Search, returning answers with 95%+ retrieval accuracy.',
+      'A full-stack document chatbot that helps users navigate legal and tax forms using Retrieval-Augmented Generation and MongoDB Atlas Vector Search.',
     stack: ['React', 'Next.js', 'TypeScript', 'Node.js', 'Express.js', 'MongoDB Atlas Vector Search'],
     link: 'https://github.com/kurtjallo/Clarify-Hackville-2026',
   },
@@ -123,7 +123,7 @@ export const PROJECTS: Project[] = [
     name: 'Visual Debugger',
     event: 'Open Source',
     description:
-      'An open-source VS Code extension that converts developer errors into structured plain-English explanations using Gemini 2.0 Flash, reaching 100+ installs.',
+      'An open-source VS Code extension that converts developer errors into structured plain-English explanations using Gemini 2.0 Flash.',
     stack: ['JavaScript', 'TypeScript', 'VS Code Extension API', 'Gemini 2.0 Flash', 'Chart.js'],
     link: 'https://github.com/kurtjallo',
   },
