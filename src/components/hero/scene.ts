@@ -1,5 +1,4 @@
-import { dpr as currentDpr } from '@/lib/motion';
-import { atlas, blit, makeRipples, sizeCanvas, RIPPLE, RIPPLE_GLYPHS, type Atlas, type Glyph } from '@/lib/ripple';
+import { atlas, blit, createRipple, sizeCanvas, trackCanvas, type Atlas, type Glyph } from '@/lib/ripple';
 
 // Griffin's AsciiPattern field (full hero), drawn with Kurt's diamond set. Cells are 12x14, sampled at (col+.5)*.13.
 const BAND = { cw: 12, ch: 14, scale: 0.13, spacing: 0.08, speed: 0.9, alpha: [0.06, 0.13, 0.29, 0.58].map((a) => a * 0.6) };
@@ -115,77 +114,30 @@ export type SceneEls = {
 
 export type Scene = {
   frame(time: number, delta: number): void;
-  retheme(): void;
   destroy(): void;
 };
 
-/** Owns the hero canvases: the ripple trail and the code band share one clock, pointer, DPR and set of sprites. */
+/** Owns the hero canvases: the code band, and the ripple trail over it when motion is allowed. Both run on the frame loop's clock. */
 export function createScene({ root, ripple, band }: SceneEls): Scene {
-  const bandLayer = makeBand(band);
-  const rippleLayer = ripple && makeRipples(ripple);
-
-  let dpr = currentDpr();
-  let sprites = makeSprites();
+  const layer = makeBand(band);
+  const trail = ripple && createRipple(root, ripple, { backdrop: false });
+  const view = trackCanvas(band, layer, (dpr, fg) => atlas(BAND_GLYPHS, BAND.ch, dpr, fg, 12), drawBand);
   let clock = 0;
   let frameNo = 0;
 
-  function makeSprites() {
-    const ink = getComputedStyle(document.documentElement).getPropertyValue('--fg').trim();
-    return {
-      ripple: atlas(RIPPLE_GLYPHS, RIPPLE.pitch, dpr, ink, RIPPLE.glyphPx),
-      band: atlas(BAND_GLYPHS, BAND.ch, dpr, ink, 12),
-    };
-  }
-
   function drawBand() {
-    bandLayer.draw(clock * BAND.speed, sprites.band);
+    layer.draw(clock * BAND.speed, view.sprites());
   }
-
-  function resize() {
-    const nextDpr = currentDpr();
-    if (nextDpr !== dpr) {
-      dpr = nextDpr;
-      sprites = makeSprites();
-    }
-    bandLayer.resize(dpr);
-    rippleLayer?.resize(dpr);
-    drawBand();
-  }
-
-  function onMove(e: PointerEvent) {
-    if (e.pointerType === 'touch') return;
-    const hb = root.getBoundingClientRect();
-    const x = e.clientX - hb.left;
-    const y = e.clientY - hb.top;
-    if (x >= 0 && y >= 0 && x < hb.width && y < hb.height) rippleLayer?.poke(x, y, clock);
-    else rippleLayer?.leave();
-  }
-
-  function onOut(e: MouseEvent) {
-    if (!e.relatedTarget) rippleLayer?.leave();
-  }
-
-  const ro = new ResizeObserver(resize);
-  if (ripple) ro.observe(ripple);
-  ro.observe(band);
-  addEventListener('pointermove', onMove, { passive: true });
-  addEventListener('mouseout', onOut);
 
   return {
     frame(time, delta) {
       clock = time / 1000;
-      rippleLayer?.frame(clock, delta / 1000, sprites.ripple);
+      trail?.frame(time, delta);
       if (++frameNo % 2 === 0) drawBand();
     },
-    retheme() {
-      sprites = makeSprites();
-      drawBand();
-      rippleLayer?.invalidate();
-    },
     destroy() {
-      ro.disconnect();
-      removeEventListener('pointermove', onMove);
-      removeEventListener('mouseout', onOut);
+      view.destroy();
+      trail?.destroy();
     },
   };
 }

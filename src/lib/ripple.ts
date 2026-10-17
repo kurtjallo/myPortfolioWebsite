@@ -85,6 +85,46 @@ export function sizeCanvas(canvas: HTMLCanvasElement, ctx: CanvasRenderingContex
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 }
 
+/** Keeps `layer` sized to `canvas` and the sprites `paint` builds in step with the DPR and theme; `redraw` follows every change. */
+export function trackCanvas(
+  canvas: HTMLCanvasElement,
+  layer: { resize(dpr: number): void },
+  paint: (dpr: number, fg: string, bg: string) => Atlas,
+  redraw: () => void,
+) {
+  let dpr = currentDpr();
+  const fresh = () => {
+    const css = getComputedStyle(document.documentElement);
+    return paint(dpr, css.getPropertyValue('--fg').trim(), css.getPropertyValue('--bg').trim());
+  };
+  let sprites = fresh();
+
+  function resize() {
+    const next = currentDpr();
+    if (next !== dpr) {
+      dpr = next;
+      sprites = fresh();
+    }
+    layer.resize(dpr);
+    redraw();
+  }
+
+  const ro = new ResizeObserver(resize);
+  ro.observe(canvas);
+  const offTheme = onTheme(() => {
+    sprites = fresh();
+    redraw();
+  });
+
+  return {
+    sprites: () => sprites,
+    destroy() {
+      ro.disconnect();
+      offTheme();
+    },
+  };
+}
+
 type Ripple = { col: number; row: number; t0: number; next: number };
 
 /** The BFS trail: each pointer cell spawns a ripple that lights one Manhattan ring every ringMs, then every lit cell fades. */
@@ -187,27 +227,19 @@ export function makeRipples(canvas: HTMLCanvasElement) {
 
 export type RippleScene = { frame(time: number, delta: number): void; destroy(): void };
 
-/** A ripple trail on `canvas`, poked by the pointer over `host`; sprites follow the theme and DPR. */
-export function createRipple(host: HTMLElement, canvas: HTMLCanvasElement): RippleScene {
+/**
+ * A ripple trail on `canvas`, poked by the pointer over `host`; sprites follow the theme and DPR.
+ * `backdrop` paints each cell on `--bg` so filled cells knock out the ink under them; bare glyphs vanish over the portrait's dense ASCII.
+ */
+export function createRipple(host: HTMLElement, canvas: HTMLCanvasElement, { backdrop = true } = {}): RippleScene {
   const layer = makeRipples(canvas);
-  let dpr = currentDpr();
-  let sprites = makeSprites();
+  const view = trackCanvas(
+    canvas,
+    layer,
+    (dpr, fg, bg) => atlas(RIPPLE_GLYPHS, RIPPLE.pitch, dpr, fg, RIPPLE.glyphPx, backdrop ? bg : undefined),
+    layer.invalidate,
+  );
   let clock = 0;
-
-  function makeSprites() {
-    const css = getComputedStyle(document.documentElement);
-    // Filled cells knock the ink out under them; bare glyphs vanish over the portrait's dense ASCII.
-    return atlas(RIPPLE_GLYPHS, RIPPLE.pitch, dpr, css.getPropertyValue('--fg').trim(), RIPPLE.glyphPx, css.getPropertyValue('--bg').trim());
-  }
-
-  function resize() {
-    const nextDpr = currentDpr();
-    if (nextDpr !== dpr) {
-      dpr = nextDpr;
-      sprites = makeSprites();
-    }
-    layer.resize(dpr);
-  }
 
   function onMove(e: PointerEvent) {
     if (e.pointerType === 'touch') return;
@@ -217,25 +249,18 @@ export function createRipple(host: HTMLElement, canvas: HTMLCanvasElement): Ripp
   }
 
   const onLeave = () => layer.leave();
-  const ro = new ResizeObserver(resize);
-  ro.observe(canvas);
   host.addEventListener('pointermove', onMove, { passive: true });
   host.addEventListener('pointerleave', onLeave);
-  const offTheme = onTheme(() => {
-    sprites = makeSprites();
-    layer.invalidate();
-  });
 
   return {
     frame(time, delta) {
       clock = time / 1000;
-      layer.frame(clock, delta / 1000, sprites);
+      layer.frame(clock, delta / 1000, view.sprites());
     },
     destroy() {
-      ro.disconnect();
+      view.destroy();
       host.removeEventListener('pointermove', onMove);
       host.removeEventListener('pointerleave', onLeave);
-      offTheme();
     },
   };
 }
