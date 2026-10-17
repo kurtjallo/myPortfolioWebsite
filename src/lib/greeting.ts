@@ -1,4 +1,5 @@
 import { GITHUB_URL, SITE } from '@/data';
+import { SHORTCUT } from '@/lib/commandMenu';
 
 const MARK = [
   '        ◆',
@@ -18,7 +19,7 @@ export function greet() {
     ...MARK,
     '',
     'Hi, you found the console.',
-    'Press ⌘K (Ctrl K) for the command menu.',
+    `Press ${SHORTCUT} for the command menu.`,
     SITE.email,
     `Source: ${GITHUB_URL}/myPortfolioWebsite`,
   ];
