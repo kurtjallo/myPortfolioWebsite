@@ -1,10 +1,11 @@
 import { useEffect, useRef, type CSSProperties } from 'react';
 import { ABOUT, SITE } from '@/data';
 import { useFrameLoop, useReducedMotion } from '@/lib/motion';
+import { pad } from '@/lib/pad';
 import { createRipple, type RippleScene } from '@/lib/ripple';
+import { SectionHeading } from './SectionHeading';
 import './About.css';
 
-const [lead, muted] = ABOUT.heading;
 const place = `${SITE.location}, ON`;
 
 export function About() {
@@ -30,18 +31,14 @@ export function About() {
       <div className="container about-grid">
         <div className="about-copy" data-reveal style={{ '--slide': '-32px', '--rise': '0px' } as CSSProperties}>
           <span className="eyebrow">About</span>
-          <h2 className="h2">
-            {lead}
-            <br />
-            <span className="mute">{muted}</span>
-          </h2>
+          <SectionHeading heading={ABOUT.heading} />
           <p className="lead about-lead">{ABOUT.intro}</p>
           <div className="about-do">
             <p className="label">What I do</p>
             <ol>
               {ABOUT.whatIDo.map((item, i) => (
                 <li key={item}>
-                  <span className="index">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="index">{pad(i)}</span>
                   <span>{item}</span>
                 </li>
               ))}

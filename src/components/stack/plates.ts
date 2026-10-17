@@ -1,4 +1,5 @@
 import type { LayerId } from '@/data';
+import { pad } from '@/lib/pad';
 
 // Griffin's slab geometry: a true-iso slab (half-diagonals 218.357 x 126.068, 16 thick) centred at y 269.
 // Top-face art is authored on a flat 252x252 page: x runs up the upper-left edge, y down the lower-left edge.
@@ -100,7 +101,7 @@ const backend = () => {
   const x0 = 40, tab = 16;
   const code = CODE.map((r, k) => {
     const y = ROW0 + k * ROW, x = x0 + r.i * tab;
-    const num = text(16, y + 3, String(k + 1).padStart(2, '0'), 7, { op: 0.5 });
+    const num = text(16, y + 3, pad(k), 7, { op: 0.5 });
     if ('t' in r) return num + text(x, y + 4, r.t, 11.5);
     let cx = x;
     return num + r.w.map((w) => {
