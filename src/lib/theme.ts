@@ -26,8 +26,14 @@ export function switchTheme(next: Theme, from = { x: innerWidth / 2, y: innerHei
   const { x, y } = from;
   const R = Math.max(x, innerWidth - x) + Math.max(y, innerHeight - y);
   const diamond = (r: number) => `polygon(${x}px ${y - r}px, ${x + r}px ${y}px, ${x}px ${y + r}px, ${x - r}px ${y}px)`;
+  const noTransitions = document.createElement('style');
+  noTransitions.textContent = '*, *::before, *::after { transition: none !important; }';
   // flushSync so React-rendered labels commit inside the update, before the new view is captured.
-  const t = document.startViewTransition(() => flushSync(() => setTheme(next)));
+  const t = document.startViewTransition(() => {
+    document.head.append(noTransitions);
+    flushSync(() => setTheme(next));
+  });
+  t.finished.finally(() => noTransitions.remove());
   // A newer switch skips this one and rejects `ready`, which Safari reports as unhandled.
   t.ready.then(
     () =>
