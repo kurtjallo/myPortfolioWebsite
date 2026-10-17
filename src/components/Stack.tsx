@@ -227,8 +227,8 @@ function StackPinned() {
       schedule();
     };
 
-    const io = new IntersectionObserver(([e]) => {
-      near = e.isIntersecting;
+    const io = new IntersectionObserver((entries) => {
+      near = entries[entries.length - 1].isIntersecting;
       schedule();
     }, { rootMargin: '50% 0px' });
     const ro = new ResizeObserver(() => {
