@@ -5,7 +5,6 @@ import { createRipple, type RippleScene } from '@/lib/ripple';
 import './About.css';
 
 const [lead, muted] = ABOUT.heading;
-const [communityLead, ...communityRest] = ABOUT.community.split(/(?<=\.)\s+/);
 const place = `${SITE.location}, ON`;
 
 export function About() {
@@ -51,7 +50,7 @@ export function About() {
           <div className="about-community">
             <p className="label">Community</p>
             <p className="body">
-              <span className="about-fg">{communityLead}</span> {communityRest.join(' ')}
+              <span className="about-fg">{ABOUT.community.lead}</span> {ABOUT.community.rest}
             </p>
           </div>
         </div>

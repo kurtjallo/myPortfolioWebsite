@@ -70,7 +70,7 @@ export const ABOUT = {
     'Build tools and AI agents that help me ship faster',
     'Keep production fast and reliable',
   ],
-  community: 'Replit Ambassador. Growing the builder community through events and technical content.',
+  community: { lead: 'Replit Ambassador.', rest: 'Growing the builder community through events and technical content.' },
   /** The portrait as ASCII art (190 x 100 cells of JetBrains Mono, cropped at mid-chest); dark-theme art has ink where the photo is bright. */
   portrait: { light: portraitLight, dark: portraitDark, cols: 190, rows: 100 },
 };
