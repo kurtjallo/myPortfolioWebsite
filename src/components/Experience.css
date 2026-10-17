@@ -1,15 +1,9 @@
 .exp {
-  --p-bg: #080503;
-  --p-fg: #fafaf9;
-  --p-muted: rgba(250, 250, 249, 0.58);
-  --p-line: rgba(250, 250, 249, 0.12);
-  --p-tint: rgba(250, 250, 249, 0.03);
   background: var(--p-bg);
   color: var(--p-fg);
   isolation: isolate;
 }
 [data-theme="dark"] .exp {
-  --p-bg: #17120e;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
 }

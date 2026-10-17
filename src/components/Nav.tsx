@@ -5,15 +5,30 @@ import { switchTheme, useTheme } from '@/lib/theme';
 import { Logo } from '@/components/Logo';
 import './Nav.css';
 
+/** `top`: transparent over the hero. Once scrolled, it takes the colors of what's under it. */
+type Tone = 'top' | 'page' | 'panel';
+
+/** The scrolled nav's vertical middle; the section at this line is the one it sits over. */
+const NAV_MID = 32;
+
+const toneAt = (scrollY: number): Tone => {
+  if (scrollY <= 20) return 'top';
+  for (const s of document.querySelectorAll('[data-nav="panel"]')) {
+    const r = s.getBoundingClientRect();
+    if (r.top <= NAV_MID && r.bottom > NAV_MID) return 'panel';
+  }
+  return 'page';
+};
+
 export function Nav() {
-  const [scrolled, setScrolled] = useState(false);
+  const [tone, setTone] = useState<Tone>('top');
   const [menuOpen, setMenuOpen] = useState(false);
   const toggle = useRef<HTMLButtonElement>(null);
   const sheet = useRef<HTMLElement>(null);
   const next = useTheme() === 'dark' ? 'light' : 'dark';
 
   useEffect(() => {
-    const update = () => setScrolled(window.scrollY > 20);
+    const update = () => setTone(toneAt(window.scrollY));
     update();
     window.addEventListener('scroll', update, { passive: true });
     return () => window.removeEventListener('scroll', update);
@@ -42,7 +57,7 @@ export function Nav() {
 
   return (
     <>
-      <header className={scrolled ? 'nav nav-scrolled' : 'nav'}>
+      <header className={tone === 'top' ? 'nav' : 'nav nav-scrolled'} data-tone={tone}>
         <a className="nav-brand" href="#home">
           <Logo />
           <span className="nav-name">{SITE.name}</span>

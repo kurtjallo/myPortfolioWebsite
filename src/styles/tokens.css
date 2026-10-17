@@ -8,8 +8,13 @@
   --line-strong: rgba(8, 5, 3, 0.20);
   --line-rule: rgba(8, 5, 3, 0.30);
   --tint-strong: rgba(8, 5, 3, 0.05);
-  --nav-glass: rgba(250, 250, 249, 0.80);
   --on-fg: #fafaf9;
+  /* Inverted panel: the Experience section, and the nav while it sits over it */
+  --p-bg: #080503;
+  --p-fg: #fafaf9;
+  --p-muted: rgba(250, 250, 249, 0.58);
+  --p-line: rgba(250, 250, 249, 0.12);
+  --p-tint: rgba(250, 250, 249, 0.03);
   --green: #00c950;
   --focus: #0b62d6;
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
@@ -30,8 +35,8 @@
   --line-strong: rgba(250, 250, 249, 0.20);
   --line-rule: rgba(250, 250, 249, 0.30);
   --tint-strong: rgba(250, 250, 249, 0.06);
-  --nav-glass: rgba(8, 5, 3, 0.72);
   --on-fg: #080503;
+  --p-bg: #17120e;
   --green: #05df72;
   --focus: #52a8ff;
   color-scheme: dark;
