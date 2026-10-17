@@ -1,7 +1,8 @@
 import { useEffect, type RefObject } from 'react';
 
 /**
- * Sets `data-shown` on every `[data-reveal]` inside `root` once it scrolls into view (styles in tokens.css).
+ * Sets `data-shown` on every `[data-reveal]` inside `root` once it scrolls into view (styles in tokens.css),
+ * including ones added after mount.
  * An attribute, not a class: React rewrites `className` on re-render and would erase a class added here.
  */
 export function useReveal(root: RefObject<HTMLElement | null>) {
@@ -19,7 +20,18 @@ export function useReveal(root: RefObject<HTMLElement | null>) {
       },
       { threshold: 0.15 },
     );
-    el.querySelectorAll('[data-reveal]').forEach((n) => io.observe(n));
-    return () => io.disconnect();
+    const watch = (n: Element) => {
+      if (n.matches('[data-reveal]')) io.observe(n);
+      n.querySelectorAll('[data-reveal]').forEach((r) => io.observe(r));
+    };
+    watch(el);
+    const mo = new MutationObserver((muts) => {
+      for (const m of muts) for (const n of m.addedNodes) if (n instanceof Element) watch(n);
+    });
+    mo.observe(el, { childList: true, subtree: true });
+    return () => {
+      io.disconnect();
+      mo.disconnect();
+    };
   }, [root]);
 }
