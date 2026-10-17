@@ -1,4 +1,4 @@
-import { dpr as currentDpr } from '@/lib/motion';
+import { dpr as currentDpr, onDprChange } from '@/lib/motion';
 import { onTheme } from '@/lib/theme';
 
 export const RIPPLE = { pitch: 14, rings: 8, ringMs: 35, fadeMs: 1100, peak: 0.58, edge: 0.12, glyphPx: 12 };
@@ -111,6 +111,7 @@ export function trackCanvas(
 
   const ro = new ResizeObserver(resize);
   ro.observe(canvas);
+  const offDpr = onDprChange(resize);
   const offTheme = onTheme(() => {
     sprites = fresh();
     redraw();
@@ -120,6 +121,7 @@ export function trackCanvas(
     sprites: () => sprites,
     destroy() {
       ro.disconnect();
+      offDpr();
       offTheme();
     },
   };

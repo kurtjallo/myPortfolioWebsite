@@ -23,6 +23,22 @@ export function dpr() {
   return Math.min(window.devicePixelRatio || 1, 2);
 }
 
+/** Calls `fn` when the device pixel ratio changes, as when the window moves to another screen. Returns the unsubscribe. */
+export function onDprChange(fn: () => void) {
+  let mq: MediaQueryList;
+  // The query matches only the ratio it was built with, so each change re-arms it for the new one.
+  const change = () => {
+    arm();
+    fn();
+  };
+  const arm = () => {
+    mq = matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`);
+    mq.addEventListener('change', change, { once: true });
+  };
+  arm();
+  return () => mq.removeEventListener('change', change);
+}
+
 /**
  * Run `tick(timeMs, deltaMs)` every animation frame, but only while `ref` is on screen,
  * the tab is visible, and the user allows motion. Time only advances while running.
