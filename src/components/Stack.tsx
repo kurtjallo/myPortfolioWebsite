@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState, type Ref } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, type Ref } from 'react';
 import { STACK, STACK_HEADING, STACK_LEAD, type Layer } from '@/data';
 import { useReducedMotion } from '@/lib/motion';
 import { SkillIcon } from './SkillIcon';
@@ -120,7 +120,15 @@ function LayerText({ layer, i }: { layer: Layer; i: number }) {
 }
 
 export function Stack() {
-  return useReducedMotion() ? <StackStatic /> : <StackPinned />;
+  const reduced = useReducedMotion();
+  const [overflow, setOverflow] = useState(false);
+  useEffect(() => {
+    if (!overflow) return;
+    const retry = () => setOverflow(false);
+    addEventListener('resize', retry);
+    return () => removeEventListener('resize', retry);
+  }, [overflow]);
+  return reduced || overflow ? <StackStatic /> : <StackPinned onOverflow={() => setOverflow(true)} />;
 }
 
 function StackStatic() {
@@ -145,7 +153,8 @@ function StackStatic() {
   );
 }
 
-function StackPinned() {
+/** The pinned deck; calls `onOverflow` when the text or the deck row no longer fits the viewport. */
+function StackPinned({ onOverflow }: { onOverflow: () => void }) {
   const [active, setActive] = useState<Active>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
@@ -172,11 +181,12 @@ function StackPinned() {
       sticky.style.height = `${vh}px`;
     };
     const rescale = () => {
+      if (sticky.scrollHeight > sticky.clientHeight) return onOverflow();
       scale = stage.clientWidth / VIEW_W;
       fit.top = Math.max(0, NAV_CLEAR - visual.offsetTop) + 12;
       fit.bot = visual.clientHeight - 16;
       fit.mid = visual.clientHeight / 2;
-      fit.s = Math.min(scale, (fit.bot - fit.top) / DECK_MAX);
+      fit.s = clamp((fit.bot - fit.top) / DECK_MAX, 0, scale);
       fit.k = fit.s / scale;
       lastTy.fill(NaN);
       lastCam = '';
