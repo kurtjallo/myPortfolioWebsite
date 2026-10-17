@@ -56,7 +56,7 @@
 }
 .cb-reach { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 24px; padding: 32px 0 48px; }
 .cb-status { display: flex; align-items: center; gap: 10px; margin: 0; }
-.cb-time { margin: 8px 0 0 18px; text-wrap: balance; }
+.cb-time { margin: 8px 0 0 18px; text-transform: none; text-wrap: balance; }
 .cb-ctas { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 480px; }
 .cb-ctas .pill { justify-content: center; }
 .cb-ctas .pill:first-child { grid-column: 1 / -1; }
