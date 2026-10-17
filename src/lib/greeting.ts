@@ -19,7 +19,7 @@ export function greet() {
     ...MARK,
     '',
     'Hi, you found the console.',
-    `Press ${SHORTCUT} for the command menu.`,
+    `Click the page, then press ${SHORTCUT} for the command menu.`,
     SITE.email,
     `Source: ${GITHUB_URL}/myPortfolioWebsite`,
   ];
