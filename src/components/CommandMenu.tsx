@@ -93,6 +93,7 @@ export function CommandMenu() {
     }
     if (!(await c.run()) || !d.open) return d.close();
     setDoneId(c.id);
+    clearTimeout(doneTimer.current);
     doneTimer.current = window.setTimeout(() => d.close(), 800);
   };
 
