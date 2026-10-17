@@ -57,8 +57,9 @@ export function useFrameLoop(ref: RefObject<Element | null>, tick: (time: number
         raf = 0;
       }
     };
-    const io = new IntersectionObserver(([entry]) => {
-      onScreen = entry.isIntersecting;
+    // Entries for one target batch up when the callback is delayed; the last one is the current state.
+    const io = new IntersectionObserver((entries) => {
+      onScreen = entries[entries.length - 1].isIntersecting;
       update();
     });
     io.observe(el);
