@@ -1,4 +1,6 @@
 import { useSyncExternalStore } from 'react';
+import { flushSync } from 'react-dom';
+import { prefersReducedMotion } from '@/lib/motion';
 
 export type Theme = 'light' | 'dark';
 
@@ -16,6 +18,25 @@ export function setTheme(theme: Theme) {
     localStorage.setItem(KEY, theme);
   } catch {}
   listeners.forEach((fn) => fn(theme));
+}
+
+/** Reveals `next` as a diamond growing from `from` (default: the viewport centre) until it just covers the viewport. */
+export function switchTheme(next: Theme, from = { x: innerWidth / 2, y: innerHeight / 2 }) {
+  if (!document.startViewTransition || prefersReducedMotion()) return setTheme(next);
+  const { x, y } = from;
+  const R = Math.max(x, innerWidth - x) + Math.max(y, innerHeight - y);
+  const diamond = (r: number) => `polygon(${x}px ${y - r}px, ${x + r}px ${y}px, ${x}px ${y + r}px, ${x - r}px ${y}px)`;
+  // flushSync so React-rendered labels commit inside the update, before the new view is captured.
+  const t = document.startViewTransition(() => flushSync(() => setTheme(next)));
+  // A newer switch skips this one and rejects `ready`, which Safari reports as unhandled.
+  t.ready.then(
+    () =>
+      document.documentElement.animate(
+        { clipPath: [diamond(0), diamond(R)] },
+        { duration: 650, easing: 'cubic-bezier(.65, 0, .35, 1)', pseudoElement: '::view-transition-new(root)' },
+      ),
+    () => {},
+  );
 }
 
 export function onTheme(fn: (theme: Theme) => void) {
