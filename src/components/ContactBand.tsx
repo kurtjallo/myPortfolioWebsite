@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { CONTACT, LINKS, SITE } from '@/data';
 import { useReducedMotion } from '@/lib/motion';
 import { copyEmail } from '@/lib/email';
+import { localTime } from '@/lib/localTime';
 import { useScramble } from '@/hooks/useScramble';
 import { Logo } from '@/components/Logo';
 import './ContactBand.css';
@@ -50,6 +51,25 @@ function CopyEmail() {
       </span>
     </>
   );
+}
+
+function LocalTime() {
+  const [now, setNow] = useState(() => new Date());
+
+  // Re-aimed at the wall-clock minute on every tick; a fixed 60s interval slips after sleep or throttling.
+  useEffect(() => {
+    let timer = 0;
+    const tick = () => {
+      timer = window.setTimeout(() => {
+        setNow(new Date());
+        tick();
+      }, 60_000 - (Date.now() % 60_000));
+    };
+    tick();
+    return () => clearTimeout(timer);
+  }, []);
+
+  return <p className="label cb-time">{localTime(now, SITE.timeZone)}</p>;
 }
 
 export function ContactBand() {
@@ -112,10 +132,13 @@ export function ContactBand() {
         <div className="cb-close" data-reveal>
           <p className="cb-body">{CONTACT.body}</p>
           <div className="cb-reach">
-            <p className="label cb-status">
-              <span className="dot-live" />
-              {CONTACT.status}
-            </p>
+            <div>
+              <p className="label cb-status">
+                <span className="dot-live" />
+                {CONTACT.status}
+              </p>
+              <LocalTime />
+            </div>
             <div className="cb-ctas">
               <CopyEmail />
               <a className="pill outline" href={LINKS.linkedin.href} target="_blank" rel="noopener noreferrer">

@@ -48,6 +48,7 @@ export const SITE = {
   name: 'Kurt Jallorina',
   role: 'Software Engineer',
   location: 'Toronto',
+  timeZone: 'America/Toronto',
   email: 'kurtjallo@gmail.com',
 };
 
