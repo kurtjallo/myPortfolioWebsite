@@ -1,19 +1,19 @@
+/* Full-bleed bar whose content lines up with .container's edges */
 .nav {
-  position: fixed; z-index: 40; left: 0; right: 0; top: 0;
-  margin: 0 auto; max-width: 1400px; height: 80px;
+  position: fixed; z-index: 40; left: 0; right: 0; top: 0; height: 80px;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 0 var(--pad-x);
-  border: 1px solid transparent; border-radius: 0;
-  transition: all 0.5s var(--ease);
+  padding: 0 max(var(--pad-x), calc((100% - 1400px) / 2 + var(--pad-x)));
+  color: var(--fg);
+  transition: height 0.5s var(--ease), background-color 0.3s var(--ease), color 0.3s var(--ease);
 }
 .nav.nav-scrolled {
-  top: 16px; left: 16px; right: 16px; max-width: 1200px; height: 56px;
-  background: var(--nav-glass);
+  height: 64px;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
   backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-  border-color: var(--line); border-radius: 16px;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
 }
-@media (min-width: 1232px) { .nav.nav-scrolled { left: 0; right: 0; } }
+.nav[data-tone="panel"], .nav[data-tone="panel"] + .nav-sheet {
+  --bg: var(--p-bg); --fg: var(--p-fg); --muted: var(--p-muted); --line: var(--p-line); --on-fg: var(--p-bg);
+}
 
 .nav-brand { display: inline-flex; align-items: center; gap: 10px; font-size: 20px; letter-spacing: -0.01em; white-space: nowrap; transition: font-size 0.5s var(--ease); }
 .nav-brand svg { flex: none; width: 1.2em; height: 1.2em; }
@@ -37,7 +37,7 @@
 .nav-icon:hover { color: var(--fg); }
 .nav-menu { display: none; }
 @media (max-width: 899px) { .nav-menu { display: grid; } }
-.nav-cmdk { width: auto; padding: 0 10px; font-family: var(--mono); font-size: 12px; white-space: nowrap; }
+.nav-cmdk { width: auto; padding: 0 10px; font-family: var(--mono); font-size: 12px; white-space: nowrap; box-shadow: none; }
 @media (max-width: 899px) { .nav-cmdk { display: none; } }
 
 .nav-cta { height: 36px; padding: 0 18px; font-size: 14px; white-space: nowrap; }
@@ -48,7 +48,6 @@
   .nav-right { gap: 8px; }
   .nav-cta { padding: 0 14px; }
   .nav-cta .arrow { display: none; }
-  .nav.nav-scrolled { left: 8px; right: 8px; padding: 0 12px; }
   .nav.nav-scrolled .nav-brand { font-size: 16px; }
 }
 
@@ -57,12 +56,13 @@
 }
 
 .nav-sheet {
-  position: fixed; z-index: 39; left: 8px; right: 8px; top: 80px;
-  display: grid; padding: 8px; border-radius: 16px;
-  background: var(--nav-glass); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-  border: 1px solid var(--line); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  position: fixed; z-index: 39; left: 0; right: 0; top: 80px;
+  display: grid; padding: 0 var(--pad-x) 8px; color: var(--fg);
+  background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--line);
 }
+.nav-scrolled + .nav-sheet { top: 64px; }
 .nav-sheet[hidden] { display: none; }
-.nav-sheet a { padding: 14px 12px; font-size: 18px; border-bottom: 1px solid var(--line); }
+.nav-sheet a { padding: 14px 0; font-size: 18px; border-bottom: 1px solid var(--line); }
 .nav-sheet a:last-child { border-bottom: 0; }
 @media (min-width: 900px) { .nav-sheet { display: none; } }

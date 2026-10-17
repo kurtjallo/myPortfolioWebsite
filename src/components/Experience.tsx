@@ -79,7 +79,7 @@ export function Experience() {
   const ongoing = role.end === null;
 
   return (
-    <section id="experience" className="section exp">
+    <section id="experience" className="section exp" data-nav="panel">
       <div className="container">
         <div className="exp-head">
           <span className="eyebrow" data-reveal>
