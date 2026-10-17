@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { SITE } from '@/data';
 import { useFrameLoop, useReducedMotion } from '@/lib/motion';
-import { onTheme } from '@/lib/theme';
 import { createScene, type Scene } from './scene';
 import './hero.css';
 
@@ -17,9 +16,7 @@ export function Hero() {
     if (!root.current || !band.current) return;
     const s = createScene({ root: root.current, ripple: ripple.current, band: band.current });
     scene.current = s;
-    const offTheme = onTheme(s.retheme);
     return () => {
-      offTheme();
       s.destroy();
       scene.current = null;
     };
