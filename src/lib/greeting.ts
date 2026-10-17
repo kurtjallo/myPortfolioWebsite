@@ -2,15 +2,14 @@ import { GITHUB_URL, SITE } from '@/data';
 import { SHORTCUT } from '@/lib/commandMenu';
 
 const MARK = [
-  '        ◆',
-  '    ◆ ◆ ◆ ◆ ◆',
-  '◆ ◆ ◆ ◆ ◆ ◆ ◆ ◆ ◆',
-  '    ◆ ◆ ◆ ◆ ◆',
-  '◈ ◈     ◆     ◈ ◈',
-  '    ◈ ◈   ◈ ◈',
-  '◇ ◇     ◈     ◇ ◇',
-  '    ◇ ◇   ◇ ◇',
-  '        ◇',
+  "    _.-'-._",
+  "_.-'       '-._",
+  "'-._       _.-'",
+  "    '-._.-'",
+  "'-._       _.-'",
+  "    '-._.-'",
+  "'-._       _.-'",
+  "    '-._.-'",
 ];
 
 /** The plates mark and a hello, for visitors who open DevTools. */
