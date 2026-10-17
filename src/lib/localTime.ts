@@ -1,10 +1,11 @@
 /** Minutes east of UTC that `timeZone` observes at `now`. */
 function utcOffset(now: Date, timeZone: string) {
-  const name = new Intl.DateTimeFormat('en-US', { timeZone, timeZoneName: 'longOffset' })
-    .formatToParts(now)
-    .find((p) => p.type === 'timeZoneName')!.value;
-  const m = /([+-])(\d\d):(\d\d)/.exec(name);
-  return m ? (m[1] === '-' ? -1 : 1) * (Number(m[2]) * 60 + Number(m[3])) : 0;
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone, hourCycle: 'h23', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric',
+  }).formatToParts(now);
+  const part = (type: Intl.DateTimeFormatPartTypes) => Number(parts.find((p) => p.type === type)!.value);
+  const wall = Date.UTC(part('year'), part('month') - 1, part('day'), part('hour'), part('minute'));
+  return wall / 60_000 - Math.floor(now.getTime() / 60_000);
 }
 
 /** "9:14 PM local time · 3h ahead of you" for `timeZone`, without the suffix when the viewer's offset matches. */
