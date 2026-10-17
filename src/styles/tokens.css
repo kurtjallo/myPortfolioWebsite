@@ -135,8 +135,9 @@ main::after {
 }
 [data-reveal][data-shown] { opacity: 1; transform: none; }
 
-/* The theme switch reveals the new view with a clip-path diamond (lib/theme.ts) instead of the default cross-fade. */
-::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+/* The theme switch cuts a growing diamond out of the old view (lib/theme.ts) instead of the default cross-fade; clicks pass through to the live page. */
+::view-transition { pointer-events: none; }
+::view-transition-old(root) { animation: none; }
 
 @media (prefers-reduced-motion: reduce) {
   [data-reveal] { opacity: 1; transform: none; transition: none; }
