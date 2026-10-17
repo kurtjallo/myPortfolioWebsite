@@ -96,6 +96,8 @@ export function CommandMenu() {
   };
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    // Safari sends the key that confirms IME input after compositionend, so only keyCode 229 marks it.
+    if (e.nativeEvent.isComposing || e.keyCode === 229) return;
     const step = STEP_KEYS[e.key];
     if (step && items.length) {
       e.preventDefault();
