@@ -25,22 +25,29 @@ export function switchTheme(next: Theme, from = { x: innerWidth / 2, y: innerHei
   if (!document.startViewTransition || prefersReducedMotion()) return setTheme(next);
   const { x, y } = from;
   const R = Math.max(x, innerWidth - x) + Math.max(y, innerHeight - y);
-  const diamond = (r: number) => `polygon(${x}px ${y - r}px, ${x + r}px ${y}px, ${x}px ${y + r}px, ${x - r}px ${y}px)`;
+  const hole = (r: number) =>
+    `polygon(evenodd, 0 0, 100% 0, 100% 100%, 0 100%, 0 0, ${x}px ${y - r}px, ${x + r}px ${y}px, ${x}px ${y + r}px, ${x - r}px ${y}px, ${x}px ${y - r}px)`;
+  const root = document.documentElement;
   const noTransitions = document.createElement('style');
   noTransitions.textContent = '*, *::before, *::after { transition: none !important; }';
-  // flushSync so React-rendered labels commit inside the update, before the new view is captured.
+  // flushSync so React-rendered labels commit inside the update, before the reveal starts.
   const t = document.startViewTransition(() => {
     document.head.append(noTransitions);
     flushSync(() => setTheme(next));
+    // Captured elements aren't hit-testable, so only the old view is captured and the live page stays clickable beneath it.
+    root.style.viewTransitionName = 'none';
   });
-  t.finished.finally(() => noTransitions.remove());
+  t.finished.finally(() => {
+    noTransitions.remove();
+    root.style.removeProperty('view-transition-name');
+  });
   // A newer switch skips this one and rejects `ready`, which Safari reports as unhandled.
   t.ready.then(
     () => {
       noTransitions.remove();
-      document.documentElement.animate(
-        { clipPath: [diamond(0), diamond(R)] },
-        { duration: 650, easing: 'cubic-bezier(.65, 0, .35, 1)', pseudoElement: '::view-transition-new(root)' },
+      root.animate(
+        { clipPath: [hole(0), hole(R)] },
+        { duration: 650, easing: 'cubic-bezier(.65, 0, .35, 1)', pseudoElement: '::view-transition-old(root)' },
       );
     },
     () => {},
