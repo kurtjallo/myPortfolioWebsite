@@ -20,6 +20,7 @@ export function CommandMenu() {
   const dialog = useRef<HTMLDialogElement>(null);
   const input = useRef<HTMLInputElement>(null);
   const doneTimer = useRef(0);
+  const backdropPress = useRef(false);
   const [query, setQuery] = useState('');
   const [active, setActive] = useState(0);
   const [doneId, setDoneId] = useState<string | null>(null);
@@ -111,7 +112,8 @@ export function CommandMenu() {
       ref={dialog}
       className="cmdk"
       aria-label="Command menu"
-      onClick={(e) => e.target === e.currentTarget && e.currentTarget.close()}
+      onMouseDown={(e) => (backdropPress.current = e.target === e.currentTarget)}
+      onClick={(e) => backdropPress.current && e.target === e.currentTarget && e.currentTarget.close()}
     >
       <div className="cmdk-panel" onMouseDown={(e) => e.target !== input.current && e.preventDefault()}>
         <input
