@@ -1,3 +1,5 @@
+export const SHORTCUT = /Mac|iPhone|iPad|iPod/.test(navigator.platform) ? '⌘K' : 'Ctrl K';
+
 const listeners = new Set<() => void>();
 
 /** The dialog's own `open` state is the source of truth, so callers only signal intent. */
