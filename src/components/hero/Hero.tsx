@@ -1,28 +1,10 @@
-import { useEffect, useRef } from 'react';
 import { SITE } from '@/data';
-import { useFrameLoop, useReducedMotion } from '@/lib/motion';
-import { createScene, type Scene } from './scene';
+import { useHeroScene } from './useHeroScene';
 import './hero.css';
 
 
 export function Hero() {
-  const root = useRef<HTMLElement>(null);
-  const ripple = useRef<HTMLCanvasElement>(null);
-  const band = useRef<HTMLCanvasElement>(null);
-  const scene = useRef<Scene | null>(null);
-  const reduced = useReducedMotion();
-
-  useEffect(() => {
-    if (!root.current || !band.current) return;
-    const s = createScene({ root: root.current, ripple: ripple.current, band: band.current });
-    scene.current = s;
-    return () => {
-      s.destroy();
-      scene.current = null;
-    };
-  }, [reduced]);
-
-  useFrameLoop(root, (time, delta) => scene.current?.frame(time, delta));
+  const { root, ripple, band, reduced } = useHeroScene();
 
   return (
     <section id="home" ref={root} className="hero">
