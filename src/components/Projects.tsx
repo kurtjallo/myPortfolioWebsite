@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { GITHUB_URL, PROJECTS, PROJECTS_HEADING } from '@/data';
+import { GITHUB_URL, PROJECTS, PROJECTS_HEADING, SITE } from '@/data';
 import './Projects.css';
 
 const vars = (v: Record<string, string>) => v as CSSProperties;
@@ -38,7 +38,7 @@ export function Projects() {
                 href={p.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`${p.name} on GitHub (opens in new tab)`}
+                aria-label={p.link === GITHUB_URL ? `${SITE.name}'s GitHub profile (opens in new tab)` : `${p.name} on GitHub (opens in new tab)`}
               />
             </article>
           ))}
