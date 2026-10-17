@@ -1,11 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { SECTIONS, SITE } from '@/data';
-import { openCommandMenu } from '@/lib/commandMenu';
+import { openCommandMenu, SHORTCUT } from '@/lib/commandMenu';
 import { switchTheme, useTheme } from '@/lib/theme';
 import { Logo } from '@/components/Logo';
 import './Nav.css';
-
-const APPLE = /Mac|iPhone|iPad|iPod/.test(navigator.platform);
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -77,7 +75,7 @@ export function Nav() {
             aria-keyshortcuts="Meta+K Control+K"
             onClick={openCommandMenu}
           >
-            {APPLE ? '⌘K' : 'Ctrl K'}
+            {SHORTCUT}
           </button>
           <button
             type="button"
