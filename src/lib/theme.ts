@@ -36,11 +36,13 @@ export function switchTheme(next: Theme, from = { x: innerWidth / 2, y: innerHei
   t.finished.finally(() => noTransitions.remove());
   // A newer switch skips this one and rejects `ready`, which Safari reports as unhandled.
   t.ready.then(
-    () =>
+    () => {
+      noTransitions.remove();
       document.documentElement.animate(
         { clipPath: [diamond(0), diamond(R)] },
         { duration: 650, easing: 'cubic-bezier(.65, 0, .35, 1)', pseudoElement: '::view-transition-new(root)' },
-      ),
+      );
+    },
     () => {},
   );
 }
