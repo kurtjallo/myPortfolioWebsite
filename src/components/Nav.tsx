@@ -23,13 +23,23 @@ export function Nav() {
 
   useEffect(() => {
     if (!menuOpen) return;
+    const ac = new AbortController();
+    const { signal } = ac;
+    const close = () => setMenuOpen(false);
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== 'Escape') return;
       if (sheet.current?.contains(document.activeElement)) toggle.current?.focus();
       setMenuOpen(false);
     };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    const onDown = (e: PointerEvent) => {
+      const t = e.target as Node;
+      if (!sheet.current?.contains(t) && !toggle.current?.contains(t)) close();
+    };
+    window.addEventListener('keydown', onKey, { signal });
+    window.addEventListener('pointerdown', onDown, { signal });
+    window.addEventListener('scroll', close, { passive: true, signal });
+    matchMedia('(min-width: 900px)').addEventListener('change', close, { signal });
+    return () => ac.abort();
   }, [menuOpen]);
 
   return (
