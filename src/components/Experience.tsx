@@ -2,11 +2,11 @@ import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from
 import { EXPERIENCE_HEADING, ROLES, type Role } from '@/data';
 import { GLYPHS, useScramble } from '@/hooks/useScramble';
 import { prefersReducedMotion } from '@/lib/motion';
+import { SectionHeading } from './SectionHeading';
 import './Experience.css';
 
 const NUMERALS = ['I', 'II', 'III', 'IV', 'V', 'VI'];
 const STEP_KEYS: Partial<Record<string, number>> = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 };
-const [lead, muted] = EXPERIENCE_HEADING;
 
 const period = (r: Role) => `${r.start} - ${r.end ?? 'Present'}`;
 const fileName = (r: Role) => `${r.company.split(/[\s(]/)[0].toLowerCase().replace(/[^a-z0-9]/g, '')}.yml`;
@@ -85,11 +85,7 @@ export function Experience() {
           <span className="eyebrow" data-reveal>
             Experience
           </span>
-          <h2 className="h2" data-reveal style={{ '--d': '80ms' } as CSSProperties}>
-            {lead}
-            <br />
-            <span className="mute">{muted}</span>
-          </h2>
+          <SectionHeading heading={EXPERIENCE_HEADING} data-reveal style={{ '--d': '80ms' } as CSSProperties} />
         </div>
         <div className="exp-grid">
           <div

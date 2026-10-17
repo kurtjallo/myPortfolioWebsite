@@ -1,12 +1,13 @@
 import { useEffect, useLayoutEffect, useRef, useState, type Ref } from 'react';
 import { STACK, STACK_HEADING, STACK_LEAD, type Layer } from '@/data';
 import { useReducedMotion } from '@/lib/motion';
+import { pad } from '@/lib/pad';
+import { SectionHeading } from './SectionHeading';
 import { SkillIcon } from './SkillIcon';
 import { PLATES, VIEW_H, VIEW_W, type Point } from './stack/plates';
 import './Stack.css';
 
 const STEPS = STACK.length;
-const pad = (i: number) => String(i + 1).padStart(2, '0');
 const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
 
 /** The index of the centred plate, or null while the intro shows and the plates are spread. */
@@ -84,15 +85,10 @@ function PlateSvg({ layer, state, className = 'sk-plate', ref }: {
 }
 
 function Intro() {
-  const [line1, line2] = STACK_HEADING;
   return (
     <>
       <span className="eyebrow">Stack</span>
-      <h2 className="h2">
-        {line1}
-        <br />
-        <span className="mute">{line2}</span>
-      </h2>
+      <SectionHeading heading={STACK_HEADING} />
       <p className="lead sk-lead">{STACK_LEAD}</p>
     </>
   );

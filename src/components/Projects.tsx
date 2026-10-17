@@ -1,22 +1,18 @@
 import type { CSSProperties } from 'react';
 import { GITHUB_URL, PROJECTS, PROJECTS_HEADING, SITE } from '@/data';
+import { pad } from '@/lib/pad';
+import { SectionHeading } from './SectionHeading';
 import './Projects.css';
 
 const vars = (v: Record<string, string>) => v as CSSProperties;
-const pad = (i: number) => String(i + 1).padStart(2, '0');
 
 export function Projects() {
-  const [line1, line2] = PROJECTS_HEADING;
   return (
     <section id="projects" className="section">
       <div className="container">
         <div className="pj-head">
           <span className="eyebrow" data-reveal>Projects</span>
-          <h2 className="h2" data-reveal style={vars({ '--d': '80ms' })}>
-            {line1}
-            <br />
-            <span className="mute">{line2}</span>
-          </h2>
+          <SectionHeading heading={PROJECTS_HEADING} data-reveal style={vars({ '--d': '80ms' })} />
         </div>
         <div className="pj-rows">
           {PROJECTS.map((p, i) => (
