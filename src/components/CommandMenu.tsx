@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
 import { LINKS, SECTIONS, SITE } from '@/data';
 import { onOpenCommandMenu } from '@/lib/commandMenu';
 import { copyEmail } from '@/lib/email';
-import { setTheme, useTheme } from '@/lib/theme';
+import { switchTheme, useTheme } from '@/lib/theme';
 import './CommandMenu.css';
 
 const GROUPS = ['Go to', 'Actions', 'Links'] as const;
@@ -32,7 +32,7 @@ export function CommandMenu() {
         (s): Command => ({ id: s.id, group: 'Go to', label: s.label, run: () => document.getElementById(s.id)?.scrollIntoView() }),
       ),
       { id: 'copy-email', group: 'Actions', label: 'Copy email', keywords: SITE.email, hint: SITE.email, done: 'Copied', run: copyEmail },
-      { id: 'theme', group: 'Actions', label: `Switch to ${next} theme`, keywords: 'dark light mode appearance', run: () => setTheme(next) },
+      { id: 'theme', group: 'Actions', label: `Switch to ${next} theme`, keywords: 'dark light mode appearance', run: () => switchTheme(next) },
       ...(['github', 'linkedin', 'events'] as const).map(
         (k): Command => ({
           id: k,

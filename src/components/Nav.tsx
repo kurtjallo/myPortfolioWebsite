@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { SECTIONS, SITE } from '@/data';
 import { openCommandMenu } from '@/lib/commandMenu';
-import { setTheme, useTheme } from '@/lib/theme';
+import { switchTheme, useTheme } from '@/lib/theme';
 import { Logo } from '@/components/Logo';
 import './Nav.css';
 
@@ -79,7 +79,15 @@ export function Nav() {
           >
             {APPLE ? '⌘K' : 'Ctrl K'}
           </button>
-          <button type="button" className="nav-icon" aria-label={`Switch to ${next} theme`} onClick={() => setTheme(next)}>
+          <button
+            type="button"
+            className="nav-icon"
+            aria-label={`Switch to ${next} theme`}
+            onClick={(e) => {
+              const r = e.currentTarget.getBoundingClientRect();
+              switchTheme(next, { x: r.left + r.width / 2, y: r.top + r.height / 2 });
+            }}
+          >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
               <circle cx="12" cy="12" r="5" />
               <path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
