@@ -109,9 +109,28 @@ export const ROLES: Role[] = [
   },
 ];
 
-export const PROJECTS_HEADING: Heading = ['Selected projects.', 'Built and shipped.'];
+export const PROJECTS_HEADING: Heading = ['Currently building.', 'Work in progress.'];
 
 export const PROJECTS: Project[] = [
+  {
+    name: 'Umbreon',
+    event: 'Open source · Self-hosted',
+    description:
+      'A self-hosted software factory that proves every change works before you merge it. It runs your app in a sandbox, clicks through it like a user, and posts screenshots, a video, and a pass or fail on the pull request.',
+    stack: ['TypeScript', 'Node.js', 'AI SDK', 'Playwright', 'Docker'],
+    link: 'https://github.com/kurtjallo/umbreon',
+  },
+  {
+    name: 'Honeycomb',
+    event: 'Open source · macOS',
+    description:
+      'Free, private AI meeting notes for macOS. It listens to your calls without joining them, transcribes both sides on your Mac, and writes the notes when the call ends.',
+    stack: ['Swift', 'MLX', 'NVIDIA Parakeet', 'Qwen', 'Ollama'],
+    link: 'https://github.com/kurtjallo/Honeycomb',
+  },
+];
+
+export const MORE_PROJECTS: Project[] = [
   {
     name: 'Clarify',
     event: 'Hackville 2026',
